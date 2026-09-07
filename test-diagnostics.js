@@ -177,6 +177,46 @@ runTest("TEST 9: TranscriptProcessor annotated HTML generation", () => {
 });
 
 // -----------------------------------------------------------------------------
+// TEST 10: Coaching Intelligence - Filler words prioritization & drill
+// -----------------------------------------------------------------------------
+runTest("TEST 10: Coaching Intelligence - Filler words prioritization & drill", () => {
+    const transcript = "Um, basically, uh, we need to, like, consider the project timeline, you know, because um we have deadlines.";
+    const result = SpeechDiagnostics.analyzeSpeech({
+        transcript,
+        duration: 30,
+        topic: "Deadlines"
+    });
+
+    assert.ok(result.coachInsights, "Must generate coachInsights");
+    assert.ok(result.primaryWeakness, "Must identify primary weakness");
+    assert.strictEqual(result.primaryWeakness.type, "fillers", "Primary weakness should be fillers");
+    assert.ok(result.primaryWeakness.plainExplanation.includes("filler words"), "Must explain in plain language");
+    assert.ok(result.drill, "Must generate a targeted drill");
+    assert.strictEqual(result.drill.id, "drill-fillers", "Targeted drill should be drill-fillers");
+    assert.strictEqual(result.drill.duration, 30, "Drill duration should be 30 seconds");
+    assert.ok(result.coachStrengths.length > 0, "Must include genuine strengths");
+});
+
+// -----------------------------------------------------------------------------
+// TEST 11: Coaching Intelligence - Fast pacing prioritization & drill
+// -----------------------------------------------------------------------------
+runTest("TEST 11: Coaching Intelligence - Fast pacing prioritization & drill", () => {
+    // 60 words spoken in 15 seconds = 240 WPM (very fast pace)
+    const transcript = "In this fast paced environment we must ship features quickly without delays or hesitations because modern customers demand instantaneous results and our competitors are moving at a rapid clip every single week so we cannot afford any downtime or slow decision making processes.";
+    const result = SpeechDiagnostics.analyzeSpeech({
+        transcript,
+        duration: 15,
+        topic: "Speed in Tech"
+    });
+
+    assert.ok(result.wpm > 155, `WPM should be fast, got ${result.wpm}`);
+    assert.ok(result.primaryWeakness, "Must identify primary weakness");
+    assert.strictEqual(result.primaryWeakness.type, "fast_pace", "Primary weakness should be fast_pace");
+    assert.strictEqual(result.drill.id, "drill-controlled-pacing", "Targeted drill should be controlled pacing");
+    assert.ok(result.drill.instructions.includes("calm, measured rhythm"), "Drill should have actionable instructions");
+});
+
+// -----------------------------------------------------------------------------
 // SUMMARY
 // -----------------------------------------------------------------------------
 console.log("\n==================================================");

@@ -737,6 +737,28 @@
             professionalVersion = professionalVersion.replace(reg, vi.suggestions[0]);
         });
 
+        // ---------------------------------------------------------------------
+        // L. Coaching Intelligence & Targeted Drill Engine
+        // ---------------------------------------------------------------------
+        const coachInsights = identifyCoachingInsights({
+            wpm,
+            paceStatus,
+            wordCount,
+            durationSeconds: durationSec,
+            sentenceCount,
+            totalFillerCount,
+            fillerPercentage,
+            fillerWordsList,
+            grammarCorrections,
+            vocabularyImprovements,
+            repeatedWords,
+            structureEvidence,
+            prepMarkersFound,
+            lexicalVariety,
+            rawText,
+            topic
+        });
+
         return {
             overallScore,
             fluencyScore: fluencyScore100,
@@ -772,7 +794,282 @@
                 professional: professionalVersion || naturalVersion || rawText
             },
             nextStep,
+            // Coaching-First Properties
+            coachInsights,
+            primaryWeakness: coachInsights.primaryWeakness,
+            secondaryWeakness: coachInsights.secondaryWeakness,
+            coachStrengths: coachInsights.strengths,
+            drill: coachInsights.drill,
+            coachGreeting: coachInsights.greeting,
             isAnalyzed: true
+        };
+    }
+
+    /**
+     * Identifies the #1 primary weakness, optional secondary weakness,
+     * student-friendly explanation with speech evidence, actionable tip, and targeted drill.
+     */
+    function identifyCoachingInsights(data) {
+        const {
+            wpm = 0,
+            wordCount = 0,
+            durationSeconds = 0,
+            sentenceCount = 0,
+            totalFillerCount = 0,
+            fillerPercentage = 0,
+            fillerWordsList = [],
+            grammarCorrections = [],
+            vocabularyImprovements = [],
+            repeatedWords = [],
+            structureEvidence = {},
+            prepMarkersFound = 0,
+            lexicalVariety = 0,
+            rawText = '',
+            topic = ''
+        } = data;
+
+        const isVeryShort = wordCount < 8 || durationSeconds < 5;
+
+        // Friendly greeting based on speaking performance
+        let greeting = "Nice work!";
+        if (isVeryShort) {
+            greeting = "Good start!";
+        } else if (totalFillerCount === 0 && wpm >= 110 && wpm <= 150 && grammarCorrections.length === 0) {
+            greeting = "Outstanding delivery! 🌟";
+        } else if (wpm >= 105 && wpm <= 155 && totalFillerCount <= 2) {
+            greeting = "Great speaking! You communicated clearly. 👏";
+        } else {
+            greeting = "Nice work! Here is your coach takeaway: 👍";
+        }
+
+        const candidates = [];
+
+        // Condition 0: Extremely short speech
+        if (isVeryShort) {
+            candidates.push({
+                priority: 100,
+                type: "short_speech",
+                title: "Speech was a bit too brief",
+                plainExplanation: `You spoke ${wordCount} word${wordCount === 1 ? '' : 's'} (${durationSeconds}s). To help your coach give accurate feedback, try sharing a few full sentences.`,
+                evidence: `${wordCount} words detected in ${durationSeconds} seconds`,
+                tip: "State your main thought, add a quick reason why, and wrap it up.",
+                drill: {
+                    id: "drill-warmup",
+                    type: "warmup",
+                    title: "30-Second Warmup Challenge",
+                    duration: 30,
+                    goal: "Speak for 30 seconds in 3-4 complete sentences",
+                    instructions: "Pick one clear thought on this topic and explain it with a reason without stopping early.",
+                    focus: "Continuous speaking confidence"
+                }
+            });
+        }
+
+        // Condition 1: Filler Words
+        if (totalFillerCount >= 4 || (fillerPercentage >= 4.0 && totalFillerCount >= 2)) {
+            const topWords = (fillerWordsList || []).slice(0, 3).map(f => `"${f.word}" (${f.count}x)`).join(', ');
+            const priority = totalFillerCount >= 6 ? 90 : 78;
+            candidates.push({
+                priority,
+                type: "fillers",
+                title: "Frequent filler words",
+                plainExplanation: `You used filler words ${totalFillerCount} times (${topWords}) while searching for your next thought.`,
+                evidence: `${totalFillerCount} filler words detected (${topWords})`,
+                tip: "Embrace silent pauses. When thinking between ideas, take a quiet 1-second breath instead of saying 'um' or 'basically'.",
+                drill: {
+                    id: "drill-fillers",
+                    type: "fillers",
+                    title: "30-Second Zero-Filler Challenge",
+                    duration: 30,
+                    goal: "Speak for 30 seconds with 0 filler words",
+                    instructions: "Answer the prompt. Whenever you pause to think, stay completely silent for one second instead of saying 'um' or 'like'.",
+                    focus: "Silent pauses instead of filler sounds"
+                }
+            });
+        }
+
+        // Condition 2: Speaking Too Fast (>155 WPM)
+        if (wpm > 155 && wordCount >= 20) {
+            const priority = wpm > 175 ? 85 : 72;
+            candidates.push({
+                priority,
+                type: "fast_pace",
+                title: "Speaking a little too quickly",
+                plainExplanation: `You spoke at ${wpm} words per minute when explaining your points. When speaking too fast, listeners have less time to absorb your ideas.`,
+                evidence: `${wpm} WPM (comfortable conversational rhythm is 110–145 WPM)`,
+                tip: "Take a relaxed breath after each sentence to let your ideas land before starting your next thought.",
+                drill: {
+                    id: "drill-controlled-pacing",
+                    type: "fast_pace",
+                    title: "Controlled-Pacing Challenge",
+                    duration: 45,
+                    goal: "Slow your pace to a comfortable 120–140 words per minute",
+                    instructions: "Speak in a calm, measured rhythm. Deliberately pause for one full breath after every sentence.",
+                    focus: "Deliberate cadence and clear listener pauses"
+                }
+            });
+        }
+
+        // Condition 3: Speaking Too Slow / Hesitant (<95 WPM)
+        if (wpm < 95 && wordCount >= 10 && durationSeconds >= 15) {
+            candidates.push({
+                priority: 66,
+                type: "slow_pace",
+                title: "Hesitations slowing your flow",
+                plainExplanation: `Your speaking pace was ${wpm} words per minute with long stops between thoughts.`,
+                evidence: `${wpm} WPM (target is 110–145 WPM)`,
+                tip: "Trust your first thought and keep sentences moving forward without worrying about perfection.",
+                drill: {
+                    id: "drill-momentum",
+                    type: "slow_pace",
+                    title: "Smooth Momentum Challenge",
+                    duration: 45,
+                    goal: "Keep sentences flowing steadily without long stops",
+                    instructions: "Focus on continuous speech momentum. Connect your thoughts without second-guessing yourself.",
+                    focus: "Conversational flow and momentum"
+                }
+            });
+        }
+
+        // Condition 4: Weak Structure / Missing Reasoning or Examples
+        if ((prepMarkersFound < 2 || (!structureEvidence?.hasReason && !structureEvidence?.hasExample)) && wordCount >= 25) {
+            candidates.push({
+                priority: 68,
+                type: "weak_structure",
+                title: "Needs clearer structure",
+                plainExplanation: "You expressed your main point, but didn't support it with an explicit reason (e.g. 'because...') or a concrete example (e.g. 'for example...').",
+                evidence: "Missing explicit reason ('because...') or example ('for instance...') connectors",
+                tip: "Use the PREP structure: State your Point, give a Reason, share a real Example, and restate your Point.",
+                drill: {
+                    id: "drill-prep-structure",
+                    type: "weak_structure",
+                    title: "PREP-Based Response Challenge",
+                    duration: 60,
+                    goal: "Structure your response in 4 clear parts (Point ➔ Reason ➔ Example ➔ Point)",
+                    instructions: "Spend 15s on your Point, 15s on your Reason ('because...'), 15s on an Example ('for instance...'), and 15s wrapping it up.",
+                    focus: "Clear idea progression from point to proof"
+                }
+            });
+        }
+
+        // Condition 5: Weak or Abrupt Conclusion
+        if (!structureEvidence?.hasPointConclusion && wordCount >= 35 && sentenceCount >= 3) {
+            candidates.push({
+                priority: 63,
+                type: "weak_conclusion",
+                title: "Abrupt or missing conclusion",
+                plainExplanation: "You shared good ideas, but your answer stopped abruptly without a concluding sentence to tie everything together.",
+                evidence: "Speech ended after an explanation without a final takeaway sentence",
+                tip: "Always close with a definitive sentence starting with 'That is why...' or 'In conclusion...' so your listener knows you've finished.",
+                drill: {
+                    id: "drill-strong-conclusion",
+                    type: "weak_conclusion",
+                    title: "Strong Conclusion Challenge",
+                    duration: 45,
+                    goal: "Practice ending your answer with a definitive, memorable closing sentence",
+                    instructions: "Speak for 45 seconds on this prompt, making sure your final sentence clearly summarizes your main argument.",
+                    focus: "Confident, clean finish"
+                }
+            });
+        }
+
+        // Condition 6: Vocabulary Repetition
+        if ((repeatedWords && repeatedWords.length >= 2) || (repeatedWords && repeatedWords.length >= 1 && repeatedWords[0].count >= 3)) {
+            const topRep = repeatedWords[0];
+            const syns = (VOCAB_UPGRADE_DICTIONARY[topRep.word.toLowerCase()]?.alternatives || ['effective', 'notable', 'meaningful']).slice(0, 3).join(', ');
+            candidates.push({
+                priority: 56,
+                type: "repetitive_vocab",
+                title: "Repeated word choices",
+                plainExplanation: `You repeated the word "${topRep.word}" ${topRep.count} times. Swapping in varied words makes your speech sound much more natural.`,
+                evidence: `Repeated "${topRep.word}" ${topRep.count} times`,
+                tip: `Try alternating with words like ${syns} to add natural color to your ideas.`,
+                drill: {
+                    id: "drill-vocab-variety",
+                    type: "repetitive_vocab",
+                    title: "Natural Vocabulary Variation Drill",
+                    duration: 45,
+                    goal: "Express your point using varied, natural vocabulary",
+                    instructions: `Answer this prompt without repeating "${topRep.word}". Challenge yourself to use 2 different descriptive words.`,
+                    focus: "Natural vocabulary diversity"
+                }
+            });
+        }
+
+        // Condition 7: Grammar Correction
+        if (grammarCorrections && grammarCorrections.length >= 1) {
+            const gc = grammarCorrections[0];
+            candidates.push({
+                priority: 59,
+                type: "grammar",
+                title: "Grammar adjustment",
+                plainExplanation: `A quick grammar polish: you said "${gc.original}" instead of "${gc.correction}".`,
+                evidence: `"${gc.original}" ➔ "${gc.correction}" (${gc.rule})`,
+                tip: gc.explanation || 'Practice repeating the corrected sentence out loud so it sounds natural.',
+                drill: {
+                    id: "drill-grammar-polish",
+                    type: "grammar",
+                    title: "Clean Phrasing Challenge",
+                    duration: 30,
+                    goal: "Practice speaking the corrected phrase smoothly",
+                    instructions: `Deliver a short 30-second response incorporating the phrasing "${gc.correction}".`,
+                    focus: "Clean, natural grammar"
+                }
+            });
+        }
+
+        // Sort candidates by priority descending
+        candidates.sort((a, b) => b.priority - a.priority);
+
+        let primaryWeakness = null;
+        let secondaryWeakness = null;
+
+        if (candidates.length > 0) {
+            primaryWeakness = candidates[0];
+            if (candidates.length > 1) {
+                secondaryWeakness = candidates[1];
+            }
+        } else {
+            // High performing speech!
+            primaryWeakness = {
+                priority: 10,
+                type: "flow_polish",
+                title: "Subtle pause for emphasis",
+                plainExplanation: "Your delivery was clear, balanced, and confident! To make your speaking even more compelling, practice adding an intentional 1-second pause right before your biggest point.",
+                evidence: `Pacing (${wpm} WPM) and speech hygiene were right on target`,
+                tip: "Use strategic pauses right before your key message to build listener focus.",
+                drill: {
+                    id: "drill-emphasis",
+                    type: "flow_polish",
+                    title: "Expressive Emphasis Challenge",
+                    duration: 45,
+                    goal: "Practice pausing right before your main takeaway",
+                    instructions: "Deliver your thoughts, deliberately pausing for one full second before delivering your central punchline.",
+                    focus: "Vocal presence and impact"
+                }
+            };
+        }
+
+        // Select 1-2 genuine strengths
+        const coachStrengths = [];
+        if (wpm >= 105 && wpm <= 150) coachStrengths.push(`Smooth, natural speaking pace (${wpm} WPM)`);
+        if (totalFillerCount === 0 && wordCount >= 15) coachStrengths.push("Clean speech hygiene: zero filler words detected!");
+        else if (totalFillerCount <= 2 && wordCount >= 15) coachStrengths.push("Crisp delivery with minimal filler words");
+        if (grammarCorrections.length === 0 && wordCount >= 15) coachStrengths.push("Accurate, natural sentence structure");
+        if (prepMarkersFound >= 2) coachStrengths.push("Logical thought progression with clear transition signposts");
+        if (lexicalVariety >= 55) coachStrengths.push("Good vocabulary variety and natural phrasing");
+        if (coachStrengths.length === 0) coachStrengths.push("Clear verbal output with identifiable core message");
+
+        return {
+            greeting,
+            primaryWeakness,
+            secondaryWeakness: secondaryWeakness ? {
+                title: secondaryWeakness.title,
+                plainExplanation: secondaryWeakness.plainExplanation,
+                tip: secondaryWeakness.tip
+            } : null,
+            strengths: coachStrengths.slice(0, 2),
+            drill: primaryWeakness.drill
         };
     }
 
@@ -809,12 +1106,19 @@
             prepMarkersFound: 0,
             rephrasings: { natural: "", professional: "" },
             nextStep: message,
+            coachInsights: null,
+            primaryWeakness: null,
+            secondaryWeakness: null,
+            coachStrengths: [],
+            drill: null,
+            coachGreeting: "Welcome to Speech Coach! Click Start Speaking whenever you're ready.",
             isAnalyzed: false
         };
     }
 
     return {
         analyzeSpeech,
+        identifyCoachingInsights,
         createEmptyDiagnosticsState,
         UNCONDITIONAL_FILLERS,
         VOCAB_UPGRADE_DICTIONARY,

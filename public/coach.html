@@ -302,384 +302,529 @@
         </div>
 
         <!-- 1. COMMUNICATION COACH STUDIO VIEW -->
-        <div id="coach-studio-view" class="flex flex-col gap-6 sm:gap-8">
+        <div id="coach-studio-view" class="flex flex-col gap-6">
 
-        <!-- HERO HEADER BANNER -->
-        <section class="neu-card p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-            <div class="flex flex-col gap-2.5 max-w-2xl">
-                <div class="flex items-center gap-2">
-                    <span class="neu-badge px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50/50">
-                        ⚡ Real-Time Speech Diagnostics
-                    </span>
-                </div>
-                <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-800 tracking-tight leading-tight">
-                    Communication & Speech <span class="text-gradient">Coach</span>
-                </h1>
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                    Evaluate real-time speech fluency, eliminate filler words, regulate your pace, and build structured speaking presence with our deterministic speech diagnostics engine.
-                </p>
-            </div>
-
-            <!-- QUICK STATS WIDGET -->
-            <div class="neu-card-sm p-4 flex items-center gap-4 shrink-0 bg-gradient-to-br from-slate-50/70 to-blue-50/40 border border-white/60">
-                <div class="neu-circle w-12 h-12 flex items-center justify-center text-xl text-blue-600 shrink-0">
-                    🎙️
-                </div>
-                <div>
-                    <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Target Cadence</div>
-                    <div class="text-lg font-outfit font-extrabold text-slate-800">110–150 <span class="text-xs font-sans text-blue-600 font-semibold">WPM</span></div>
-                    <div class="text-[11px] text-emerald-600 font-medium">Zero-Filler Goal</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PRACTICE STUDIO WORKSPACE -->
-        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6" aria-label="Practice Studio">
-
-            <!-- LEFT: TOPIC & PROMPT CONTROLS (5 cols) -->
-            <div class="lg:col-span-5 flex flex-col gap-5">
-                <!-- TOPIC CARD -->
-                <div class="neu-card p-5 sm:p-6 flex flex-col gap-4">
-                    <div class="flex items-center justify-between">
-                        <span id="topic-category-badge" class="neu-badge px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-indigo-600">
-                            Workplace & Tech
-                        </span>
-                        <button type="button" onclick="shuffleTopic()" class="neu-btn px-2.5 py-1 text-xs font-bold text-slate-600 hover:text-blue-600 flex items-center gap-1.5 cursor-pointer" title="Get a new prompt">
-                            <span>🎲</span> Shuffle Topic
-                        </button>
-                    </div>
-
-                    <div>
-                        <h2 id="topic-title" class="text-base sm:text-lg font-extrabold text-slate-800">
-                            Remote Work vs. Hybrid Model
-                        </h2>
-                        <p id="topic-prompt" class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed bg-white/40 p-3 rounded-xl border border-slate-200/60">
-                            "Should remote work completely replace traditional office work in the future, or is a hybrid model the only sustainable path?"
-                        </p>
-                    </div>
-
-                    <!-- FRAMEWORK GUIDE PILL -->
-                    <div class="neu-card-sm p-3 bg-slate-50/50 border border-white/60">
-                        <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500 flex items-center gap-1">
-                            <span>📐</span> Recommended Structure:
-                        </div>
-                        <div id="framework-desc" class="text-xs font-semibold text-blue-700 mt-1">
-                            PREP: Point ➔ Reason ➔ Example ➔ Point
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TIMER & AUDIO ENGINE CONTROLS -->
-                <div class="neu-card p-5 flex flex-col gap-4">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">⏱️ Speech Timer</span>
-                        <div class="flex items-center gap-1.5" role="group" aria-label="Timer Presets">
-                            <button type="button" onclick="setTimerDuration(60)" class="timer-preset-btn neu-badge px-2 py-0.5 text-xs font-bold text-blue-600 border border-blue-300">60s</button>
-                            <button type="button" onclick="setTimerDuration(120)" class="timer-preset-btn neu-badge px-2 py-0.5 text-xs font-bold text-slate-600">120s</button>
-                            <button type="button" onclick="setTimerDuration(180)" class="timer-preset-btn neu-badge px-2 py-0.5 text-xs font-bold text-slate-600">180s</button>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-slate-900 text-white p-4 rounded-2xl shadow-inner">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-400 uppercase tracking-widest font-mono">Time Remaining</span>
-                            <span id="timer-display" class="font-digital text-3xl font-extrabold text-emerald-400" aria-live="polite">01:00</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button type="button" id="btn-toggle-timer" onclick="toggleTimer()" class="neu-btn px-4 py-2 text-xs font-extrabold text-slate-900 bg-white hover:bg-slate-100 rounded-xl shadow cursor-pointer">
-                                ▶ Start
-                            </button>
-                            <button type="button" onclick="resetTimer()" class="p-2 text-xs text-slate-400 hover:text-white" title="Reset Timer" aria-label="Reset Timer">
-                                ↺
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden shadow-inner">
-                        <div id="timer-progress-bar" class="bg-gradient-to-r from-blue-500 to-emerald-500 h-2 rounded-full transition-all duration-300" style="width: 100%;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT: RECORDING, TRANSCRIPT & LIVE INPUT (7 cols) -->
-            <div class="lg:col-span-7 flex flex-col gap-5">
-                <div class="neu-card p-5 sm:p-6 flex flex-col gap-4">
-                    
-                    <!-- VOICE MICROPHONE CONTROLS -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200/80">
-                        <div class="flex items-center gap-3">
-                            <button type="button" id="btn-record-mic" onclick="toggleMicRecording()" aria-label="Start Microphone Recording" class="neu-circle w-12 h-12 flex items-center justify-center text-xl text-slate-700 hover:text-red-600 transition-all cursor-pointer shadow-md">
-                                🎙️
-                            </button>
-                            <div>
-                                <div id="mic-status-label" class="text-xs font-extrabold text-slate-800" aria-live="polite">
-                                    Click Mic to Record Voice
-                                </div>
-                                <div class="text-[11px] text-slate-500">
-                                    Live Web Speech Recognition
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- LIVE SOUNDWAVE BARS -->
-                        <div id="soundwave-container" class="hidden flex items-center gap-1 h-8 px-3 py-1 rounded-xl bg-blue-50 border border-blue-100" aria-hidden="true">
-                            <div class="soundwave-bar" style="animation-delay: 0.1s;"></div>
-                            <div class="soundwave-bar" style="animation-delay: 0.3s;"></div>
-                            <div class="soundwave-bar" style="animation-delay: 0.5s;"></div>
-                            <div class="soundwave-bar" style="animation-delay: 0.2s;"></div>
-                            <div class="soundwave-bar" style="animation-delay: 0.4s;"></div>
-                            <span class="text-[10px] font-bold text-blue-600 ml-1.5 animate-pulse">LISTENING...</span>
-                        </div>
-                    </div>
-
-                    <!-- TRANSCRIPT TEXTAREA -->
-                    <div class="flex flex-col gap-1.5">
-                        <div class="flex items-center justify-between text-xs text-slate-500 font-semibold px-1">
-                            <label for="speech-transcript-input">Spoken Speech / Input Transcript:</label>
-                            <div class="flex items-center gap-2">
-                                <span id="word-count-badge" class="neu-badge px-2 py-0.5 text-[10px] font-bold text-slate-600">0 words</span>
-                                <button type="button" onclick="clearTranscript()" class="text-slate-400 hover:text-red-500 text-[11px]">Clear</button>
-                            </div>
-                        </div>
-                        <textarea id="speech-transcript-input" rows="7" placeholder="Speak into the microphone or paste your speech transcript here to evaluate fluency, pace, fillers, grammar, and structure..." class="neu-input w-full p-4 text-xs sm:text-sm text-slate-800 placeholder-slate-400 resize-none font-sans leading-relaxed"></textarea>
-                    </div>
-
-                    <!-- EVALUATE BUTTON -->
-                    <div class="flex items-center justify-between pt-1">
-                        <div class="text-[11px] text-slate-500 hidden sm:block">
-                            💡 Aim for 100–140 words in 60 seconds with clear PREP structure
-                        </div>
-                        <button type="button" id="btn-evaluate" onclick="submitSpeechForEvaluation()" class="neu-btn px-6 py-3 text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-lg flex items-center gap-2 transition-all cursor-pointer">
-                            <span>⚡</span> Get Speech Diagnostics
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- EVALUATION RESULTS DASHBOARD (HIDDEN UNTIL ANALYZED - NO FAKE DATA) -->
-        <section id="results-dashboard-section" class="hidden flex flex-col gap-6" aria-label="Speech Diagnostics Results">
-
-            <!-- 1. TOP: CORE SCORE CARDS (Overall, Fluency, Grammar, Vocab, Structure) -->
-            <div class="neu-card p-6 sm:p-8 flex flex-col gap-6">
-                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/80">
-                    <div>
+            <!-- COACH HERO HEADER -->
+            <section class="neu-card p-6 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 relative overflow-hidden">
+                <div class="flex flex-col gap-2 max-w-2xl text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-2">
                         <span class="neu-badge px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50/50">
-                            Diagnostic Analysis
+                            🎙️ Friendly Speech Coach
                         </span>
-                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 mt-1">
-                            Speech Diagnostics Dashboard
-                        </h2>
+                        <span class="neu-badge px-2.5 py-0.5 text-[10px] font-bold text-slate-500">
+                            Clarity • Natural Flow • Confidence
+                        </span>
                     </div>
-                    <!-- Overall Score Pill -->
-                    <div class="neu-card-sm px-5 py-3 flex items-center gap-3 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200">
-                        <div class="text-right">
-                            <div class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">Overall Score</div>
-                            <div id="metric-overall-score" class="text-2xl font-outfit font-black text-blue-600">-- / 100</div>
-                        </div>
-                        <div class="w-10 h-10 neu-circle flex items-center justify-center text-lg text-amber-500 font-bold">
-                            🏆
-                        </div>
-                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight leading-tight">
+                        Practice Speaking, <span class="text-gradient">Get Coached</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Pick a question, speak your mind out loud, and get simple, friendly coaching to strengthen your everyday communication.
+                    </p>
                 </div>
 
-                <!-- 4 CORE CATEGORY SCORES (Fluency, Grammar, Vocabulary, Structure) -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <!-- Fluency & Pace -->
-                    <div class="neu-card-sm p-4 flex flex-col gap-1 bg-white/40 border border-slate-200/60">
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">🎙️ Fluency</div>
-                        <div id="metric-fluency-score" class="font-outfit font-extrabold text-xl text-blue-600">-- / 10</div>
-                        <div class="text-[11px] text-slate-600">Pacing & delivery</div>
-                    </div>
-
-                    <!-- Grammar & Syntax -->
-                    <div class="neu-card-sm p-4 flex flex-col gap-1 bg-white/40 border border-slate-200/60">
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">📐 Grammar</div>
-                        <div id="metric-grammar-score" class="font-outfit font-extrabold text-xl text-indigo-600">-- / 10</div>
-                        <div class="text-[11px] text-slate-600">Rule-based syntax</div>
-                    </div>
-
-                    <!-- Vocabulary Sophistication -->
-                    <div class="neu-card-sm p-4 flex flex-col gap-1 bg-white/40 border border-slate-200/60">
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">📚 Vocabulary</div>
-                        <div id="metric-vocab-score" class="font-outfit font-extrabold text-xl text-emerald-600">-- / 10</div>
-                        <div class="text-[11px] text-slate-600">Vocabulary Range</div>
-                    </div>
-
-                    <!-- Structure & Coherence -->
-                    <div class="neu-card-sm p-4 flex flex-col gap-1 bg-white/40 border border-slate-200/60">
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">🏛️ Structure</div>
-                        <div id="metric-structure-score" class="font-outfit font-extrabold text-xl text-purple-600">-- / 10</div>
-                        <div class="text-[11px] text-slate-600">PREP / Transitions</div>
-                    </div>
-                </div>
-
-                <!-- 2. SECOND: DETERMINISTIC METRICS STRIP -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
-                    <div class="neu-badge p-3 flex flex-col text-center">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">Speaking Speed</span>
-                        <span class="text-base font-outfit font-extrabold text-slate-800"><span id="metric-wpm">--</span> <span class="text-xs text-blue-600">WPM</span></span>
-                        <span id="metric-pace-status" class="text-[10px] font-semibold text-emerald-600">--</span>
-                    </div>
-                    <div class="neu-badge p-3 flex flex-col text-center">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">Word Count</span>
-                        <span id="metric-word-count" class="text-base font-outfit font-extrabold text-slate-800">-- words</span>
-                        <span class="text-[10px] text-slate-500">Spoken tokens</span>
-                    </div>
-                    <div class="neu-badge p-3 flex flex-col text-center">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">Sentence Count</span>
-                        <span id="metric-sentence-count" class="text-base font-outfit font-extrabold text-slate-800">-- sentences</span>
-                        <span class="text-[10px] text-slate-500">Flow segments</span>
-                    </div>
-                    <div class="neu-badge p-3 flex flex-col text-center">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">Filler Words</span>
-                        <span id="metric-filler-count" class="text-base font-outfit font-extrabold text-red-600">-- detected</span>
-                        <span class="text-[10px] text-slate-500">Um, uh, basically</span>
-                    </div>
-                    <div class="neu-badge p-3 flex flex-col text-center">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">Filler % / Variety</span>
-                        <span id="metric-filler-percentage" class="text-base font-outfit font-extrabold text-slate-800">--%</span>
-                        <span id="metric-diversity" class="text-[10px] text-emerald-600 font-semibold">-- variety</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. TOP 3 IMPROVEMENTS & STRENGTHS (Side by Side) -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- TOP 3 IMPROVEMENTS (7 cols) -->
-                <div class="lg:col-span-7 neu-card p-6 flex flex-col gap-4">
-                    <div class="flex items-center gap-2">
-                        <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-amber-600">🎯</span>
-                        <h3 class="text-base font-extrabold text-slate-800">Your Top 3 Improvements</h3>
-                    </div>
-                    <div id="top-improvements-list" class="flex flex-col gap-2.5">
-                        <!-- Dynamic items -->
-                    </div>
-                </div>
-
-                <!-- KEY STRENGTHS (5 cols) -->
-                <div class="lg:col-span-5 neu-card p-6 flex flex-col gap-4">
-                    <div class="flex items-center gap-2">
-                        <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-emerald-600">🌟</span>
-                        <h3 class="text-base font-extrabold text-slate-800">Strengths</h3>
-                    </div>
-                    <ul id="key-strengths-list" class="flex flex-col gap-2.5">
-                        <!-- Dynamic items -->
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 4. YOUR TRANSCRIPT (Annotated Review) -->
-            <div class="neu-card p-6 flex flex-col gap-3">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                        <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-blue-600">📝</span>
-                        <h3 class="text-base font-extrabold text-slate-800">Your Transcript & Speech Anatomy</h3>
-                    </div>
-                    <div class="flex items-center gap-3 text-[11px]">
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-red-300"></span> Filler Words</span>
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-amber-300"></span> Hedging</span>
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-blue-300"></span> Transitions</span>
-                    </div>
-                </div>
-                <div id="annotated-transcript-box" class="neu-card-sm p-4 text-xs sm:text-sm text-slate-800 bg-white/50 leading-relaxed min-h-[60px]">
-                </div>
-            </div>
-
-            <!-- 5. CORRECTIONS & BETTER PHRASING -->
-            <div class="neu-card p-6 sm:p-8 flex flex-col gap-5">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-indigo-600">🛠️</span>
-                        <h3 class="text-base font-extrabold text-slate-800">Corrections & Better Phrasing</h3>
-                    </div>
-                    <!-- Audio Coach Playback -->
-                    <button type="button" onclick="speakCoachFeedback()" class="neu-btn px-3 py-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 cursor-pointer shadow-sm" title="Listen to Professional Phrasing">
-                        <span>🔊</span> Listen Audio
+                <!-- 3-STAGE INTERACTIVE STEPPER -->
+                <div class="neu-card-sm p-2 sm:p-3 flex items-center gap-1.5 sm:gap-2.5 bg-white/60 border border-slate-200/70 shrink-0 select-none" role="tablist" aria-label="Coaching Stages">
+                    <button type="button" id="stage-tab-practice" onclick="setStage('practice')" class="stage-step-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black text-blue-700 bg-blue-100 flex items-center gap-1.5 transition-all cursor-pointer">
+                        <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">1</span>
+                        <span>Practice</span>
+                    </button>
+                    <span class="text-slate-300 font-bold text-xs">➔</span>
+                    <button type="button" id="stage-tab-speaking" class="stage-step-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 flex items-center gap-1.5 transition-all opacity-70">
+                        <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-[10px]">2</span>
+                        <span>Speaking</span>
+                    </button>
+                    <span class="text-slate-300 font-bold text-xs">➔</span>
+                    <button type="button" id="stage-tab-feedback" class="stage-step-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 flex items-center gap-1.5 transition-all opacity-70">
+                        <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-[10px]">3</span>
+                        <span>Feedback</span>
                     </button>
                 </div>
+            </section>
 
-                <!-- Grammatical Rule Corrections -->
-                <div class="flex flex-col gap-2.5">
-                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Rule-Based Grammar Diagnostics:</span>
-                    <div id="corrections-list-container" class="flex flex-col gap-2.5">
-                        <!-- Dynamic corrections -->
+            <!-- ============================================================= -->
+            <!-- STAGE 1: PRACTICE (TOPIC & PREPARATION)                       -->
+            <!-- ============================================================= -->
+            <section id="stage-practice" class="flex flex-col gap-5">
+                <div class="neu-card p-6 sm:p-8 flex flex-col gap-5 relative">
+                    
+                    <!-- Top Bar: Category, Active Drill Badge, Topic Shuffle -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200/80">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span id="topic-category-badge" class="neu-badge px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50">
+                                Workplace & Tech
+                            </span>
+                            <span id="drill-active-badge" class="hidden neu-badge px-3 py-1 text-[11px] font-black uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-300 animate-pulse">
+                                🎯 Targeted Drill Active
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="shuffleTopic()" class="neu-btn px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 cursor-pointer" title="Get a different question">
+                                <span>🎲</span> Change Question
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Phrasing Upgrades (Natural & Professional) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                    <div class="neu-card-sm p-4 flex flex-col gap-2 bg-gradient-to-br from-blue-50/50 to-slate-50 border border-blue-200">
-                        <span class="text-[11px] font-extrabold text-blue-700 uppercase tracking-wider">Natural Flow Version</span>
-                        <p id="rephrase-natural-version" class="text-xs sm:text-sm text-slate-800 italic leading-relaxed bg-white/70 p-3 rounded-xl">
-                            "..."
-                        </p>
-                        <span class="text-[11px] text-slate-500">Eliminates filler sounds and corrects grammar while preserving original conversational tone.</span>
+                    <!-- Speaking Question & Prompt -->
+                    <div class="flex flex-col gap-2">
+                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Speaking Question:</div>
+                        <h2 id="topic-title" class="text-lg sm:text-2xl font-black text-slate-800 tracking-tight leading-snug">
+                            Remote Work vs. Hybrid Model
+                        </h2>
+                        <div id="topic-prompt-box" class="bg-white/70 p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-inner mt-1">
+                            <p id="topic-prompt" class="text-sm sm:text-base text-slate-700 font-medium leading-relaxed">
+                                "Should remote work completely replace traditional office work in the future, or is a hybrid model the only sustainable path?"
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="neu-card-sm p-4 flex flex-col gap-2 bg-gradient-to-br from-indigo-50/50 to-blue-50/50 border border-indigo-200">
-                        <span class="text-[11px] font-extrabold text-indigo-700 uppercase tracking-wider">Natural & Professional Version</span>
-                        <p id="rephrase-professional-version" class="text-xs sm:text-sm text-indigo-950 font-medium leading-relaxed bg-white/80 p-3 rounded-xl border border-indigo-100">
-                            "..."
-                        </p>
-                        <span class="text-[11px] text-indigo-700">Substitutes precision action verbs and structured discourse transitions for executive impact.</span>
+                    <!-- Coach Tip (Student-friendly advice, no jargon) -->
+                    <div id="coach-tip-box" class="neu-card-sm p-3.5 bg-blue-50/60 border border-blue-200/80 flex items-start gap-2.5">
+                        <span class="text-base shrink-0">💡</span>
+                        <div class="text-xs sm:text-sm text-slate-700">
+                            <span class="font-bold text-blue-800">Coach Tip:</span>
+                            <span id="framework-desc" class="ml-1 text-slate-700 font-medium">Answer in 3 parts: State your main point, share a quick reason or example, and wrap it up with a clear closing thought.</span>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- 6. VOCABULARY UPGRADE & NEXT STEP -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Preparation Time & Speaking Time Controls -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                        <!-- Preparation Time Card -->
+                        <div class="neu-card-sm p-3.5 sm:p-4 flex items-center justify-between bg-white/50 border border-slate-200/70">
+                            <div>
+                                <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Preparation Time</div>
+                                <div id="prep-time-status" class="text-sm sm:text-base font-extrabold text-slate-800 mt-0.5">15 Seconds</div>
+                            </div>
+                            <button type="button" id="btn-prep-countdown" onclick="togglePrepTimer()" class="neu-btn px-3 py-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 cursor-pointer">
+                                <span>⏱️</span> <span id="prep-btn-label">Take 15s to Think</span>
+                            </button>
+                        </div>
 
-                <!-- VOCABULARY UPGRADE (6 cols) -->
-                <div class="lg:col-span-6 neu-card p-6 flex flex-col gap-4">
-                    <div class="flex items-center gap-2">
-                        <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-amber-500">🚀</span>
-                        <h3 class="text-base font-extrabold text-slate-800">Vocabulary Upgrade</h3>
+                        <!-- Speaking Time Goal -->
+                        <div class="neu-card-sm p-3.5 sm:p-4 flex items-center justify-between bg-white/50 border border-slate-200/70">
+                            <div>
+                                <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Speaking Goal</div>
+                                <div id="speaking-goal-label" class="text-sm sm:text-base font-extrabold text-slate-800 mt-0.5">60 Seconds</div>
+                            </div>
+                            <div class="flex items-center gap-1" role="group" aria-label="Timer Duration Presets">
+                                <button type="button" onclick="setTimerDuration(30)" class="timer-preset-btn neu-badge px-2.5 py-1 text-xs font-bold text-slate-600 hover:text-blue-600 cursor-pointer">30s</button>
+                                <button type="button" onclick="setTimerDuration(60)" class="timer-preset-btn neu-badge px-2.5 py-1 text-xs font-bold text-blue-600 border border-blue-300 cursor-pointer">60s</button>
+                                <button type="button" onclick="setTimerDuration(90)" class="timer-preset-btn neu-badge px-2.5 py-1 text-xs font-bold text-slate-600 hover:text-blue-600 cursor-pointer">90s</button>
+                                <button type="button" onclick="setTimerDuration(120)" class="timer-preset-btn neu-badge px-2.5 py-1 text-xs font-bold text-slate-600 hover:text-blue-600 cursor-pointer">120s</button>
+                            </div>
+                        </div>
                     </div>
-                    <div id="vocab-boost-container" class="flex flex-col gap-3">
-                        <!-- Dynamic Vocab items -->
-                    </div>
-                </div>
 
-                <!-- PERSONALIZED NEXT STEP (6 cols) -->
-                <div class="lg:col-span-6 neu-card p-6 flex flex-col gap-4 bg-gradient-to-br from-blue-50/40 to-slate-50">
-                    <div class="flex items-center gap-2">
-                        <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-blue-600">🎯</span>
-                        <h3 class="text-base font-extrabold text-slate-800">Personalized Next Step</h3>
-                    </div>
-                    <div id="practice-follow-up-box" class="text-xs sm:text-sm text-slate-700 bg-white/70 p-4 rounded-xl border border-blue-200 leading-relaxed">
-                        Ready for your next speaking drill?
-                    </div>
-                    <div class="flex items-center gap-3 mt-auto pt-2">
-                        <button type="button" onclick="acceptFollowUpChallenge()" class="neu-btn px-4 py-2.5 text-xs font-extrabold text-blue-600 hover:text-blue-800 flex items-center gap-2 cursor-pointer">
-                            <span>🎙️</span> Accept Challenge & Speak Again
+                    <!-- Prominent Start Speaking Button -->
+                    <div class="flex flex-col items-center justify-center pt-3 pb-2 gap-2">
+                        <button type="button" id="btn-start-speaking" onclick="startSpeakingStage()" class="neu-btn px-8 sm:px-14 py-4 text-base sm:text-lg font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 rounded-2xl shadow-xl flex items-center gap-3 transition-all transform hover:scale-[1.02] cursor-pointer">
+                            <span class="text-2xl">🎙️</span>
+                            <span>Start Speaking</span>
                         </button>
-                        <button type="button" onclick="shuffleTopic()" class="neu-btn px-3 py-2.5 text-xs font-bold text-slate-600 cursor-pointer">
-                            Next Topic ➔
+                        <p class="text-xs text-slate-500 text-center">
+                            Click when you're ready. Your coach will listen and take friendly notes.
+                        </p>
+                    </div>
+
+                    <!-- Text Alternative Fallback Toggle -->
+                    <div class="pt-2 border-t border-slate-200/60 flex flex-col items-center">
+                        <button type="button" onclick="toggleTypeFallback()" class="text-xs text-slate-500 hover:text-blue-600 font-semibold underline cursor-pointer">
+                            Prefer to paste or type your speech instead?
+                        </button>
+                        <div id="type-fallback-container" class="hidden w-full mt-3 flex flex-col gap-2">
+                            <div class="flex items-center justify-between text-xs text-slate-500">
+                                <span>Paste speech transcript:</span>
+                                <span id="word-count-badge" class="neu-badge px-2 py-0.5 text-[10px] font-bold text-slate-600">0 words</span>
+                            </div>
+                            <textarea id="speech-transcript-input" rows="4" placeholder="Speak into the microphone or paste your speech text here to get feedback..." class="neu-input w-full p-3.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 resize-none font-sans leading-relaxed"></textarea>
+                            <div class="flex justify-end gap-2">
+                                <button type="button" onclick="clearTranscript()" class="neu-btn px-3 py-1.5 text-xs font-bold text-slate-600">Clear</button>
+                                <button type="button" id="btn-evaluate" onclick="submitSpeechForEvaluation()" class="neu-btn px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700">
+                                    ⚡ Analyze Written Speech
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================= -->
+            <!-- STAGE 2: SPEAKING (LIVE, DISTRACTION-FREE)                     -->
+            <!-- ============================================================= -->
+            <section id="stage-speaking" class="hidden flex flex-col gap-5">
+                <div class="neu-card p-6 sm:p-8 flex flex-col gap-6">
+                    
+                    <!-- Header: Recording Status & Countdown Timer -->
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-200/80">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-3.5 h-3.5 rounded-full bg-red-500 animate-ping"></span>
+                            <span id="mic-status-label" class="text-xs sm:text-sm font-black text-red-600 uppercase tracking-wider">
+                                Listening... Speak naturally!
+                            </span>
+                        </div>
+                        
+                        <!-- Simple Digital Time Remaining -->
+                        <div class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl shadow-inner">
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Time Left:</span>
+                            <span id="timer-display" class="font-digital text-xl sm:text-2xl font-black text-emerald-400">
+                                01:00
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Active Prompt Reminder (Distraction-free reference) -->
+                    <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-200/80">
+                        <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Your Question:</div>
+                        <div id="speaking-topic-prompt" class="text-xs sm:text-sm font-semibold text-slate-800 mt-0.5">
+                            "..."
+                        </div>
+                    </div>
+
+                    <!-- Soundwave Animation -->
+                    <div id="soundwave-container" class="flex items-center justify-center gap-1.5 h-10 py-1" aria-hidden="true">
+                        <div class="soundwave-bar" style="animation-delay: 0.1s;"></div>
+                        <div class="soundwave-bar" style="animation-delay: 0.3s;"></div>
+                        <div class="soundwave-bar" style="animation-delay: 0.5s;"></div>
+                        <div class="soundwave-bar" style="animation-delay: 0.2s;"></div>
+                        <div class="soundwave-bar" style="animation-delay: 0.4s;"></div>
+                        <div class="soundwave-bar" style="animation-delay: 0.6s;"></div>
+                        <div class="soundwave-bar" style="animation-delay: 0.15s;"></div>
+                    </div>
+
+                    <!-- Live Distraction-Free Transcript Box -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center justify-between px-1 text-xs text-slate-500 font-semibold">
+                            <span>Live Transcript:</span>
+                            <span id="live-word-count-badge" class="neu-badge px-2 py-0.5 text-[10px] font-bold text-slate-600">0 words</span>
+                        </div>
+                        <div id="speaking-live-transcript-box" class="neu-input w-full p-4 text-xs sm:text-sm text-slate-800 min-h-[140px] max-h-[220px] overflow-y-auto leading-relaxed bg-white/80">
+                            <span class="text-slate-400 italic">Listening... Start speaking whenever you're ready.</span>
+                        </div>
+                        <!-- Progress bar -->
+                        <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden shadow-inner mt-1">
+                            <div id="timer-progress-bar" class="bg-gradient-to-r from-blue-500 to-emerald-500 h-1.5 rounded-full transition-all duration-300" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Prominent Stop Speaking Button -->
+                    <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                        <button type="button" id="btn-stop-speaking" onclick="finishSpeakingAndEvaluate()" class="neu-btn px-8 sm:px-12 py-3.5 text-base sm:text-lg font-black text-white bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 rounded-2xl shadow-xl flex items-center gap-2.5 cursor-pointer transform hover:scale-[1.02] transition-all">
+                            <span>⏹️</span>
+                            <span>Stop Speaking & Get Coaching</span>
+                        </button>
+                        <button type="button" onclick="cancelSpeakingAndRestart()" class="neu-btn px-4 py-3 text-xs font-bold text-slate-600 hover:text-slate-800 cursor-pointer">
+                            ↺ Start Over
                         </button>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- RECENT SESSIONS HISTORY LOG (REAL METRICS ONLY) -->
-        <section class="neu-card p-6 flex flex-col gap-4" aria-label="Session History">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center gap-2">
-                    <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-slate-700">📜</span>
-                    <h3 class="text-base font-extrabold text-slate-800">Recent Speaking Sessions</h3>
+            <!-- ============================================================= -->
+            <!-- STAGE 3: FEEDBACK (COACHING, WEAKNESS & TARGETED DRILL)        -->
+            <!-- ============================================================= -->
+            <section id="stage-feedback" class="hidden flex flex-col gap-6">
+
+                <!-- 1. Coach Encouragement Header -->
+                <div class="neu-card p-6 sm:p-8 flex flex-col gap-5 bg-gradient-to-br from-white/70 via-blue-50/30 to-slate-50 border border-white/80">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 neu-circle flex items-center justify-center text-2xl text-amber-500 shrink-0">
+                                🎯
+                            </div>
+                            <div>
+                                <h2 id="coach-feedback-greeting" class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">
+                                    Nice work!
+                                </h2>
+                                <p class="text-xs sm:text-sm text-slate-600">
+                                    Here is your key coaching takeaway and targeted exercise.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="startNewSession()" class="neu-btn px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 cursor-pointer">
+                                <span>🎲</span> Next Topic
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. BEFORE / AFTER COMPARISON BANNER (Visible on Drill / Retry) -->
+                    <div id="before-after-comparison-banner" class="hidden neu-card-sm p-4 bg-gradient-to-r from-emerald-50 via-teal-50 to-blue-50 border border-emerald-300 flex flex-col gap-2.5">
+                        <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-emerald-800">
+                            <span>🎉</span> <span>Progress Check: Before vs. After</span>
+                        </div>
+                        <div id="before-after-comparison-details" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs sm:text-sm">
+                            <!-- Injected dynamically via coachUI.js -->
+                        </div>
+                    </div>
+
+                    <!-- 3. TOP 1–2 IMPORTANT WEAKNESSES (Plain language with exact speech evidence) -->
+                    <div class="flex flex-col gap-4">
+                        <!-- Primary Weakness Card -->
+                        <div id="primary-weakness-card" class="neu-card-sm p-5 bg-gradient-to-br from-amber-50/60 to-orange-50/40 border border-amber-300/80 flex flex-col gap-3 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <span class="neu-badge px-3 py-1 text-[11px] font-black uppercase tracking-wider text-amber-800 bg-amber-100/80">
+                                    Main Coaching Focus
+                                </span>
+                                <span id="primary-weakness-type-badge" class="text-xs font-bold text-amber-900">
+                                    Pacing & Flow
+                                </span>
+                            </div>
+                            
+                            <div>
+                                <h3 id="primary-weakness-title" class="text-base sm:text-lg font-black text-slate-900">
+                                    You spoke a little too quickly
+                                </h3>
+                                <p id="primary-weakness-explanation" class="text-xs sm:text-sm text-slate-700 mt-1.5 leading-relaxed">
+                                    You spoke at 168 words per minute when explaining your points. When speaking too quickly, listeners have less time to absorb your ideas.
+                                </p>
+                            </div>
+
+                            <!-- Clear Improvement Tip -->
+                            <div class="bg-white/80 p-3.5 rounded-xl border border-amber-200/80 flex items-start gap-2.5">
+                                <span class="text-base shrink-0">💡</span>
+                                <div>
+                                    <div class="text-[11px] font-extrabold uppercase tracking-wider text-amber-900">Coach Tip</div>
+                                    <p id="primary-weakness-tip" class="text-xs sm:text-sm text-slate-800 font-medium mt-0.5">
+                                        Take a relaxed breath after each sentence to let your ideas land before starting your next thought.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Weakness (If present, subtle and concise) -->
+                        <div id="secondary-weakness-card" class="hidden neu-card-sm p-3.5 bg-slate-50/70 border border-slate-200 flex items-start gap-2.5">
+                            <span class="text-sm shrink-0 mt-0.5">🔍</span>
+                            <div class="text-xs sm:text-sm text-slate-700">
+                                <span class="font-bold text-slate-900" id="secondary-weakness-title">Second observation:</span>
+                                <span id="secondary-weakness-explanation" class="ml-1">Wrap up with a clear closing sentence so your audience knows you have finished.</span>
+                            </div>
+                        </div>
+
+                        <!-- What You Did Well (Strengths) -->
+                        <div class="neu-card-sm p-4 bg-emerald-50/40 border border-emerald-200/70 flex flex-col gap-2">
+                            <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                                <span>🌟</span> <span>What you did well</span>
+                            </div>
+                            <ul id="coach-strengths-list" class="flex flex-col gap-1 text-xs sm:text-sm text-slate-700">
+                                <li class="flex items-center gap-2">
+                                    <span class="text-emerald-600 font-bold">✓</span> Clear articulation and good conversational energy
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 4. TARGETED PRACTICE DRILL CARD -->
+                    <div id="targeted-drill-card" class="neu-card-sm p-5 sm:p-6 bg-gradient-to-br from-blue-50/80 via-indigo-50/40 to-slate-50 border-2 border-blue-400/80 flex flex-col gap-4 shadow-md">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <span class="neu-circle w-9 h-9 flex items-center justify-center text-base text-blue-700 bg-blue-100 font-bold shrink-0">
+                                    ⚡
+                                </span>
+                                <div>
+                                    <div class="text-[10px] font-black uppercase tracking-wider text-blue-600">Targeted Exercise</div>
+                                    <h3 id="drill-title" class="text-base sm:text-lg font-black text-slate-800">
+                                        Controlled-Pacing Challenge
+                                    </h3>
+                                </div>
+                            </div>
+                            <span id="drill-duration-badge" class="neu-badge px-2.5 py-1 text-xs font-black text-indigo-700 bg-indigo-100">
+                                ⏱️ 45 Seconds
+                            </span>
+                        </div>
+
+                        <p id="drill-instructions" class="text-xs sm:text-sm text-slate-700 leading-relaxed bg-white/70 p-3.5 rounded-xl border border-blue-200">
+                            Deliver your thoughts at a calm, deliberate speed. Intentionally pause for one full breath after every sentence.
+                        </p>
+
+                        <div class="flex flex-wrap items-center gap-3 pt-1">
+                            <button type="button" id="btn-practice-drill" onclick="launchTargetedDrill()" class="neu-btn px-6 sm:px-8 py-3 text-xs sm:text-sm font-black text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-lg flex items-center gap-2 cursor-pointer transition-all transform hover:scale-[1.02]">
+                                <span>🎯</span>
+                                <span>Practice This Drill / Try Again</span>
+                            </button>
+                            <button type="button" onclick="startNewSession()" class="neu-btn px-4 py-3 text-xs font-bold text-slate-600 hover:text-slate-800 cursor-pointer">
+                                Try Another Topic ➔
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 5. COLLAPSIBLE ACCORDION: SEE DETAILED FEEDBACK -->
+                    <details id="detailed-feedback-accordion" class="group neu-card-sm overflow-hidden border border-slate-200/80 transition-all duration-300">
+                        <summary class="p-4 sm:p-5 flex items-center justify-between cursor-pointer list-none select-none bg-slate-50/60 hover:bg-slate-100/60 transition-colors">
+                            <div class="flex items-center gap-2.5">
+                                <span class="text-base group-open:rotate-90 transition-transform">▸</span>
+                                <span class="text-xs sm:text-sm font-extrabold text-slate-800">See detailed feedback & analytics</span>
+                            </div>
+                            <span class="text-xs text-slate-500 group-open:hidden">Full metrics, grammar & rephrasings</span>
+                        </summary>
+                        
+                        <div class="p-5 sm:p-6 flex flex-col gap-6 border-t border-slate-200/60 bg-white/40">
+                            <!-- Overall Score & 4 Category Scores -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                                <div class="neu-badge p-3 flex flex-col text-center bg-blue-50/50">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Overall</span>
+                                    <span id="metric-overall-score" class="text-xl font-outfit font-black text-blue-600">-- / 100</span>
+                                </div>
+                                <div class="neu-badge p-3 flex flex-col text-center">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Fluency</span>
+                                    <span id="metric-fluency-score" class="text-lg font-outfit font-extrabold text-indigo-600">-- / 10</span>
+                                </div>
+                                <div class="neu-badge p-3 flex flex-col text-center">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Grammar</span>
+                                    <span id="metric-grammar-score" class="text-lg font-outfit font-extrabold text-purple-600">-- / 10</span>
+                                </div>
+                                <div class="neu-badge p-3 flex flex-col text-center">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Vocabulary</span>
+                                    <span id="metric-vocab-score" class="text-lg font-outfit font-extrabold text-emerald-600">-- / 10</span>
+                                </div>
+                                <div class="neu-badge p-3 flex flex-col text-center">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Structure</span>
+                                    <span id="metric-structure-score" class="text-lg font-outfit font-extrabold text-slate-800">-- / 10</span>
+                                </div>
+                            </div>
+
+                            <!-- Detailed Metrics Strip -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <div class="neu-card-sm p-3 flex flex-col text-center bg-white/60">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Speaking Speed</span>
+                                    <span class="text-base font-outfit font-black text-slate-800"><span id="metric-wpm">--</span> WPM</span>
+                                    <span id="metric-pace-status" class="text-[10px] font-semibold text-emerald-600">--</span>
+                                </div>
+                                <div class="neu-card-sm p-3 flex flex-col text-center bg-white/60">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Filler Words</span>
+                                    <span id="metric-filler-count" class="text-base font-outfit font-black text-red-600">--</span>
+                                    <span id="metric-filler-percentage" class="text-[10px] text-slate-500">--% density</span>
+                                </div>
+                                <div class="neu-card-sm p-3 flex flex-col text-center bg-white/60">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Word Count</span>
+                                    <span id="metric-word-count" class="text-base font-outfit font-black text-slate-800">--</span>
+                                    <span id="metric-sentence-count" class="text-[10px] text-slate-500">-- sentences</span>
+                                </div>
+                                <div class="neu-card-sm p-3 flex flex-col text-center bg-white/60">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Word Variety</span>
+                                    <span id="metric-diversity" class="text-base font-outfit font-black text-slate-800">--</span>
+                                    <span class="text-[10px] text-slate-500">Unique words</span>
+                                </div>
+                            </div>
+
+                            <!-- Top Improvements & Strengths Detailed Lists -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex flex-col gap-2">
+                                    <span class="text-xs font-bold text-slate-700">Key Improvement Notes:</span>
+                                    <div id="top-improvements-list" class="flex flex-col gap-2"></div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <span class="text-xs font-bold text-slate-700">Detailed Strengths:</span>
+                                    <ul id="key-strengths-list" class="flex flex-col gap-2"></ul>
+                                </div>
+                            </div>
+
+                            <!-- Annotated Transcript -->
+                            <div class="flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                                    <span>Annotated Speech Transcript:</span>
+                                    <div class="flex items-center gap-2 text-[10px]">
+                                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-red-400"></span> Fillers</span>
+                                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-amber-400"></span> Hedging</span>
+                                    </div>
+                                </div>
+                                <div id="annotated-transcript-box" class="neu-card-sm p-4 text-xs sm:text-sm text-slate-800 bg-white leading-relaxed max-h-[160px] overflow-y-auto"></div>
+                            </div>
+
+                            <!-- Natural & Professional Rephrasings with Audio Playback -->
+                            <div class="flex flex-col gap-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Natural & Professional Phrasing:</span>
+                                    <button type="button" onclick="speakCoachFeedback()" class="neu-btn px-3 py-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 cursor-pointer">
+                                        <span>🔊</span> Listen Audio
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="neu-card-sm p-3.5 bg-blue-50/50 border border-blue-200">
+                                        <span class="text-[10px] font-extrabold uppercase text-blue-700">Natural Flow</span>
+                                        <p id="rephrase-natural-version" class="text-xs text-slate-800 italic mt-1 leading-relaxed">"..."</p>
+                                    </div>
+                                    <div class="neu-card-sm p-3.5 bg-indigo-50/50 border border-indigo-200">
+                                        <span class="text-[10px] font-extrabold uppercase text-indigo-700">Polished & Professional</span>
+                                        <p id="rephrase-professional-version" class="text-xs text-indigo-950 font-medium mt-1 leading-relaxed">"..."</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Grammar & Vocabulary Details -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex flex-col gap-2">
+                                    <span class="text-xs font-bold text-slate-700">Grammar Diagnostics:</span>
+                                    <div id="corrections-list-container" class="flex flex-col gap-2"></div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <span class="text-xs font-bold text-slate-700">Vocabulary Upgrades:</span>
+                                    <div id="vocab-boost-container" class="flex flex-col gap-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
                 </div>
-                <!-- Real Session Summary Badges -->
-                <div id="session-history-stats-summary" class="hidden flex items-center gap-2 text-xs font-bold">
-                    <span class="neu-badge px-2.5 py-1 text-slate-700">Current: <span id="hist-stat-current" class="text-blue-600 font-extrabold">--</span></span>
-                    <span class="neu-badge px-2.5 py-1 text-slate-700">Previous: <span id="hist-stat-prev" class="text-slate-600 font-extrabold">--</span></span>
-                    <span class="neu-badge px-2.5 py-1 text-slate-700">Best: <span id="hist-stat-best" class="text-emerald-600 font-extrabold">--</span></span>
+            </section>
+
+            <!-- ============================================================= -->
+            <!-- SIMPLE PROGRESS & HISTORY SECTION                             -->
+            <!-- ============================================================= -->
+            <section class="neu-card p-6 sm:p-8 flex flex-col gap-5" aria-label="Speaking Progress">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2.5">
+                        <span class="neu-circle w-8 h-8 flex items-center justify-center text-sm text-blue-600 font-bold">📈</span>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-black text-slate-800">Your Speaking Journey</h3>
+                            <p class="text-xs text-slate-500">Track your habits, celebrate improvements, and stay consistent.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div id="sessions-history-list" class="flex flex-col gap-2.5">
-                <div class="text-xs text-slate-500 py-3 text-center">No past speech sessions recorded yet. Start speaking above!</div>
-            </div>
-        </section>
+
+                <!-- 3 Simple Focus & Progress Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Today's Focus -->
+                    <div class="neu-card-sm p-4 flex flex-col gap-1.5 bg-gradient-to-br from-blue-50/50 to-white/70 border border-blue-200">
+                        <span class="text-[11px] font-bold text-blue-700 uppercase tracking-wider">🎯 Today's Focus</span>
+                        <div id="progress-today-focus" class="text-xs sm:text-sm font-black text-slate-800">
+                            Slow down when explaining ideas
+                        </div>
+                        <span class="text-[11px] text-slate-500">Derived from your latest speaking drill</span>
+                    </div>
+
+                    <!-- Biggest Improvement This Week -->
+                    <div class="neu-card-sm p-4 flex flex-col gap-1.5 bg-gradient-to-br from-emerald-50/50 to-white/70 border border-emerald-200">
+                        <span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">🏆 Biggest Improvement</span>
+                        <div id="progress-biggest-improvement" class="text-xs sm:text-sm font-black text-slate-800">
+                            Fewer filler words during transitions
+                        </div>
+                        <span id="progress-improvement-stat" class="text-[11px] text-emerald-700 font-bold">Reduced fillers on retries</span>
+                    </div>
+
+                    <!-- Consistent Strengths -->
+                    <div class="neu-card-sm p-4 flex flex-col gap-1.5 bg-gradient-to-br from-indigo-50/50 to-white/70 border border-indigo-200">
+                        <span class="text-[11px] font-bold text-indigo-700 uppercase tracking-wider">🌟 Your Superpowers</span>
+                        <div id="progress-strengths-summary" class="text-xs sm:text-sm font-black text-slate-800">
+                            Clear articulation & good pacing
+                        </div>
+                        <span class="text-[11px] text-slate-500">Consistent across your speaking sessions</span>
+                    </div>
+                </div>
+
+                <!-- Recent Speaking Sessions List -->
+                <div class="flex flex-col gap-2 pt-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-700">Recent Sessions:</span>
+                        <div id="session-history-stats-summary" class="hidden flex items-center gap-2 text-xs font-bold">
+                            <span class="neu-badge px-2.5 py-0.5 text-slate-700">Latest: <span id="hist-stat-current" class="text-blue-600 font-extrabold">--</span></span>
+                            <span class="neu-badge px-2.5 py-0.5 text-slate-700">Best: <span id="hist-stat-best" class="text-emerald-600 font-extrabold">--</span></span>
+                        </div>
+                    </div>
+                    <div id="sessions-history-list" class="flex flex-col gap-2.5">
+                        <div class="text-xs text-slate-500 py-3 text-center">No past speech sessions recorded yet. Start speaking above!</div>
+                    </div>
+                </div>
+            </section>
         </div> <!-- End #coach-studio-view -->
 
         <!-- 2. FLUENCY LAB VIEW CONTAINER (TOGGLED VIA SEPARATE BUTTON) -->
