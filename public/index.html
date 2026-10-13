@@ -29,14 +29,27 @@
                         mono: ['"JetBrains Mono"', 'SF Mono', 'Roboto Mono', 'Monaco', 'Consolas', 'monospace'],
                     },
                     colors: {
+                        stitch: {
+                            bg: '#f8fafc',
+                            card: '#ffffff',
+                            violet: '#7c3aed',
+                            'violet-light': '#f5f3ff',
+                            cyan: '#06b6d4',
+                            'cyan-light': '#ecfeff',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            navy: '#0f172a',
+                            slate: '#1e293b',
+                            muted: '#64748b'
+                        },
                         neu: {
-                            base: '#e0e5ec',
+                            base: '#f8fafc',
                             dark: '#1e293b',
                             text: '#334155',
                             muted: '#64748b',
-                            accent: '#2563eb',
-                            sky: '#0284c7',
-                            indigo: '#4f46e5'
+                            accent: '#7c3aed',
+                            sky: '#06b6d4',
+                            indigo: '#6366f1'
                         }
                     }
                 }
@@ -876,6 +889,7 @@
             box-shadow: 0 24px 48px -6px rgba(0, 0, 0, 0.7), 0 0 24px rgba(37, 99, 235, 0.45);
         }
     </style>
+    <link rel="stylesheet" href="/css/stitch-theme.css">
 </head>
 
 <body class="min-h-screen flex flex-col items-center relative overflow-x-hidden">
@@ -888,137 +902,130 @@
         <span class="hidden sm:inline">Admin Studio</span>
     </a>
 
-    <!-- TOP NAVIGATION BAR -->
-    <header class="relative w-full max-w-5xl px-3 sm:px-6 py-4 sm:py-6 flex items-center justify-between z-20 gap-2 min-h-[64px]">
-        <!-- LEFT: LOGO & NAV LINKS -->
-        <div class="flex items-center gap-2 sm:gap-3">
-            <a href="/praxis" class="flex items-center gap-2 sm:gap-2.5 group cursor-pointer" title="Return to PRAXiS Home">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 neu-circle flex items-center justify-center text-amber-500 shrink-0 group-hover:scale-105 transition-transform">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L14.85 8.36L21.82 9.27L16.66 14.14L18.09 21.02L12 17.67L5.91 21.02L7.34 14.14L2.18 9.27L9.15 8.36L12 2Z" fill="url(#star-grad-nav)" stroke="#f59e0b" stroke-width="0.8" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="star-grad-nav" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#fbbf24"/>
-                                <stop offset="1" stop-color="#d97706"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <span class="font-outfit font-extrabold text-xl sm:text-2xl text-slate-800 tracking-tight">PRAXiS</span>
-            </a>
+    <!-- TOP NAVIGATION BAR (STITCH REFERENCE A) -->
+    <header class="w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between gap-3 min-h-[64px]">
+            <!-- LEFT: PRAXIS LOGO & BRAND -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <a href="/praxis" class="flex items-center gap-2.5 group cursor-pointer" title="Return to PRAXiS Home">
+                    <!-- Dark rounded-square logo mark with neon symbol -->
+                    <div class="stitch-logo-mark group-hover:scale-105 transition-transform">
+                        <svg class="stitch-logo-symbol" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L14.85 8.36L21.82 9.27L16.66 14.14L18.09 21.02L12 17.67L5.91 21.02L7.34 14.14L2.18 9.27L9.15 8.36L12 2Z" fill="url(#stitch-neon-star)" stroke="#c084fc" stroke-width="0.8" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="stitch-neon-star" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#38bdf8"/>
+                                    <stop offset="0.5" stop-color="#a855f7"/>
+                                    <stop offset="1" stop-color="#ec4899"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-outfit font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none">PRAXiS</span>
+                        <span class="text-[9px] font-bold text-violet-600 uppercase tracking-widest leading-none mt-0.5 hidden xs:block">Student Studio</span>
+                    </div>
+                </a>
 
-            <!-- DESKTOP NAV LINKS -->
-            <nav class="hidden md:flex items-center gap-2 ml-2">
-                <button type="button" onclick="openCompassFeature()" class="neu-btn px-3.5 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 transition-all cursor-pointer">
-                    <span>🧭</span> Compass
-                </button>
-                <a href="/routine.html" class="neu-btn px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 transition-all">
-                    <span>🔥</span> Routine Tracker
-                </a>
-                <a href="/coach.html" class="neu-btn px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 transition-all">
-                    <span>🎙️</span> Communication
-                </a>
-                <a href="/coach.html?view=fluency" class="neu-btn px-3.5 py-1.5 text-xs font-extrabold text-blue-600 hover:text-blue-700 flex items-center gap-1.5 transition-all" title="Fluency Lab Speaking Drills">
-                    <span>⚡</span> Fluency Lab
-                </a>
-                <a id="nav-admin-btn" href="/admin.html" class="neu-btn px-3.5 py-1.5 text-xs font-black text-purple-700 hover:text-purple-900 border border-purple-300 flex items-center gap-1.5 transition-all hidden" title="Open Admin Studio">
-                    <span>🛡️</span> Admin Studio
-                </a>
-            </nav>
-        </div>
-
-        <div class="ml-auto flex items-center gap-2 sm:gap-2.5 shrink-0">
-            <!-- MOBILE TOP NAV ICONS -->
-            <div class="flex md:hidden items-center gap-1.5">
-                <button type="button" onclick="openCompassFeature()" title="Career Compass" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-blue-600 cursor-pointer">
-                    🧭
-                </button>
-                <a href="/coach.html" title="Communication Coach" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-blue-600 font-bold">
-                    🎙️
-                </a>
-                <a href="/coach.html?view=fluency" title="Fluency Lab" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-amber-500 font-bold">
-                    ⚡
-                </a>
-                <a href="/routine.html" title="Routine Tracker" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-amber-500">
-                    🔥
-                </a>
-                <a id="mobile-nav-admin-btn" href="/admin.html" title="Admin Studio" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-purple-700 font-bold hidden">
-                    🛡️
-                </a>
+                <!-- DESKTOP NAV LINKS -->
+                <nav class="hidden md:flex items-center gap-1.5 ml-4">
+                    <button type="button" onclick="openCompassFeature()" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-violet-600 hover:bg-violet-50/60 flex items-center gap-1.5 transition-all cursor-pointer">
+                        <span>🧭</span> Compass
+                    </button>
+                    <a href="/coach.html" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-violet-600 hover:bg-violet-50/60 flex items-center gap-1.5 transition-all">
+                        <span>🎙️</span> Communication Coach
+                    </a>
+                    <a href="/routine.html" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-violet-600 hover:bg-violet-50/60 flex items-center gap-1.5 transition-all">
+                        <span>🔥</span> Routine Tracker
+                    </a>
+                    <a href="/coach.html?view=fluency" class="px-3 py-1.5 rounded-xl text-xs font-extrabold text-cyan-600 hover:text-cyan-700 hover:bg-cyan-50 flex items-center gap-1 transition-all" title="Fluency Lab Speaking Drills">
+                        <span>⚡</span> Fluency Lab
+                    </a>
+                    <a id="nav-admin-btn" href="/admin.html" class="px-3 py-1.5 rounded-xl text-xs font-black text-purple-700 hover:text-purple-900 bg-purple-50 border border-purple-200 flex items-center gap-1.5 transition-all hidden" title="Open Admin Studio">
+                        <span>🛡️</span> Admin Studio
+                    </a>
+                </nav>
             </div>
 
-            <!-- AUTH & PROFILE CONTAINER -->
-            <div id="auth-container" class="flex items-center gap-2 z-30">
-                <!-- Logged Out State Button -->
-                <button id="btn-google-login" class="neu-btn px-3 py-1.5 sm:px-4 sm:py-2 flex items-center gap-2 text-slate-800 hover:text-indigo-600 font-bold text-xs transition-all shadow-sm cursor-pointer">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
-                        <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
-                        <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
-                        <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12 0 14.8s.7 5.1 1.9 7.5l3.7-2.9z"/>
-                        <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/>
-                    </svg>
-                    <span>Google Sign In</span>
+            <!-- RIGHT: CIRCULAR AI ASSISTANT ICON & STUDENT AVATAR -->
+            <div class="ml-auto flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <!-- Circular AI / Assistant Icon -->
+                <button type="button" onclick="openCompassFeature()" title="Praxis AI Career Assistant" class="w-9 h-9 rounded-full bg-violet-50 border border-violet-200/80 hover:bg-violet-100 flex items-center justify-center text-violet-600 transition shadow-xs relative cursor-pointer">
+                    <span class="text-sm">✨</span>
+                    <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 </button>
 
-                <!-- Logged In State Profile Card (Hidden by default) -->
-                <div id="profile-section" class="hidden flex items-center gap-2.5 bg-slate-900/90 text-white px-3 py-1.5 rounded-full border border-slate-700 shadow-md">
-                    <img id="user-avatar" class="w-7 h-7 rounded-full border border-indigo-400 object-cover shrink-0" src="" alt="Avatar">
-                    <div class="flex flex-col text-left hidden sm:flex">
-                        <div class="flex items-center gap-1">
-                            <span id="user-name" class="text-[11px] font-bold text-slate-100 leading-tight">User</span>
-                            <span id="profile-role-badge" class="hidden px-1.5 py-0.5 bg-purple-600 text-[8px] font-extrabold uppercase rounded text-white leading-none">ADMIN</span>
-                        </div>
-                        <span id="user-email" class="text-[9px] text-slate-400 leading-none truncate max-w-[110px]">email</span>
-                    </div>
-                    <a id="profile-admin-btn" href="/admin.html" title="Open Admin Studio" class="hidden px-2 py-0.5 bg-purple-600 hover:bg-purple-500 text-white text-[10px] font-bold rounded transition ml-1 cursor-pointer">
-                        Admin
-                    </a>
-                    <button id="btn-logout" title="Sign Out" class="px-2 py-0.5 bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-[10px] font-semibold rounded transition ml-1 cursor-pointer">
-                        Exit
+                <!-- Auth & Profile Container -->
+                <div id="auth-container" class="flex items-center gap-2 z-30">
+                    <!-- Logged Out State Button -->
+                    <button id="btn-google-login" class="px-3.5 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl flex items-center gap-2 transition shadow-xs cursor-pointer">
+                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+                            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12 0 14.8s.7 5.1 1.9 7.5l3.7-2.9z"/>
+                            <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/>
+                        </svg>
+                        <span>Sign In</span>
                     </button>
+
+                    <!-- Logged In State Profile Card -->
+                    <div id="profile-section" class="hidden flex items-center gap-2.5 bg-white border border-slate-200/90 hover:border-violet-300 px-2 sm:px-3 py-1.5 rounded-full shadow-xs transition">
+                        <img id="user-avatar" class="w-7 h-7 rounded-full border border-violet-400 object-cover shrink-0" src="" alt="Student Profile Avatar">
+                        <div class="flex flex-col text-left hidden sm:flex">
+                            <div class="flex items-center gap-1">
+                                <span id="user-name" class="text-xs font-bold text-slate-800 leading-tight">Student</span>
+                                <span id="profile-role-badge" class="hidden px-1.5 py-0.2 bg-violet-600 text-[8px] font-extrabold uppercase rounded text-white leading-none">ADMIN</span>
+                            </div>
+                            <span id="user-email" class="text-[9px] text-slate-400 leading-none truncate max-w-[110px]">email</span>
+                        </div>
+                        <a id="profile-admin-btn" href="/admin.html" title="Open Admin Studio" class="hidden px-2 py-0.5 bg-violet-600 hover:bg-violet-500 text-white text-[10px] font-bold rounded transition ml-1 cursor-pointer">
+                            Admin
+                        </a>
+                        <button id="btn-logout" title="Sign Out" class="px-2 py-0.5 text-rose-600 hover:bg-rose-50 text-[10px] font-semibold rounded transition ml-1 cursor-pointer">
+                            Exit
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- AUTHENTICATION LANDING GATE (LOCKED UNTIL LOGGED IN) -->
-    <div id="auth-gate-landing" class="w-full max-w-4xl px-4 py-12 sm:py-16 flex flex-col items-center justify-center text-center relative z-20 min-h-[75vh]">
-        <div class="neu-card p-6 sm:p-12 md:p-14 w-full max-w-2xl flex flex-col items-center text-center shadow-2xl relative overflow-hidden border border-indigo-100/50">
-            <!-- GLOW ACCENT -->
-            <div class="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none brand-glow-pulse"></div>
-            <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none brand-glow-pulse"></div>
+    <div id="auth-gate-landing" class="w-full max-w-4xl px-4 py-10 sm:py-16 flex flex-col items-center justify-center text-center relative z-20 min-h-[75vh]">
+        <div class="stitch-card p-6 sm:p-12 md:p-14 w-full max-w-2xl flex flex-col items-center text-center relative overflow-hidden border border-slate-200/90 shadow-xl">
+            <!-- Subtle Cool Tint Ambient Glow -->
+            <div class="absolute -top-24 -left-24 w-56 h-56 bg-violet-400/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-cyan-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <!-- PRAXiS BRAND BADGE -->
-            <div class="w-16 h-16 sm:w-20 sm:h-20 neu-circle flex items-center justify-center text-amber-500 mb-6 shrink-0 shadow-inner auth-badge-float">
+            <!-- Praxis Logo Mark Hero -->
+            <div class="stitch-logo-mark w-16 h-16 sm:w-20 sm:h-20 rounded-2xl mb-5 shadow-lg">
                 <svg class="w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L14.85 8.36L21.82 9.27L16.66 14.14L18.09 21.02L12 17.67L5.91 21.02L7.34 14.14L2.18 9.27L9.15 8.36L12 2Z" fill="url(#star-grad-gate)" stroke="#f59e0b" stroke-width="0.8" stroke-linejoin="round"/>
+                    <path d="M12 2L14.85 8.36L21.82 9.27L16.66 14.14L18.09 21.02L12 17.67L5.91 21.02L7.34 14.14L2.18 9.27L9.15 8.36L12 2Z" fill="url(#gate-neon-star)" stroke="#c084fc" stroke-width="0.8" stroke-linejoin="round"/>
                     <defs>
-                        <linearGradient id="star-grad-gate" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#fbbf24"/>
-                            <stop offset="1" stop-color="#d97706"/>
+                        <linearGradient id="gate-neon-star" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#38bdf8"/>
+                            <stop offset="0.5" stop-color="#a855f7"/>
+                            <stop offset="1" stop-color="#ec4899"/>
                         </linearGradient>
                     </defs>
                 </svg>
             </div>
 
-            <div class="neu-badge auth-badge-float text-indigo-600 font-bold px-4 py-1.5 text-xs uppercase tracking-widest mb-4 inline-flex items-center gap-2 shadow-sm">
-                🔒 Authentication Required
+            <div class="stitch-badge-violet px-3.5 py-1 text-xs uppercase tracking-widest mb-4 inline-flex items-center gap-1.5">
+                🔒 Student Authentication
             </div>
 
-            <!-- BEAUTIFUL ANIMATED WELCOME HEADING -->
-            <div class="welcome-anim-box mb-4">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 font-outfit leading-tight tracking-tight">
-                    Welcome to <span class="praxis-shimmer-text">PRAXiS</span>
-                </h1>
-            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 font-outfit leading-tight tracking-tight mb-3">
+                Welcome to <span class="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">PRAXiS</span>
+            </h1>
 
-            <p class="text-slate-600 text-sm sm:text-base mb-8 max-w-lg leading-relaxed font-medium">
-                Sign in with your Google account to operate the website, generate your personalized Career Roadmap, and keep your progress synced across all your devices.
+            <p class="text-slate-600 text-xs sm:text-base mb-8 max-w-lg leading-relaxed font-medium">
+                Sign in with your Google account to operate the student platform, synthesize your career trajectory, and keep your daily routine synced across devices.
             </p>
 
-            <!-- PROMINENT GOOGLE SIGN-IN BUTTON ONLY -->
-            <button id="gate-btn-google-login" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-black text-sm sm:text-base rounded-2xl shadow-xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] active:scale-95 border border-indigo-400/30 mb-3 cursor-pointer">
-                <svg class="w-6 h-6 shrink-0 bg-white p-0.5 rounded-full" viewBox="0 0 24 24">
+            <!-- Google Sign-In Button -->
+            <button id="gate-btn-google-login" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-black text-sm sm:text-base rounded-2xl shadow-lg flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] active:scale-95 border border-violet-400/30 mb-3 cursor-pointer">
+                <svg class="w-5 h-5 shrink-0 bg-white p-0.5 rounded-full" viewBox="0 0 24 24">
                     <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
                     <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
                     <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12 0 14.8s.7 5.1 1.9 7.5l3.7-2.9z"/>
@@ -1027,58 +1034,43 @@
                 <span>Continue with Google</span>
             </button>
 
-            <!-- EMAIL / PASSWORD ALTERNATIVE OPTION -->
+            <!-- Email alternative -->
             <div class="mb-8 text-center">
-                <button type="button" onclick="openAuthModal('login')" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 transition underline underline-offset-4 cursor-pointer">
+                <button type="button" onclick="openAuthModal('login')" class="text-xs font-semibold text-slate-500 hover:text-violet-600 transition underline underline-offset-4 cursor-pointer">
                     Or sign in / register with Email &amp; Password
                 </button>
             </div>
 
-            <!-- FEATURES PREVIEW LIST -->
+            <!-- Features Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full border-t border-slate-200/80 pt-6 text-left">
-                <div class="p-3 neu-card-sm flex items-start gap-2">
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-start gap-2">
                     <span class="text-base sm:text-lg">🧭</span>
                     <div>
                         <h4 class="text-xs font-bold text-slate-800 font-outfit">Career Compass</h4>
-                        <p class="text-[10px] text-slate-500 font-medium leading-snug">Personalized roadmap</p>
+                        <p class="text-[10px] text-slate-500 font-medium">Trajectory roadmaps</p>
                     </div>
                 </div>
-                <a href="/coach.html" class="p-3 neu-card-sm flex items-start gap-2 text-left hover:scale-[1.02] transition-all cursor-pointer bg-blue-50/40 border border-blue-200">
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-start gap-2">
                     <span class="text-base sm:text-lg">🎙️</span>
                     <div>
-                        <h4 class="text-xs font-bold text-slate-800 font-outfit flex items-center gap-1">
-                            <span>Communication</span>
-                            <span class="neu-badge text-[8px] font-black text-blue-600 px-1 py-0.2">New</span>
-                        </h4>
-                        <p class="text-[10px] text-slate-500 font-medium leading-snug">60s speech lab</p>
-                    </div>
-                </a>
-                <a href="/routine.html" class="p-3 neu-card-sm flex items-start gap-2 text-left hover:scale-[1.02] transition-all cursor-pointer">
-                    <span class="text-base sm:text-lg">📊</span>
-                    <div>
-                        <h4 class="text-xs font-bold text-slate-800 font-outfit flex items-center gap-1">
-                            <span>Habit Tracker</span>
-                            <span class="neu-badge text-[8px] font-black text-amber-600 px-1 py-0.2">Open</span>
-                        </h4>
-                        <p class="text-[10px] text-slate-500 font-medium leading-snug">Track daily habits</p>
-                    </div>
-                </a>
-                <div class="p-3 neu-card-sm flex items-start gap-2">
-                    <span class="text-base sm:text-lg">☁️</span>
-                    <div>
-                        <h4 class="text-xs font-bold text-slate-800 font-outfit">Cloud Sync</h4>
-                        <p class="text-[10px] text-slate-500 font-medium leading-snug">Synced everywhere</p>
+                        <h4 class="text-xs font-bold text-slate-800 font-outfit">Speech Coach</h4>
+                        <p class="text-[10px] text-slate-500 font-medium">60s speech drill</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- ADMIN STUDIO DISCRETE ENTRY POINT -->
-            <div class="mt-6 pt-4 border-t border-slate-200/80 w-full flex items-center justify-center gap-3 text-xs font-semibold text-slate-400">
-                <span>PRAXiS Career Ecosystem</span>
-                <span>&bull;</span>
-                <a href="/admin.html" class="text-slate-500 hover:text-indigo-600 transition flex items-center gap-1 font-bold">
-                    <span>🔒</span> <span>Admin Studio</span>
-                </a>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-start gap-2">
+                    <span class="text-base sm:text-lg">🔥</span>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-800 font-outfit">Routine System</h4>
+                        <p class="text-[10px] text-slate-500 font-medium">Daily habit mastery</p>
+                    </div>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-start gap-2">
+                    <span class="text-base sm:text-lg">⚡</span>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-800 font-outfit">Fluency Lab</h4>
+                        <p class="text-[10px] text-slate-500 font-medium">Connector drills</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1182,62 +1174,239 @@
         <!-- INTRODUCTORY SHOWCASE & ECOSYSTEM SCROLL SECTION -->
         <div id="landing-intro" class="w-full max-w-5xl px-3 sm:px-6 flex flex-col items-center transition-all duration-700 relative z-10">
         
-            <!-- SHOWCASE HERO: WELCOME & PLATFORM OVERVIEW -->
-            <div class="min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center text-center reveal active pt-4 sm:pt-8 pb-10 w-full relative">
+            <!-- ============================================================== -->
+            <!-- REFERENCE A — PRAXIS HOME DASHBOARD                           -->
+            <!-- ============================================================== -->
+            <div id="stitch-home-dashboard" class="w-full flex flex-col items-center pt-2 pb-6 text-left">
                 
-                <!-- Ambient Decorative Glow Spheres -->
-                <div class="absolute top-10 left-1/2 -translate-x-1/2 w-80 h-80 sm:w-96 sm:h-96 bg-gradient-to-tr from-indigo-500/15 via-blue-500/15 to-cyan-400/10 rounded-full blur-3xl pointer-events-none brand-glow-pulse"></div>
+                <!-- MAIN WELCOME SECTION -->
+                <div class="w-full mb-6">
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <!-- Green outlined status pill with green dot and SYNC ACTIVE -->
+                        <div class="stitch-status-pill">
+                            <span class="stitch-status-dot"></span>
+                            <span>SYNC &bull; ACTIVE</span>
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-400 font-digital" id="dash-date-indicator">TODAY</span>
+                    </div>
 
-                <!-- PERSONALIZED WELCOME PILL -->
-                <div class="showcase-hero-pill px-4 py-2 sm:px-5 sm:py-2.5 mb-6 inline-flex items-center gap-2.5 text-slate-800 text-xs sm:text-sm font-bold shadow-sm relative z-10">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0"></span>
-                    <span class="text-indigo-600 font-black uppercase tracking-wider text-[11px] sm:text-xs">Logged In</span>
-                    <span class="text-slate-300">|</span>
-                    <span id="showcase-user-greeting" class="text-slate-700 font-medium">Welcome back, <span id="showcase-user-name" class="font-extrabold text-indigo-600">Explorer</span>! ✨</span>
+                    <!-- Large, bold greeting with waving-hand emoji -->
+                    <h1 class="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 font-outfit tracking-tight leading-tight">
+                        <span id="showcase-user-greeting">Good evening, <span id="showcase-user-name" class="text-violet-600">Alex</span></span>
+                        <span class="inline-block hover:scale-125 transition-transform cursor-default select-none ml-1">👋</span>
+                    </h1>
+
+                    <!-- Short motivational subtitle -->
+                    <p class="text-xs sm:text-base text-slate-500 font-medium mt-1">
+                        Let's continue building your future.
+                    </p>
                 </div>
 
-                <!-- GRAND TITLE -->
-                <h1 class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-800 mb-5 leading-tight tracking-tight font-outfit relative z-10 max-w-4xl">
-                    The Complete Ecosystem For <br>
-                    <span class="praxis-shimmer-text">Your Life & Career.</span>
-                </h1>
+                <!-- PROGRESS SUMMARY: Horizontal three-column card -->
+                <div class="grid grid-cols-3 gap-2.5 sm:gap-4 w-full mb-6">
+                    <!-- Day Streak: flame icon and number -->
+                    <div class="stitch-card p-3 sm:p-5 flex flex-col items-center justify-center text-center">
+                        <span class="text-xl sm:text-2xl mb-1 text-amber-500">🔥</span>
+                        <span id="home-streak-number" class="text-xl sm:text-3xl font-black text-slate-900 font-outfit">5</span>
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Day Streak</span>
+                    </div>
 
-                <!-- SUBTITLE -->
-                <p class="text-xs sm:text-base md:text-lg text-slate-600 mb-8 sm:mb-10 font-medium max-w-2xl leading-relaxed px-2 sm:px-0 relative z-10">
-                    Stop guessing your path. PRAXiS combines <strong>Multi-Factor Career Matching</strong>, <strong>Phase-by-Phase Career Roadmaps</strong>, <strong>30-Day Routine & Habit Discipline</strong>, and <strong>Communication Coaching</strong> into one unified operating system.
-                </p>
+                    <!-- Momentum: lightning icon and percentage -->
+                    <div class="stitch-card p-3 sm:p-5 flex flex-col items-center justify-center text-center">
+                        <span class="text-xl sm:text-2xl mb-1 text-violet-500">⚡</span>
+                        <span id="home-momentum-number" class="text-xl sm:text-3xl font-black text-slate-900 font-outfit">88%</span>
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Momentum</span>
+                    </div>
 
-                <!-- ECOSYSTEM QUICK JUMP ANCHORS (4 CORE MODULE PILLS) -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 w-full max-w-3xl mb-10 relative z-10">
-                    <button type="button" onclick="openCompassFeature()" class="showcase-hero-pill p-3 sm:p-3.5 flex flex-col items-center justify-center text-center group cursor-pointer">
-                        <span class="text-xl sm:text-2xl mb-1 group-hover:scale-110 transition-transform">🧭</span>
-                        <span class="text-[11px] sm:text-xs font-black text-slate-800 group-hover:text-blue-600 transition-colors">Career Compass</span>
-                        <span class="text-[9px] text-slate-400 font-semibold mt-0.5">AI Trait Roadmaps</span>
-                    </button>
-                    <a href="/coach.html" class="showcase-hero-pill p-3 sm:p-3.5 flex flex-col items-center justify-center text-center group cursor-pointer">
-                        <span class="text-xl sm:text-2xl mb-1 group-hover:scale-110 transition-transform">🎙️</span>
-                        <span class="text-[11px] sm:text-xs font-black text-slate-800 group-hover:text-blue-600 transition-colors">Communication</span>
-                        <span class="text-[9px] text-slate-400 font-semibold mt-0.5">AI Speech Lab</span>
+                    <!-- Goals Met: progress icon and fraction -->
+                    <div class="stitch-card p-3 sm:p-5 flex flex-col items-center justify-center text-center">
+                        <span class="text-xl sm:text-2xl mb-1 text-emerald-500">🎯</span>
+                        <span id="home-goals-number" class="text-xl sm:text-3xl font-black text-slate-900 font-outfit">4/5</span>
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Goals Met</span>
+                    </div>
+                </div>
+
+                <!-- RECOMMENDED NEXT STEP CARD -->
+                <div class="stitch-card-violet-tint p-5 sm:p-7 w-full mb-6 relative overflow-hidden">
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <!-- Small violet badge -->
+                        <span class="stitch-badge-violet">Recommended Next Step</span>
+                        <!-- Cyan time badge on the right -->
+                        <span class="stitch-badge-cyan">15 MIN</span>
+                    </div>
+
+                    <!-- Bold heading -->
+                    <h2 class="text-lg sm:text-2xl font-black text-slate-900 font-outfit mt-2 mb-1.5 leading-snug">
+                        Explore careers that match your strengths
+                    </h2>
+
+                    <!-- Brief supporting description -->
+                    <p class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed mb-4 max-w-2xl">
+                        Synthesize your cognitive tendencies, evaluate multi-dimensional trade-offs, and inspect customized 5-phase career progression tracks.
+                    </p>
+
+                    <!-- Skill tags -->
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="stitch-badge-violet">Synthesis</span>
+                        <span class="stitch-badge-violet">Strategic Empathy</span>
+                        <span class="stitch-badge-violet">Systems Thinking</span>
+                    </div>
+
+                    <!-- Primary action button & bookmark button -->
+                    <div class="flex items-center gap-2.5">
+                        <button type="button" onclick="openCompassFeature()" class="stitch-btn-primary text-xs sm:text-sm px-6 py-3 cursor-pointer">
+                            <span>Continue Journey</span>
+                            <span class="text-base">&rarr;</span>
+                        </button>
+                        <button type="button" onclick="this.textContent = this.textContent === '🔖' ? '✅' : '🔖'" title="Bookmark Next Step" class="w-11 h-11 rounded-xl bg-white border border-violet-200 text-violet-600 hover:bg-violet-50 flex items-center justify-center text-base shadow-xs transition cursor-pointer">
+                            🔖
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SPEECH COACH CARD -->
+                <div class="stitch-card p-5 sm:p-7 w-full mb-6 text-left">
+                    <div class="flex items-start justify-between gap-3 mb-4">
+                        <div class="flex items-center gap-3">
+                            <!-- Microphone icon inside violet-tinted square -->
+                            <div class="w-11 h-11 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center text-xl shrink-0">
+                                🎙️
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-black text-slate-900 font-outfit leading-tight">Speech Coach</h3>
+                                <p class="text-xs text-slate-500 font-medium">Daily Vocal Drill</p>
+                            </div>
+                        </div>
+                        <!-- Small cyan duration badge -->
+                        <span class="stitch-badge-cyan">1 MIN</span>
+                    </div>
+
+                    <!-- Inner prompt card with practice sentence -->
+                    <div class="p-4 bg-slate-50/90 rounded-xl border border-slate-200/80 mb-4">
+                        <p class="text-xs sm:text-sm font-semibold text-slate-800 italic leading-relaxed">
+                            "Explain why technical debt should be addressed alongside new feature velocity in rapid sprint cycles."
+                        </p>
+                    </div>
+
+                    <!-- Decorative waveform visualization & Ready status -->
+                    <div class="flex items-center justify-between mb-4 px-1">
+                        <div class="flex items-center gap-1.5 h-6">
+                            <div class="stitch-waveform-bar"></div>
+                            <div class="stitch-waveform-bar"></div>
+                            <div class="stitch-waveform-bar"></div>
+                            <div class="stitch-waveform-bar"></div>
+                            <div class="stitch-waveform-bar"></div>
+                            <div class="stitch-waveform-bar"></div>
+                            <div class="stitch-waveform-bar"></div>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-600 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Ready
+                        </span>
+                    </div>
+
+                    <!-- Wide, dark navy Start 1-Min Drill button with play icon -->
+                    <a href="/coach.html" class="stitch-btn-navy w-full text-xs sm:text-sm py-3 cursor-pointer">
+                        <span class="text-sm">▶</span>
+                        <span>Start 1-Min Drill</span>
                     </a>
-                    <a href="/routine.html" class="showcase-hero-pill p-3 sm:p-3.5 flex flex-col items-center justify-center text-center group cursor-pointer">
+                </div>
+
+                <!-- LOWER DASHBOARD CARDS: Side-by-side cards for Routine and Career Milestones -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full mb-6">
+                    <!-- Routine card with circular progress ring -->
+                    <div class="stitch-card p-5 sm:p-6 flex flex-col justify-between text-left">
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div>
+                                <span class="stitch-badge-amber mb-1.5">Daily Routine</span>
+                                <h3 class="text-base font-black text-slate-900 font-outfit">Routine Discipline</h3>
+                                <p class="text-xs text-slate-500 font-medium">Build compound daily consistency</p>
+                            </div>
+                            <!-- Circular progress ring (e.g. 4/5 and 80%) -->
+                            <div class="relative w-16 h-16 flex items-center justify-center shrink-0">
+                                <svg class="w-16 h-16 stitch-progress-ring" viewBox="0 0 64 64">
+                                    <circle cx="32" cy="32" r="26" stroke="#f1f5f9" stroke-width="5" fill="none"></circle>
+                                    <circle id="dash-routine-ring" cx="32" cy="32" r="26" stroke="#10b981" stroke-width="5" fill="none" stroke-dasharray="163.36" stroke-dashoffset="32.67" stroke-linecap="round" class="stitch-progress-ring-circle"></circle>
+                                </svg>
+                                <span id="dash-routine-pct" class="absolute font-outfit font-black text-xs text-slate-800">80%</span>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl text-xs text-slate-600 font-medium flex items-center justify-between mb-3">
+                            <span>Today's Habits:</span>
+                            <span id="dash-routine-ratio" class="font-bold text-slate-800">4 / 5 Completed</span>
+                        </div>
+                        <a href="/routine.html" class="stitch-btn-secondary text-xs w-full text-center">
+                            Open Routine Tracker &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Career Milestones card: Current stage, milestone title, progress dots -->
+                    <div class="stitch-card p-5 sm:p-6 flex flex-col justify-between text-left">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="stitch-badge-violet">Career Trajectory</span>
+                                <span class="text-xs font-bold text-violet-600 font-digital">Stage 3 of 5</span>
+                            </div>
+                            <h3 class="text-base font-black text-slate-900 font-outfit">Foundation &amp; Core Tooling</h3>
+                            <p class="text-xs text-slate-500 font-medium mt-0.5 mb-4">Mastering high-leverage frameworks and systems</p>
+
+                            <!-- Progress dots -->
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-3 h-3 rounded-full bg-emerald-500" title="Stage 1: Completed"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500" title="Stage 2: Completed"></span>
+                                <span class="w-3.5 h-3.5 rounded-full bg-violet-600 ring-4 ring-violet-100" title="Stage 3: Active"></span>
+                                <span class="w-3 h-3 rounded-full bg-slate-200" title="Stage 4: Pending"></span>
+                                <span class="w-3 h-3 rounded-full bg-slate-200" title="Stage 5: Pending"></span>
+                                <span class="text-[11px] font-bold text-slate-400 ml-2">60% Complete</span>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="openCompassFeature()" class="stitch-btn-secondary text-xs w-full text-center cursor-pointer">
+                            View Trajectory Milestones &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Today's Focus card: Violet border/background tint and play button -->
+                <div class="stitch-card-violet-tint p-4 sm:p-5 w-full flex items-center justify-between gap-4 mb-8 text-left">
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="window.location.href='/routine.html#stopwatch'" class="w-11 h-11 rounded-full bg-violet-600 hover:bg-violet-700 text-white flex items-center justify-center text-sm shadow-md transition transform active:scale-95 cursor-pointer shrink-0">
+                            ▶
+                        </button>
+                        <div>
+                            <h4 class="text-sm font-black text-slate-900 font-outfit">Today's Focus: Deep Work &amp; Verbal Synthesis</h4>
+                            <p class="text-xs text-slate-500 font-medium">25-minute Pomodoro focus block queued</p>
+                        </div>
+                    </div>
+                    <a href="/routine.html#stopwatch" class="stitch-btn-primary text-xs py-2 px-3.5 shrink-0 hidden sm:inline-flex">
+                        Launch Timer
+                    </a>
+                </div>
+
+                <!-- Quick Module Jump Tiles -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 w-full mb-8">
+                    <button type="button" onclick="openCompassFeature()" class="stitch-card p-3 sm:p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-violet-300">
+                        <span class="text-xl sm:text-2xl mb-1 group-hover:scale-110 transition-transform">🧭</span>
+                        <span class="text-xs font-black text-slate-800 group-hover:text-violet-600 transition-colors">Career Compass</span>
+                        <span class="text-[9px] text-slate-400 font-semibold mt-0.5">Trait Roadmaps</span>
+                    </button>
+                    <a href="/coach.html" class="stitch-card p-3 sm:p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-violet-300">
+                        <span class="text-xl sm:text-2xl mb-1 group-hover:scale-110 transition-transform">🎙️</span>
+                        <span class="text-xs font-black text-slate-800 group-hover:text-violet-600 transition-colors">Speech Coach</span>
+                        <span class="text-[9px] text-slate-400 font-semibold mt-0.5">Vocal Lab</span>
+                    </a>
+                    <a href="/routine.html" class="stitch-card p-3 sm:p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-amber-300">
                         <span class="text-xl sm:text-2xl mb-1 group-hover:scale-110 transition-transform">🔥</span>
-                        <span class="text-[11px] sm:text-xs font-black text-slate-800 group-hover:text-amber-600 transition-colors">Routine Tracker</span>
+                        <span class="text-xs font-black text-slate-800 group-hover:text-amber-600 transition-colors">Routine Tracker</span>
                         <span class="text-[9px] text-slate-400 font-semibold mt-0.5">30-Day Heatmap</span>
                     </a>
-                    <button type="button" onclick="openCompassFeature()" class="showcase-hero-pill p-3 sm:p-3.5 flex flex-col items-center justify-center text-center group cursor-pointer bg-gradient-to-br from-indigo-50/60 to-blue-50/60 border border-blue-200">
-                        <span class="text-xl sm:text-2xl mb-1 group-hover:scale-110 transition-transform">🎯</span>
-                        <span class="text-[11px] sm:text-xs font-black text-blue-600 group-hover:text-blue-700 transition-colors">Start Assessment</span>
-                        <span class="text-[9px] text-blue-500 font-semibold mt-0.5">Launch Compass &rarr;</span>
-                    </button>
+                    <a href="/coach.html?view=fluency" class="stitch-card p-3 sm:p-4 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-cyan-300">
+                        <span class="text-xl sm:text-2xl mb-1 group-hover:scale-110 transition-transform">⚡</span>
+                        <span class="text-xs font-black text-slate-800 group-hover:text-cyan-600 transition-colors">Fluency Lab</span>
+                        <span class="text-[9px] text-slate-400 font-semibold mt-0.5">Speaking Drills</span>
+                    </a>
                 </div>
 
-                <!-- SCROLL PROMPT -->
-                <div class="text-indigo-600 flex flex-col items-center gap-2 animate-bounce-slow mt-2 relative z-10">
-                    <span class="text-[10px] sm:text-xs font-extrabold tracking-widest uppercase">Scroll Down to Explore Platform</span>
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
-                </div>
             </div>
 
             <!-- ============================================================== -->
@@ -1757,15 +1926,101 @@
     <div id="app-wrapper" class="w-full flex justify-center pb-16 sm:pb-20 px-3 sm:px-4 relative z-10 max-w-5xl hidden">
         <div class="neu-card p-4 sm:p-8 md:p-12 w-full transition-all duration-500">
 
-            <!-- BACK TO SHOWCASE NAV BAR -->
+            <!-- BACK TO SHOWCASE NAV BAR (REFERENCE B HEADER) -->
             <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-200/80 gap-2 flex-wrap">
-                <button type="button" onclick="backToShowcase()" class="neu-btn px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 transition-all cursor-pointer">
+                <button type="button" onclick="backToShowcase()" class="stitch-btn-secondary px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
                     <span>&larr;</span>
-                    <span>Back to Platform Showcase</span>
+                    <span>Back to Home</span>
                 </button>
                 <div class="flex items-center gap-2">
-                    <div class="neu-badge text-[10px] font-black text-blue-600 uppercase px-2.5 py-1">
-                        🧭 Career Compass
+                    <div class="stitch-badge-violet text-[10px] uppercase font-black px-2.5 py-1">
+                        🧭 Career
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- REFERENCE B — CAREER COMPASS HERO & PATH MILESTONES            -->
+            <!-- ============================================================== -->
+            <!-- 1. CAREER COMPASS HERO CARD -->
+            <div class="stitch-card-violet-tint p-5 sm:p-7 w-full mb-6 relative overflow-hidden text-left">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-violet-700 bg-violet-100/90 px-2.5 py-1 rounded-full mb-2.5 inline-block">
+                            INTERACTIVE TRAJECTORY
+                        </span>
+                        <h1 class="text-2xl sm:text-4xl font-black text-slate-900 font-outfit tracking-tight">
+                            Career Compass
+                        </h1>
+                        <p class="text-xs sm:text-sm text-slate-600 font-medium mt-1.5 max-w-xl leading-relaxed">
+                            Your personalized pathway from curiosity to craft.
+                        </p>
+                    </div>
+                    <!-- Violet circular compass icon -->
+                    <div class="w-12 h-12 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center text-2xl shrink-0 shadow-xs border border-violet-200/80">
+                        🧭
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. CAREER PATHWAY CARD: Path Milestones -->
+            <div class="stitch-card p-5 sm:p-6 w-full mb-6 text-left">
+                <div class="flex items-center justify-between gap-2 mb-4">
+                    <div>
+                        <h3 class="text-base font-black text-slate-900 font-outfit">Path Milestones</h3>
+                        <p class="text-xs text-slate-500 font-medium">Interactive trajectory journey</p>
+                    </div>
+                    <!-- Progress info: Stage 3 of 5 & calibration status -->
+                    <div class="stitch-status-pill">
+                        <span class="stitch-status-dot"></span>
+                        <span>Calibrated &bull; Stage 3 of 5</span>
+                    </div>
+                </div>
+
+                <!-- Horizontal journey with connected milestone indicators: You -> Discover -> Explore -> Build -> Career -->
+                <div class="stitch-journey-track my-6 px-2">
+                    <div class="stitch-journey-line"></div>
+                    <div class="stitch-journey-progress" style="width: 50%;"></div>
+
+                    <!-- You (completed) -->
+                    <div class="stitch-stage-node completed">
+                        <div class="stitch-node-dot">✓</div>
+                        <span class="text-[10px] font-bold text-emerald-700 mt-1">You</span>
+                    </div>
+
+                    <!-- Discover (completed) -->
+                    <div class="stitch-stage-node completed">
+                        <div class="stitch-node-dot">✓</div>
+                        <span class="text-[10px] font-bold text-emerald-700 mt-1">Discover</span>
+                    </div>
+
+                    <!-- Explore (active with violet circle) -->
+                    <div class="stitch-stage-node active">
+                        <div class="stitch-node-dot">3</div>
+                        <span class="text-[10px] font-bold text-violet-700 mt-1">Explore</span>
+                    </div>
+
+                    <!-- Build (pending) -->
+                    <div class="stitch-stage-node">
+                        <div class="stitch-node-dot">4</div>
+                        <span class="text-[10px] font-bold text-slate-400 mt-1">Build</span>
+                    </div>
+
+                    <!-- Career (pending) -->
+                    <div class="stitch-stage-node">
+                        <div class="stitch-node-dot">5</div>
+                        <span class="text-[10px] font-bold text-slate-400 mt-1">Career</span>
+                    </div>
+                </div>
+
+                <!-- Small blue-tinted information card for the active milestone -->
+                <div class="p-3.5 bg-blue-50/80 rounded-xl border border-blue-200/70 flex items-start gap-3 mt-3">
+                    <span class="text-base text-blue-600 mt-0.5">ℹ️</span>
+                    <div>
+                        <h5 class="text-xs font-bold text-blue-950">Active Milestone: Cognitive Trajectory Exploration</h5>
+                        <p class="text-[11px] text-blue-800 leading-relaxed mt-0.5">
+                            Evaluating your multidimensional problem-solving archetype, work style preferences, and values against 20+ disciplines with zero bias.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1775,11 +2030,12 @@
             <!-- ============================================================== -->
             <div id="interest-section">
                 <div class="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-800 font-outfit tracking-tight mb-2">
-                        CAREER COMPASS
-                    </h1>
+                    <span class="stitch-badge-violet uppercase tracking-widest text-[10px] mb-2 inline-block">Discovery Canvas</span>
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-800 font-outfit tracking-tight mb-1.5">
+                        Choose Your Assessment Starting Point
+                    </h2>
                     <p class="text-slate-500 font-medium text-xs sm:text-sm leading-relaxed">
-                        An intelligent career-discovery system: discover your natural thinking style, assess multi-factor trade-offs, test real tasks with 60-second reality checks, and generate structured daily roadmaps.
+                        Whether you already have a target domain or want an open discovery canvas, PRAXiS synthesizes your cognitive archetype to map actionable career milestones.
                     </p>
                 </div>
 
@@ -3192,6 +3448,92 @@
     <script src="/js/compassUI.js"></script>
     <script type="module" src="/app-firebase.js"></script>
     <script src="/script.js"></script>
+
+    <!-- ============================================================== -->
+    <!-- FIXED MOBILE BOTTOM NAVIGATION BAR (REFERENCE A)               -->
+    <!-- 5 destinations: Home | Career | Coach | Routine | Progress     -->
+    <!-- ============================================================== -->
+    <nav class="stitch-bottom-nav md:hidden" aria-label="Mobile Bottom Navigation">
+        <!-- 1. Home -->
+        <a href="/praxis" class="stitch-nav-item active" title="Praxis Home">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <span>Home</span>
+        </a>
+
+        <!-- 2. Career -->
+        <button type="button" onclick="openCompassFeature()" class="stitch-nav-item cursor-pointer" title="Career Compass">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-2-9l6-2-2 6-6 2 2-6z"></path></svg>
+            <span>Career</span>
+        </button>
+
+        <!-- 3. Coach (Raised circular active icon) -->
+        <a href="/coach.html" class="stitch-nav-raised-coach" title="Communication Coach">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+            <span class="nav-label text-white">Coach</span>
+        </a>
+
+        <!-- 4. Routine -->
+        <a href="/routine.html" class="stitch-nav-item" title="Routine Tracker">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
+            <span>Routine</span>
+        </a>
+
+        <!-- 5. Progress -->
+        <a href="/routine.html#analytics" class="stitch-nav-item" title="Progress & User Statistics">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+            <span>Progress</span>
+        </a>
+    </nav>
+
+
+    <!-- DASHBOARD HYDRATION CONTROLLER -->
+    <script>
+        function hydrateStitchDashboard() {
+            try {
+                // Streak, Momentum, Goals
+                const user = window.praxisAuth && window.praxisAuth.getUser ? window.praxisAuth.getUser() : null;
+                const userId = user ? (user.uid || user.id || 'anonymous') : 'anonymous';
+                
+                // Read local habits if available
+                const savedHabitsStr = localStorage.getItem('praxis_habits_v2_' + userId) || localStorage.getItem('praxis_habits_v2_anonymous');
+                const savedLogsStr = localStorage.getItem('praxis_routine_logs_v2_' + userId) || localStorage.getItem('praxis_routine_logs_v2_anonymous');
+                
+                const streakEl = document.getElementById('home-streak-number');
+                const momentumEl = document.getElementById('home-momentum-number');
+                const goalsEl = document.getElementById('home-goals-number');
+                const routineRing = document.getElementById('dash-routine-ring');
+                const routinePct = document.getElementById('dash-routine-pct');
+                const routineRatio = document.getElementById('dash-routine-ratio');
+
+                if (savedHabitsStr && savedLogsStr) {
+                    const habits = JSON.parse(savedHabitsStr);
+                    const logs = JSON.parse(savedLogsStr);
+                    const todayStr = new Date().toISOString().slice(0, 10);
+                    const todayLog = logs[todayStr] || { c: [] };
+                    const completed = (todayLog.c || []).length;
+                    const total = Math.max(1, habits.length);
+                    const pct = Math.round((completed / total) * 100);
+
+                    if (goalsEl) goalsEl.textContent = completed + '/' + total;
+                    if (routinePct) routinePct.textContent = pct + '%';
+                    if (routineRatio) routineRatio.textContent = completed + ' / ' + total + ' Completed';
+                    if (routineRing) {
+                        const circumference = 163.36;
+                        const offset = circumference - (pct / 100) * circumference;
+                        routineRing.style.strokeDashoffset = offset;
+                    }
+                    if (momentumEl) {
+                        momentumEl.textContent = Math.max(20, Math.min(100, pct || 88)) + '%';
+                    }
+                }
+            } catch (err) {
+                console.warn('Dashboard hydration non-critical error:', err);
+            }
+        }
+        window.addEventListener('DOMContentLoaded', hydrateStitchDashboard);
+        window.addEventListener('praxis:auth-changed', hydrateStitchDashboard);
+    </script>
+
 </body>
 
 </html>

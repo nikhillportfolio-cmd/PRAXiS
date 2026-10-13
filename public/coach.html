@@ -30,14 +30,27 @@
                         mono: ['"JetBrains Mono"', 'SF Mono', 'Roboto Mono', 'Monaco', 'Consolas', 'monospace'],
                     },
                     colors: {
+                        stitch: {
+                            bg: '#f8fafc',
+                            card: '#ffffff',
+                            violet: '#7c3aed',
+                            'violet-light': '#f5f3ff',
+                            cyan: '#06b6d4',
+                            'cyan-light': '#ecfeff',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            navy: '#0f172a',
+                            slate: '#1e293b',
+                            muted: '#64748b'
+                        },
                         neu: {
-                            base: '#e0e5ec',
+                            base: '#f8fafc',
                             dark: '#1e293b',
                             text: '#334155',
                             muted: '#64748b',
-                            accent: '#2563eb',
-                            sky: '#0284c7',
-                            indigo: '#4f46e5'
+                            accent: '#7c3aed',
+                            sky: '#06b6d4',
+                            indigo: '#6366f1'
                         }
                     }
                 }
@@ -206,6 +219,7 @@
             border: 2px solid #e0e5ec;
         }
     </style>
+    <link rel="stylesheet" href="/css/stitch-theme.css">
 </head>
 
 <body class="min-h-screen flex flex-col items-center relative overflow-x-hidden pb-16">
@@ -304,38 +318,41 @@
         <!-- 1. COMMUNICATION COACH STUDIO VIEW -->
         <div id="coach-studio-view" class="flex flex-col gap-6">
 
-            <!-- COACH HERO HEADER -->
-            <section class="neu-card p-6 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 relative overflow-hidden">
-                <div class="flex flex-col gap-2 max-w-2xl text-center md:text-left">
+            <!-- CHALLENGE HEADER (REFERENCE C) -->
+            <section class="stitch-card p-6 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 relative overflow-hidden bg-slate-50/70 border border-slate-200/90 text-left">
+                <div class="flex flex-col gap-1.5 max-w-2xl text-center md:text-left">
                     <div class="flex items-center justify-center md:justify-start gap-2">
-                        <span class="neu-badge px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50/50">
-                            🎙️ Friendly Speech Coach
+                        <!-- Small uppercase label -->
+                        <span class="stitch-badge-violet uppercase tracking-widest text-[10px] font-black">
+                            SPEECH COACH COCKPIT
                         </span>
-                        <span class="neu-badge px-2.5 py-0.5 text-[10px] font-bold text-slate-500">
-                            Clarity • Natural Flow • Confidence
+                        <!-- Green daily-streak badge -->
+                        <span class="stitch-badge-green font-bold">
+                            🔥 5 Day Streak
                         </span>
                     </div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight leading-tight">
-                        Practice Speaking, <span class="text-gradient">Get Coached</span>
+                    <!-- Large heading: Today's Speaking Challenge -->
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 font-outfit tracking-tight leading-tight mt-1">
+                        Today's Speaking Challenge
                     </h1>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        Pick a question, speak your mind out loud, and get simple, friendly coaching to strengthen your everyday communication.
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
+                        Practice articulated thinking out loud with real-time speech diagnostics, clarity scoring, and actionable polish drills.
                     </p>
                 </div>
 
-                <!-- 3-STAGE INTERACTIVE STEPPER -->
-                <div class="neu-card-sm p-2 sm:p-3 flex items-center gap-1.5 sm:gap-2.5 bg-white/60 border border-slate-200/70 shrink-0 select-none" role="tablist" aria-label="Coaching Stages">
-                    <button type="button" id="stage-tab-practice" onclick="setStage('practice')" class="stage-step-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black text-blue-700 bg-blue-100 flex items-center gap-1.5 transition-all cursor-pointer">
-                        <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">1</span>
+                <!-- 3-Stage Stepper -->
+                <div class="p-1.5 sm:p-2 rounded-2xl bg-white border border-slate-200 flex items-center gap-1.5 sm:gap-2 shrink-0 select-none shadow-xs" role="tablist" aria-label="Coaching Stages">
+                    <button type="button" id="stage-tab-practice" onclick="setStage('practice')" class="stage-step-btn px-3 py-1.5 rounded-xl text-xs font-black text-violet-700 bg-violet-100 flex items-center gap-1.5 transition-all cursor-pointer">
+                        <span class="w-5 h-5 rounded-full bg-violet-600 text-white flex items-center justify-center text-[10px]">1</span>
                         <span>Practice</span>
                     </button>
                     <span class="text-slate-300 font-bold text-xs">➔</span>
-                    <button type="button" id="stage-tab-speaking" class="stage-step-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 flex items-center gap-1.5 transition-all opacity-70">
+                    <button type="button" id="stage-tab-speaking" class="stage-step-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 flex items-center gap-1.5 transition-all opacity-70">
                         <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-[10px]">2</span>
                         <span>Speaking</span>
                     </button>
                     <span class="text-slate-300 font-bold text-xs">➔</span>
-                    <button type="button" id="stage-tab-feedback" class="stage-step-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 flex items-center gap-1.5 transition-all opacity-70">
+                    <button type="button" id="stage-tab-feedback" class="stage-step-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 flex items-center gap-1.5 transition-all opacity-70">
                         <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-[10px]">3</span>
                         <span>Feedback</span>
                     </button>
@@ -345,24 +362,39 @@
             <!-- ============================================================= -->
             <!-- STAGE 1: PRACTICE (TOPIC & PREPARATION)                       -->
             <!-- ============================================================= -->
-            <section id="stage-practice" class="flex flex-col gap-5">
-                <div class="neu-card p-6 sm:p-8 flex flex-col gap-5 relative">
+            <section id="stage-practice" class="flex flex-col gap-5 text-left">
+                <div class="stitch-card p-6 sm:p-8 flex flex-col gap-5 relative border border-slate-200">
                     
-                    <!-- Top Bar: Category, Active Drill Badge, Topic Shuffle -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200/80">
+                    <!-- Top Bar: Purple badge, Hear aloud action, Change prompt -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
                         <div class="flex flex-wrap items-center gap-2">
-                            <span id="topic-category-badge" class="neu-badge px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50">
-                                Workplace & Tech
+                            <!-- Small purple badge showing challenge duration and type -->
+                            <span class="stitch-badge-violet font-black">
+                                ⚡ 60s Drill &bull; Structure &amp; Pacing
                             </span>
-                            <span id="drill-active-badge" class="hidden neu-badge px-3 py-1 text-[11px] font-black uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-300 animate-pulse">
+                            <span id="topic-category-badge" class="stitch-badge-cyan font-bold">
+                                Workplace &amp; Tech
+                            </span>
+                            <span id="drill-active-badge" class="hidden stitch-badge-amber animate-pulse">
                                 🎯 Targeted Drill Active
                             </span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button type="button" onclick="shuffleTopic()" class="neu-btn px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 cursor-pointer" title="Get a different question">
-                                <span>🎲</span> Change Question
+                            <!-- Hear aloud action with a speaker icon -->
+                            <button type="button" onclick="speakCurrentTopicQuestion()" class="stitch-btn-secondary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Listen to question spoken out loud">
+                                <span>🔊</span> <span>Hear Prompt</span>
+                            </button>
+                            <!-- Change Prompt action -->
+                            <button type="button" onclick="shuffleTopic()" class="stitch-btn-secondary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Get a different question">
+                                <span>🔄</span> <span>Change Prompt</span>
                             </button>
                         </div>
+                    </div>
+
+                    <!-- Current Focus Indicator -->
+                    <div class="flex items-center gap-2 text-xs font-bold text-violet-700 bg-violet-50/80 px-3 py-1.5 rounded-xl border border-violet-100">
+                        <span>🎯 Focus Today:</span>
+                        <span>Structure &amp; Pacing (PREP Framework)</span>
                     </div>
 
                     <!-- Speaking Question & Prompt -->
@@ -451,70 +483,95 @@
             <!-- ============================================================= -->
             <!-- STAGE 2: SPEAKING (LIVE, DISTRACTION-FREE)                     -->
             <!-- ============================================================= -->
-            <section id="stage-speaking" class="hidden flex flex-col gap-5">
-                <div class="neu-card p-6 sm:p-8 flex flex-col gap-6">
+            <section id="stage-speaking" class="hidden flex flex-col gap-5 text-left">
+                <div class="stitch-card p-6 sm:p-10 flex flex-col items-center gap-6 relative border border-slate-200 text-center">
                     
-                    <!-- Header: Recording Status & Countdown Timer -->
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-200/80">
-                        <div class="flex items-center gap-2.5">
-                            <span class="w-3.5 h-3.5 rounded-full bg-red-500 animate-ping"></span>
-                            <span id="mic-status-label" class="text-xs sm:text-sm font-black text-red-600 uppercase tracking-wider">
-                                Listening... Speak naturally!
-                            </span>
+                    <!-- Header: Status badge & Digital timer (00:00 / 01:00) -->
+                    <div class="w-full flex items-center justify-between pb-4 border-b border-slate-100">
+                        <!-- Status badge: Ready to Record / Listening / Processing -->
+                        <div class="stitch-status-pill">
+                            <span class="stitch-status-dot"></span>
+                            <span id="mic-status-label">Ready to Record</span>
                         </div>
                         
-                        <!-- Simple Digital Time Remaining -->
-                        <div class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl shadow-inner">
-                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Time Left:</span>
-                            <span id="timer-display" class="font-digital text-xl sm:text-2xl font-black text-emerald-400">
+                        <!-- Digital Timer such as 00:00 / 01:00 -->
+                        <div class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl shadow-xs font-digital">
+                            <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">TIMER:</span>
+                            <span id="timer-display" class="text-xl sm:text-2xl font-black text-emerald-400">
                                 01:00
                             </span>
                         </div>
                     </div>
 
-                    <!-- Active Prompt Reminder (Distraction-free reference) -->
-                    <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-200/80">
-                        <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Your Question:</div>
-                        <div id="speaking-topic-prompt" class="text-xs sm:text-sm font-semibold text-slate-800 mt-0.5">
+                    <!-- Question Reminder Box -->
+                    <div class="w-full bg-slate-50 p-4 rounded-2xl border border-slate-200/80 text-left">
+                        <div class="text-[10px] font-extrabold uppercase tracking-wider text-violet-700">Speaking Challenge:</div>
+                        <div id="speaking-topic-prompt" class="text-xs sm:text-sm font-semibold text-slate-800 mt-0.5 leading-relaxed">
                             "..."
                         </div>
                     </div>
 
-                    <!-- Soundwave Animation -->
-                    <div id="soundwave-container" class="flex items-center justify-center gap-1.5 h-10 py-1" aria-hidden="true">
-                        <div class="soundwave-bar" style="animation-delay: 0.1s;"></div>
-                        <div class="soundwave-bar" style="animation-delay: 0.3s;"></div>
-                        <div class="soundwave-bar" style="animation-delay: 0.5s;"></div>
-                        <div class="soundwave-bar" style="animation-delay: 0.2s;"></div>
-                        <div class="soundwave-bar" style="animation-delay: 0.4s;"></div>
-                        <div class="soundwave-bar" style="animation-delay: 0.6s;"></div>
-                        <div class="soundwave-bar" style="animation-delay: 0.15s;"></div>
+                    <!-- Center Layered Circular Microphone & Concentric Waveform (Reference C: Violet, Cyan, Soft-Blue) -->
+                    <div class="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center my-2">
+                        <!-- Layered circular pulse rings -->
+                        <div class="stitch-pulse-ring"></div>
+                        <div class="stitch-pulse-ring-outer"></div>
+
+                        <!-- Inner circular microphone container -->
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-violet-600 to-indigo-600 text-white flex items-center justify-center text-4xl shadow-lg shadow-violet-300 relative z-10 cursor-pointer">
+                            🎙️
+                        </div>
                     </div>
 
-                    <!-- Live Distraction-Free Transcript Box -->
-                    <div class="flex flex-col gap-1.5">
+                    <!-- Decorative Audio Waveform Visualization -->
+                    <div id="soundwave-container" class="flex items-center justify-center gap-1.5 h-8 py-1" aria-hidden="true">
+                        <div class="stitch-waveform-bar"></div>
+                        <div class="stitch-waveform-bar"></div>
+                        <div class="stitch-waveform-bar"></div>
+                        <div class="stitch-waveform-bar"></div>
+                        <div class="stitch-waveform-bar"></div>
+                        <div class="stitch-waveform-bar"></div>
+                        <div class="stitch-waveform-bar"></div>
+                    </div>
+
+                    <!-- Supporting text -->
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium max-w-md">
+                        Tap microphone to speak naturally. AI listens in real-time.
+                    </p>
+
+                    <!-- Live Transcript Box -->
+                    <div class="w-full flex flex-col gap-1.5 text-left">
                         <div class="flex items-center justify-between px-1 text-xs text-slate-500 font-semibold">
-                            <span>Live Transcript:</span>
-                            <span id="live-word-count-badge" class="neu-badge px-2 py-0.5 text-[10px] font-bold text-slate-600">0 words</span>
+                            <span>Live Transcript Stream:</span>
+                            <span id="live-word-count-badge" class="stitch-badge-violet text-[10px] font-bold">0 words</span>
                         </div>
-                        <div id="speaking-live-transcript-box" class="neu-input w-full p-4 text-xs sm:text-sm text-slate-800 min-h-[140px] max-h-[220px] overflow-y-auto leading-relaxed bg-white/80">
+                        <div id="speaking-live-transcript-box" class="w-full p-4 text-xs sm:text-sm text-slate-800 min-h-[110px] max-h-[180px] overflow-y-auto leading-relaxed bg-slate-50 rounded-xl border border-slate-200">
                             <span class="text-slate-400 italic">Listening... Start speaking whenever you're ready.</span>
                         </div>
                         <!-- Progress bar -->
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden shadow-inner mt-1">
-                            <div id="timer-progress-bar" class="bg-gradient-to-r from-blue-500 to-emerald-500 h-1.5 rounded-full transition-all duration-300" style="width: 100%;"></div>
+                        <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden mt-1">
+                            <div id="timer-progress-bar" class="bg-gradient-to-r from-violet-600 to-cyan-500 h-1.5 rounded-full transition-all duration-300" style="width: 100%;"></div>
                         </div>
                     </div>
 
-                    <!-- Prominent Stop Speaking Button -->
-                    <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                        <button type="button" id="btn-stop-speaking" onclick="finishSpeakingAndEvaluate()" class="neu-btn px-8 sm:px-12 py-3.5 text-base sm:text-lg font-black text-white bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 rounded-2xl shadow-xl flex items-center gap-2.5 cursor-pointer transform hover:scale-[1.02] transition-all">
+                    <!-- Action controls: Large violet button, Reset & Difficulty below -->
+                    <div class="flex flex-col items-center gap-3 w-full pt-2">
+                        <!-- Stop & Evaluate Button -->
+                        <button type="button" id="btn-stop-speaking" onclick="finishSpeakingAndEvaluate()" class="stitch-btn-primary w-full sm:w-auto px-10 py-3.5 text-sm sm:text-base font-black flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-violet-200">
                             <span>⏹️</span>
-                            <span>Stop Speaking & Get Coaching</span>
+                            <span>Stop Speaking &amp; Analyze</span>
                         </button>
-                        <button type="button" onclick="cancelSpeakingAndRestart()" class="neu-btn px-4 py-3 text-xs font-bold text-slate-600 hover:text-slate-800 cursor-pointer">
-                            ↺ Start Over
-                        </button>
+
+                        <!-- Reset & Cancel controls below -->
+                        <div class="flex items-center gap-3 text-xs">
+                            <button type="button" onclick="cancelSpeakingAndRestart()" class="text-slate-500 hover:text-slate-800 font-bold underline underline-offset-4 cursor-pointer">
+                                ↺ Reset / Start Over
+                            </button>
+                            <span class="text-slate-300">&bull;</span>
+                            <button type="button" onclick="setStage('practice')" class="text-slate-500 hover:text-slate-800 font-bold underline underline-offset-4 cursor-pointer">
+                                ⚙️ Adjust Difficulty &amp; Prompt
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -542,9 +599,66 @@
                         </div>
                         
                         <div class="flex items-center gap-2">
-                            <button type="button" onclick="startNewSession()" class="neu-btn px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 cursor-pointer">
+                            <button type="button" onclick="startNewSession()" class="stitch-btn-secondary px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-violet-600 flex items-center gap-1.5 cursor-pointer">
                                 <span>🎲</span> Next Topic
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- REFERENCE C: 3 COMPACT METRIC CARDS IN A ROW -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 w-full">
+                        <!-- 1. Filler Words -->
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 flex flex-col justify-between shadow-xs">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-violet-500"></span> Filler Words
+                                </span>
+                                <span id="compact-filler-pill" class="stitch-badge-green font-bold text-[10px]">
+                                    Smooth
+                                </span>
+                            </div>
+                            <div id="compact-filler-stat" class="text-2xl sm:text-3xl font-black font-outfit text-slate-900 tracking-tight">
+                                0 detected
+                            </div>
+                            <div class="text-[11px] text-slate-400 font-medium mt-1">
+                                Speech pauses &amp; flow
+                            </div>
+                        </div>
+
+                        <!-- 2. Speaking Pace -->
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 flex flex-col justify-between shadow-xs">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-cyan-500"></span> Speaking Pace
+                                </span>
+                                <span id="compact-pace-pill" class="stitch-badge-cyan font-bold text-[10px]">
+                                    Ideal
+                                </span>
+                            </div>
+                            <div id="compact-pace-stat" class="text-2xl sm:text-3xl font-black font-outfit text-cyan-600 tracking-tight">
+                                138 WPM
+                            </div>
+                            <div class="text-[11px] text-slate-400 font-medium mt-1">
+                                Target: 120-150 WPM
+                            </div>
+                        </div>
+
+                        <!-- 3. Clarity -->
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 flex flex-col justify-between shadow-xs">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Clarity
+                                </span>
+                                <span id="compact-clarity-pill" class="stitch-badge-violet font-bold text-[10px]">
+                                    Crisp
+                                </span>
+                            </div>
+                            <div id="compact-clarity-stat" class="text-2xl sm:text-3xl font-black font-outfit text-violet-700 tracking-tight">
+                                92%
+                            </div>
+                            <div class="text-[11px] text-slate-400 font-medium mt-1">
+                                Structure &amp; precision
+                            </div>
                         </div>
                     </div>
 
@@ -1268,5 +1382,39 @@
             }
         });
     </script>
+
+    <!-- FIXED MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="stitch-bottom-nav md:hidden" aria-label="Mobile Navigation">
+        <!-- 1. Home -->
+        <a href="/praxis" class="stitch-nav-item" title="Praxis Home">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <span>Home</span>
+        </a>
+
+        <!-- 2. Career -->
+        <a href="/praxis#compass" class="stitch-nav-item" title="Career Compass">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-2-9l6-2-2 6-6 2 2-6z"></path></svg>
+            <span>Career</span>
+        </a>
+
+        <!-- 3. Coach (Raised circular active icon) -->
+        <a href="/coach.html" class="stitch-nav-raised-coach active" title="Communication Coach">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+            <span class="nav-label text-white">Coach</span>
+        </a>
+
+        <!-- 4. Routine -->
+        <a href="/routine.html" class="stitch-nav-item" title="Routine Tracker">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
+            <span>Routine</span>
+        </a>
+
+        <!-- 5. Progress -->
+        <a href="/routine.html#analytics" class="stitch-nav-item" title="Progress & User Statistics">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+            <span>Progress</span>
+        </a>
+    </nav>
+
 </body>
 </html>

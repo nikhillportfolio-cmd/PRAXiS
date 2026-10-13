@@ -1,0 +1,694 @@
+/**
+ * PRAXiS — STITCH DESIGN SYSTEM SPECIFICATIONS
+ * Comprehensive modern light-themed UI redesign tokens, components, and animations.
+ * Visual references:
+ * - Reference A: Praxis Home Dashboard (Mobile-first, violet tints, progress summaries, speech coach card)
+ * - Reference B: Career Compass (Interactive trajectory, path milestones, core strengths, recommended directions)
+ * - Reference C: Communication Coach (Speech coach cockpit, speaking challenge, circular mic waveform, metrics & accordions)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Outfit:wght@500;600;700;800;900&display=swap');
+
+:root {
+    /* STITCH PALETTE TOKENS */
+    --stitch-bg: #f8fafc;
+    --stitch-bg-alt: #f1f5f9;
+    --stitch-card: #ffffff;
+    --stitch-card-soft: #fbfcfe;
+    --stitch-card-violet: #f5f3ff;
+    --stitch-card-cyan: #ecfeff;
+    --stitch-card-emerald: #ecfdf5;
+    --stitch-card-amber: #fffbeb;
+
+    /* Borders */
+    --stitch-border: #e2e8f0;
+    --stitch-border-subtle: rgba(226, 232, 240, 0.85);
+    --stitch-border-violet: #ddd6fe;
+    --stitch-border-cyan: #a5f3fc;
+    --stitch-border-emerald: #a7f3d0;
+    --stitch-border-amber: #fde68a;
+
+    /* Accents */
+    --stitch-violet: #7c3aed;
+    --stitch-violet-hover: #6d28d9;
+    --stitch-violet-light: #8b5cf6;
+    --stitch-violet-soft: #ede9fe;
+    --stitch-violet-gradient: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+    --stitch-violet-gradient-subtle: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 100%);
+
+    --stitch-cyan: #06b6d4;
+    --stitch-cyan-hover: #0891b2;
+    --stitch-blue: #2563eb;
+    --stitch-blue-soft: #eff6ff;
+
+    --stitch-green: #10b981;
+    --stitch-green-hover: #059669;
+    --stitch-green-soft: #d1fae5;
+
+    --stitch-amber: #f59e0b;
+    --stitch-amber-hover: #d97706;
+    --stitch-amber-soft: #fef3c7;
+
+    --stitch-rose: #f43f5e;
+    --stitch-rose-soft: #ffe4e6;
+
+    /* Typography & Neutrals */
+    --stitch-navy: #0f172a;
+    --stitch-text-dark: #1e293b;
+    --stitch-text-body: #334155;
+    --stitch-text-muted: #64748b;
+    --stitch-text-subtle: #94a3b8;
+
+    /* Elevation Shadows */
+    --stitch-shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    --stitch-shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+    --stitch-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+    --stitch-shadow-md: 0 6px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.03);
+    --stitch-shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -4px rgba(15, 23, 42, 0.04);
+    --stitch-shadow-xl: 0 20px 30px -6px rgba(15, 23, 42, 0.1), 0 8px 12px -6px rgba(15, 23, 42, 0.05);
+    --stitch-shadow-violet: 0 6px 20px -2px rgba(124, 58, 237, 0.28);
+    --stitch-shadow-cyan: 0 6px 20px -2px rgba(6, 182, 212, 0.25);
+    --stitch-shadow-emerald: 0 6px 20px -2px rgba(16, 185, 129, 0.25);
+
+    /* Neumorphic Compatibility Mappings (Replaces mud-gray with clean Stitch aesthetics) */
+    --bg-color: #f8fafc;
+    --bg-base: #f8fafc;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --shadow-light: #ffffff;
+    --shadow-light-soft: rgba(255, 255, 255, 0.85);
+    --shadow-dark: rgba(226, 232, 240, 0.8);
+    --shadow-dark-deep: rgba(203, 213, 225, 0.8);
+    --shadow-minor: var(--stitch-shadow);
+    --shadow-minor-sm: var(--stitch-shadow-sm);
+}
+
+/* Base Body Styles */
+body {
+    background-color: var(--stitch-bg) !important;
+    color: var(--stitch-text-body);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--stitch-navy);
+}
+
+.font-digital, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* -------------------------------------------------------------------------
+   GLOBAL COMPONENT OVERRIDES & STITCH TOKENS
+   These redefine legacy .neu-* and .neo-* classes so every dynamic element
+   rendered by any script immediately adheres to the Stitch visual language.
+------------------------------------------------------------------------- */
+.neu-card, .neo-card {
+    background: #ffffff !important;
+    border-radius: 1.25rem !important;
+    border: 1px solid var(--stitch-border) !important;
+    box-shadow: var(--stitch-shadow) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.neu-card:hover, .neo-card:hover {
+    box-shadow: var(--stitch-shadow-md) !important;
+    border-color: #cbd5e1 !important;
+}
+
+.neu-card-sm, .neo-card-sm {
+    background: #ffffff !important;
+    border-radius: 1rem !important;
+    border: 1px solid var(--stitch-border) !important;
+    box-shadow: var(--stitch-shadow-xs) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.neu-card-sm:hover, .neo-card-sm:hover {
+    border-color: #cbd5e1 !important;
+    box-shadow: var(--stitch-shadow-sm) !important;
+}
+
+/* Buttons */
+.neu-btn, .neo-btn {
+    background: #ffffff !important;
+    border-radius: 0.875rem !important;
+    border: 1px solid var(--stitch-border) !important;
+    color: var(--stitch-text-dark) !important;
+    font-weight: 600 !important;
+    box-shadow: var(--stitch-shadow-xs) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+.neu-btn:hover, .neo-btn:hover {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--stitch-shadow-sm) !important;
+}
+
+.neu-btn:active, .neo-btn:active {
+    transform: translateY(0) !important;
+    background: #f1f5f9 !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.neu-btn.pressed, .neu-btn.active, .neo-btn.active {
+    background: #ede9fe !important;
+    border-color: var(--stitch-border-violet) !important;
+    color: var(--stitch-violet) !important;
+    box-shadow: inset 0 1px 2px rgba(124, 58, 237, 0.12) !important;
+}
+
+/* Circular elements & Icons */
+.neu-circle {
+    background: #ffffff !important;
+    border-radius: 9999px !important;
+    border: 1px solid var(--stitch-border) !important;
+    box-shadow: var(--stitch-shadow-xs) !important;
+    transition: all 0.2s ease !important;
+}
+
+.neu-circle:hover {
+    border-color: #cbd5e1 !important;
+    box-shadow: var(--stitch-shadow-sm) !important;
+}
+
+.neu-circle-pressed {
+    background: #f1f5f9 !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Inset / Trenches */
+.neu-trench, .neo-inset {
+    background: #f8fafc !important;
+    border: 1px solid var(--stitch-border) !important;
+    border-radius: 0.875rem !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Inputs */
+.neu-input, .neo-input {
+    background: #ffffff !important;
+    border: 1px solid var(--stitch-border) !important;
+    border-radius: 0.75rem !important;
+    color: var(--stitch-navy) !important;
+    transition: all 0.2s ease !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+
+.neu-input:focus, .neo-input:focus {
+    border-color: var(--stitch-violet) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12) !important;
+}
+
+/* Badges & Pills */
+.neu-badge, .neo-pill {
+    background: #f1f5f9 !important;
+    border: 1px solid var(--stitch-border) !important;
+    border-radius: 9999px !important;
+    color: var(--stitch-text-muted) !important;
+    box-shadow: var(--stitch-shadow-xs) !important;
+}
+
+/* Day selector button in routine */
+.neu-day-btn {
+    background: #ffffff !important;
+    border: 1px solid var(--stitch-border) !important;
+    box-shadow: var(--stitch-shadow-xs) !important;
+    transition: all 0.2s ease !important;
+}
+
+.neu-day-btn.active {
+    background: var(--stitch-violet) !important;
+    border-color: var(--stitch-violet) !important;
+    color: #ffffff !important;
+    box-shadow: var(--stitch-shadow-violet) !important;
+}
+
+/* -------------------------------------------------------------------------
+   STITCH COMPONENT CLASSES (ACCORDING TO REFERENCE A, B, C)
+------------------------------------------------------------------------- */
+
+/* STITCH LOGO MARK: Dark rounded square with neon symbol */
+.stitch-logo-mark {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #0f172a;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.stitch-logo-mark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.4), transparent 70%);
+    pointer-events: none;
+}
+
+.stitch-logo-symbol {
+    width: 1.4rem;
+    height: 1.4rem;
+    filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.7));
+}
+
+/* STITCH STATUS PILL: Green outlined status pill with green dot */
+.stitch-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.stitch-status-dot {
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 9999px;
+    background-color: #10b981;
+    box-shadow: 0 0 6px #10b981;
+    display: inline-block;
+}
+
+/* STITCH PRIMARY BUTTON: Violet-to-purple gradient with hover lift */
+.stitch-btn-primary {
+    background: var(--stitch-violet-gradient);
+    color: #ffffff !important;
+    font-weight: 700;
+    border-radius: 0.875rem;
+    padding: 0.75rem 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    box-shadow: var(--stitch-shadow-violet);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+.stitch-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -2px rgba(124, 58, 237, 0.38);
+    filter: brightness(1.05);
+}
+
+.stitch-btn-primary:active {
+    transform: translateY(0);
+}
+
+/* STITCH NAVY BUTTON: Wide dark navy button */
+.stitch-btn-navy {
+    background: #0f172a;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-radius: 0.875rem;
+    padding: 0.75rem 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid #1e293b;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+.stitch-btn-navy:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.24);
+}
+
+/* STITCH SECONDARY / GHOST BUTTON */
+.stitch-btn-secondary {
+    background: #ffffff;
+    color: var(--stitch-text-dark) !important;
+    font-weight: 600;
+    border-radius: 0.875rem;
+    padding: 0.625rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid var(--stitch-border);
+    box-shadow: var(--stitch-shadow-xs);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.stitch-btn-secondary:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+/* STITCH PILL BADGES */
+.stitch-badge-violet {
+    background: #f5f3ff;
+    color: #6d28d9;
+    border: 1px solid #ddd6fe;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stitch-badge-cyan {
+    background: #ecfeff;
+    color: #0e7490;
+    border: 1px solid #a5f3fc;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stitch-badge-green {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stitch-badge-amber {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* VIOLET TINTED CARD (Reference A & B Recommended Cards) */
+.stitch-card-violet-tint {
+    background: var(--stitch-card-violet);
+    border: 1px solid var(--stitch-border-violet);
+    border-radius: 1.25rem;
+    box-shadow: var(--stitch-shadow-sm);
+    transition: all 0.25s ease;
+}
+
+.stitch-card-violet-tint:hover {
+    box-shadow: var(--stitch-shadow-md);
+    border-color: #c4b5fd;
+}
+
+/* STITCH BOTTOM NAVIGATION (Fixed mobile bar with 5 destinations) */
+.stitch-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4.125rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--stitch-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+    z-index: 90;
+    box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.stitch-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    color: var(--stitch-text-muted);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding: 0.375rem 0.5rem;
+    border-radius: 0.75rem;
+    position: relative;
+    min-width: 3.5rem;
+}
+
+.stitch-nav-item svg, .stitch-nav-item .nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+.stitch-nav-item:hover {
+    color: var(--stitch-violet);
+}
+
+.stitch-nav-item.active {
+    color: var(--stitch-violet) !important;
+    font-weight: 700;
+}
+
+.stitch-nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.125rem;
+    width: 1.25rem;
+    height: 0.1875rem;
+    border-radius: 9999px;
+    background: var(--stitch-violet);
+}
+
+/* RAISED CIRCULAR COACH ICON ON MOBILE NAV */
+.stitch-nav-raised-coach {
+    transform: translateY(-0.75rem);
+    background: var(--stitch-violet-gradient);
+    color: #ffffff !important;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 9999px;
+    box-shadow: var(--stitch-shadow-violet);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stitch-nav-raised-coach:hover {
+    transform: translateY(-0.9rem) scale(1.05);
+    box-shadow: 0 8px 24px -2px rgba(124, 58, 237, 0.45);
+}
+
+.stitch-nav-raised-coach .nav-label {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    margin-top: 1px;
+}
+
+/* -------------------------------------------------------------------------
+   WAVEFORM & MICROPHONE VISUALIZATIONS (Reference A & C)
+------------------------------------------------------------------------- */
+.stitch-waveform-bar {
+    width: 3px;
+    background: linear-gradient(180deg, var(--stitch-violet) 0%, var(--stitch-cyan) 100%);
+    border-radius: 9999px;
+    animation: stitchWavePulse 1.2s ease-in-out infinite alternate;
+}
+
+.stitch-waveform-bar:nth-child(1) { height: 12px; animation-delay: 0.1s; }
+.stitch-waveform-bar:nth-child(2) { height: 22px; animation-delay: 0.3s; }
+.stitch-waveform-bar:nth-child(3) { height: 16px; animation-delay: 0.2s; }
+.stitch-waveform-bar:nth-child(4) { height: 28px; animation-delay: 0.4s; }
+.stitch-waveform-bar:nth-child(5) { height: 18px; animation-delay: 0.25s; }
+.stitch-waveform-bar:nth-child(6) { height: 24px; animation-delay: 0.35s; }
+.stitch-waveform-bar:nth-child(7) { height: 14px; animation-delay: 0.15s; }
+
+@keyframes stitchWavePulse {
+    0% { transform: scaleY(0.4); opacity: 0.6; }
+    100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* Layered circular pulse for mic */
+.stitch-pulse-ring {
+    position: absolute;
+    inset: -0.75rem;
+    border-radius: 9999px;
+    border: 2px solid rgba(124, 58, 237, 0.2);
+    animation: stitchPulseRing 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+.stitch-pulse-ring-outer {
+    position: absolute;
+    inset: -1.5rem;
+    border-radius: 9999px;
+    border: 2px solid rgba(6, 182, 212, 0.15);
+    animation: stitchPulseRing 2s cubic-bezier(0.25, 1, 0.5, 1) infinite 0.6s;
+}
+
+@keyframes stitchPulseRing {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.08); opacity: 0.3; }
+    100% { transform: scale(1.18); opacity: 0; }
+}
+
+/* -------------------------------------------------------------------------
+   PROGRESS RINGS & CIRCLES (Reference A & Routine)
+------------------------------------------------------------------------- */
+.stitch-progress-ring {
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.stitch-progress-ring-circle {
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* CONNECTED JOURNEY MILESTONES (Reference B) */
+.stitch-journey-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.stitch-journey-line {
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 2px;
+    background: #e2e8f0;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.stitch-journey-progress {
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    height: 2px;
+    background: linear-gradient(90deg, #10b981 0%, var(--stitch-violet) 100%);
+    transform: translateY(-50%);
+    z-index: 2;
+    transition: width 0.4s ease;
+}
+
+.stitch-stage-node {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stitch-node-dot {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    color: var(--stitch-text-muted);
+    transition: all 0.3s ease;
+}
+
+.stitch-stage-node.completed .stitch-node-dot {
+    background: #10b981;
+    border-color: #10b981;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+.stitch-stage-node.active .stitch-node-dot {
+    background: var(--stitch-violet);
+    border-color: var(--stitch-violet);
+    color: #ffffff;
+    box-shadow: var(--stitch-shadow-violet);
+    transform: scale(1.1);
+}
+
+/* -------------------------------------------------------------------------
+   CUSTOM SCROLLBAR & ACCESSIBILITY
+------------------------------------------------------------------------- */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Smooth Transitions & Focus Rings */
+*:focus-visible {
+    outline: 2px solid var(--stitch-violet) !important;
+    outline-offset: 2px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

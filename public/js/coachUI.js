@@ -592,6 +592,66 @@
         if (!evalData) return;
 
         // ---------------------------------------------------------------------
+        // REFERENCE C: 3 COMPACT METRIC CARDS HYDRATION
+        // ---------------------------------------------------------------------
+        const cfStat = document.getElementById('compact-filler-stat');
+        const cfPill = document.getElementById('compact-filler-pill');
+        if (cfStat) {
+            const count = evalData.fillerCount ?? 0;
+            cfStat.innerText = `${count} detected`;
+            if (cfPill) {
+                if (count === 0) {
+                    cfPill.innerText = 'Smooth';
+                    cfPill.className = 'stitch-badge-green font-bold text-[10px]';
+                } else if (count <= 2) {
+                    cfPill.innerText = 'Low';
+                    cfPill.className = 'stitch-badge-cyan font-bold text-[10px]';
+                } else {
+                    cfPill.innerText = 'Elevated';
+                    cfPill.className = 'stitch-badge-amber font-bold text-[10px]';
+                }
+            }
+        }
+
+        const cpStat = document.getElementById('compact-pace-stat');
+        const cpPill = document.getElementById('compact-pace-pill');
+        if (cpStat) {
+            const wpm = evalData.wpm || 0;
+            cpStat.innerText = `${wpm} WPM`;
+            if (cpPill) {
+                if (wpm >= 120 && wpm <= 160) {
+                    cpPill.innerText = 'Ideal';
+                    cpPill.className = 'stitch-badge-cyan font-bold text-[10px]';
+                } else if (wpm > 160) {
+                    cpPill.innerText = 'Rushed';
+                    cpPill.className = 'stitch-badge-amber font-bold text-[10px]';
+                } else {
+                    cpPill.innerText = 'Measured';
+                    cpPill.className = 'stitch-badge-green font-bold text-[10px]';
+                }
+            }
+        }
+
+        const ccStat = document.getElementById('compact-clarity-stat');
+        const ccPill = document.getElementById('compact-clarity-pill');
+        if (ccStat) {
+            const score = evalData.overallScore || 0;
+            ccStat.innerText = `${score}%`;
+            if (ccPill) {
+                if (score >= 85) {
+                    ccPill.innerText = 'Crisp';
+                    ccPill.className = 'stitch-badge-violet font-bold text-[10px]';
+                } else if (score >= 70) {
+                    ccPill.innerText = 'Clear';
+                    ccPill.className = 'stitch-badge-green font-bold text-[10px]';
+                } else {
+                    ccPill.innerText = 'Developing';
+                    ccPill.className = 'stitch-badge-amber font-bold text-[10px]';
+                }
+            }
+        }
+
+        // ---------------------------------------------------------------------
         // 1. Coach Encouragement Greeting
         // ---------------------------------------------------------------------
         const greetingEl = document.getElementById('coach-feedback-greeting');

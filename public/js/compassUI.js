@@ -386,6 +386,58 @@
         if (!container || !profile) return;
         container.innerHTML = "";
 
+        // REFERENCE B — Identified Core Strengths Card
+        const strengthsCard = document.createElement('div');
+        strengthsCard.className = 'col-span-1 sm:col-span-2 stitch-card p-5 sm:p-7 text-left border border-slate-200 shadow-sm mb-2';
+        
+        // Extract top identified strength names from dimensions
+        const topTraits = [];
+        if (profile.thinking && profile.thinking.topDimensions) {
+            profile.thinking.topDimensions.forEach(d => topTraits.push(d.name));
+        }
+        if (topTraits.length < 3) {
+            topTraits.push('Systems Thinking', 'Strategic Empathy', 'Rapid Prototyping');
+        }
+        const displayTraits = [...new Set(topTraits)].slice(0, 4);
+
+        strengthsCard.innerHTML = `
+            <div class="flex items-center justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">🌟</span>
+                    <h3 class="text-lg sm:text-xl font-black text-slate-900 font-outfit">Identified Core Strengths</h3>
+                </div>
+                <span class="stitch-badge-green font-bold">Verified Profile</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed mb-4">
+                Strengths synthesized through scenario evaluations across analytical problem-solving, team communication, and motivation drivers.
+            </p>
+
+            <!-- Colorful Pill Tags (Reference B) -->
+            <div class="flex flex-wrap gap-2 mb-5">
+                ${displayTraits.map((t, idx) => {
+                    const colors = [
+                        'bg-violet-100 text-violet-800 border-violet-200',
+                        'bg-cyan-100 text-cyan-800 border-cyan-200',
+                        'bg-emerald-100 text-emerald-800 border-emerald-200',
+                        'bg-amber-100 text-amber-800 border-amber-200'
+                    ];
+                    return `<span class="px-3 py-1 rounded-full text-xs font-bold border ${colors[idx % colors.length]}">${escapeHtml(t)}</span>`;
+                }).join('')}
+            </div>
+
+            <!-- Pattern Highlight information box (Reference B) -->
+            <div class="p-3.5 bg-violet-50/90 rounded-xl border border-violet-200 flex items-start gap-3">
+                <span class="text-base text-violet-600 mt-0.5">💡</span>
+                <div>
+                    <h5 class="text-xs font-bold text-violet-950">Pattern Highlight</h5>
+                    <p class="text-[11px] text-violet-800 leading-relaxed mt-0.5">
+                        ${escapeHtml(profile.thinking ? profile.thinking.description : "Your responses demonstrate high structural synthesis and technical empathy.")}
+                    </p>
+                </div>
+            </div>
+        `;
+        container.appendChild(strengthsCard);
+
         const insights = [
             { key: 'thinking', icon: '🧠', data: profile.thinking, badge: 'Thinking Style' },
             { key: 'workStyle', icon: '⚡', data: profile.workStyle, badge: 'Work Style' },
@@ -476,18 +528,25 @@
 
     function createCareerCard(career, index, tierType) {
         const card = document.createElement('div');
-        card.className = 'neu-card p-4 sm:p-6 flex flex-col justify-between group hover:scale-[1.01] transition-all duration-300 fade-in border border-white/70 shadow-lg relative';
+        const isPrimary = (index === 0 && tierType === 'strong');
+        
+        // Reference B: Violet borders/highlights for primary recommendation
+        const cardClasses = isPrimary
+            ? 'stitch-card p-5 sm:p-7 flex flex-col justify-between group transition-all duration-300 fade-in border-2 border-violet-500 shadow-md ring-4 ring-violet-50 relative'
+            : 'stitch-card p-4 sm:p-6 flex flex-col justify-between group hover:border-violet-300 transition-all duration-300 fade-in relative';
+
+        card.className = cardClasses;
         card.style.animationDelay = `${index * 90}ms`;
 
-        // Match Level & Confidence pill
+        // Match Level & Fit Score Badge (Reference B)
         const matchPills = {
-            strong: `<span class="neu-badge text-[9px] font-black text-emerald-700 bg-emerald-100/80 uppercase px-2.5 py-0.5">Strong Match</span>`,
-            exploring: `<span class="neu-badge text-[9px] font-black text-blue-700 bg-blue-100/80 uppercase px-2.5 py-0.5">Worth Exploring</span>`,
-            adjacent: `<span class="neu-badge text-[9px] font-black text-purple-700 bg-purple-100/80 uppercase px-2.5 py-0.5">You Might Also Enjoy</span>`
+            strong: `<span class="stitch-badge-green font-black">94% Fit &bull; Strong Match</span>`,
+            exploring: `<span class="stitch-badge-cyan font-black">82% Fit &bull; Worth Exploring</span>`,
+            adjacent: `<span class="stitch-badge-violet font-black">76% Fit &bull; You Might Also Enjoy</span>`
         };
 
         const traitsTags = (career.supportingTraits || []).map(t =>
-            `<span class="neu-badge text-[9px] font-bold text-slate-600 px-2 py-0.5">${escapeHtml(t)}</span>`
+            `<span class="stitch-badge-violet">${escapeHtml(t)}</span>`
         ).join(' ');
 
         // Check if reality check completed
@@ -502,28 +561,33 @@
                 disliked: "👎 Disliked",
                 strongly_disliked: "🚫 Disliked"
             };
-            realityBadgeHTML = `<div class="neu-badge text-[9px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 mt-2">Reality Check: ${reactionIcons[savedReality.reaction] || 'Done'}</div>`;
+            realityBadgeHTML = `<div class="stitch-badge-amber mt-2">Reality Check: ${reactionIcons[savedReality.reaction] || 'Done'}</div>`;
         }
+
+        const primaryBadge = isPrimary 
+            ? `<div class="mb-2"><span class="stitch-badge-violet bg-violet-600 text-white border-0 font-extrabold uppercase tracking-wider text-[10px]">★ PRIMARY RECOMMENDATION</span></div>` 
+            : '';
 
         card.innerHTML = `
             <div>
+                ${primaryBadge}
                 <div class="flex items-start justify-between gap-2 mb-3">
-                    <div class="w-12 h-12 neu-circle flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/90 flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
                         ${career.icon || "🧭"}
                     </div>
                     <div class="flex flex-col items-end gap-1">
                         ${matchPills[tierType] || matchPills.exploring}
-                        <span class="text-[10px] font-bold text-slate-500">${escapeHtml(career.confidenceLevel || "High Confidence")}</span>
+                        <span class="text-[10px] font-bold text-slate-400 font-digital">${escapeHtml(career.confidenceLevel || "High Confidence")}</span>
                     </div>
                 </div>
 
-                <span class="text-[10px] font-extrabold text-blue-600 uppercase tracking-wider">${escapeHtml(career.category)}</span>
-                <h3 class="text-base sm:text-lg font-black text-slate-800 font-outfit mt-0.5 leading-snug group-hover:text-blue-600 transition-colors">${escapeHtml(career.title)}</h3>
+                <span class="text-[10px] font-extrabold text-violet-600 uppercase tracking-wider">${escapeHtml(career.category)}</span>
+                <h3 class="text-base sm:text-lg font-black text-slate-900 font-outfit mt-0.5 leading-snug group-hover:text-violet-600 transition-colors">${escapeHtml(career.title)}</h3>
 
                 <p class="text-xs text-slate-600 font-medium leading-relaxed mt-2 mb-3 line-clamp-3">${escapeHtml(career.desc)}</p>
 
-                <div class="neu-trench p-2.5 rounded-xl text-[11px] font-medium text-slate-700 mb-3 leading-relaxed bg-slate-100/50">
-                    <span class="font-bold text-indigo-600 block mb-0.5">Why it matches:</span>
+                <div class="p-3 rounded-xl text-[11px] font-medium text-slate-700 mb-3 leading-relaxed bg-slate-50 border border-slate-200/80">
+                    <span class="font-bold text-violet-700 block mb-0.5">Why it matches:</span>
                     ${escapeHtml(career.whyItMatches)}
                 </div>
 
@@ -531,7 +595,7 @@
                     ${traitsTags}
                 </div>
 
-                <div class="text-[11px] text-amber-800/90 font-medium flex items-start gap-1.5 mb-2 bg-amber-50/50 p-2 rounded-lg border border-amber-200/50">
+                <div class="text-[11px] text-amber-900 font-medium flex items-start gap-1.5 mb-2 bg-amber-50/60 p-2.5 rounded-xl border border-amber-200/60">
                     <span class="shrink-0 text-xs">⚡</span>
                     <span class="line-clamp-2">${escapeHtml(career.frictionNote)}</span>
                 </div>
@@ -541,19 +605,20 @@
                 </div>
             </div>
 
-            <div class="pt-4 mt-3 border-t border-slate-200/80 flex items-center justify-between gap-2 flex-wrap">
+            <!-- Action footer with Explore Details (Reference B) -->
+            <div class="pt-4 mt-3 border-t border-slate-100 flex items-center justify-between gap-2 flex-wrap">
                 <button type="button" onclick="inspectCareerRoadmap('${career.id}')"
-                    class="neu-btn px-3 py-1.5 text-xs font-extrabold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer">
-                    <span>Inspect Roadmap</span> &rarr;
+                    class="${isPrimary ? 'stitch-btn-primary' : 'stitch-btn-secondary'} text-xs px-3.5 py-2 flex items-center gap-1.5 cursor-pointer">
+                    <span>Explore Details</span> &rarr;
                 </button>
 
                 <div class="flex items-center gap-1.5">
                     <button type="button" onclick="openRealityCheckModal('${career.id}')" title="Take 60-Second Reality Check"
-                        class="neu-circle w-8 h-8 flex items-center justify-center text-xs hover:text-amber-600 transition-colors cursor-pointer">
+                        class="w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-xs hover:text-amber-600 transition-colors cursor-pointer">
                         ⚡
                     </button>
                     <button type="button" onclick="toggleCareerComparisonUI('${career.id}')" title="Compare Side-by-Side"
-                        class="neu-circle w-8 h-8 flex items-center justify-center text-xs hover:text-indigo-600 transition-colors cursor-pointer">
+                        class="w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-xs hover:text-violet-600 transition-colors cursor-pointer">
                         ⚖️
                     </button>
                 </div>

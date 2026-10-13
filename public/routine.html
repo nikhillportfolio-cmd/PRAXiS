@@ -11,7 +11,7 @@
     <meta property="og:url" content="/routine">
     <link rel="canonical" href="/routine">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#2563eb">
+    <meta name="theme-color" content="#7c3aed">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -30,29 +30,37 @@
                         mono: ['"JetBrains Mono"', 'SF Mono', 'Roboto Mono', 'Monaco', 'Consolas', 'monospace'],
                     },
                     colors: {
+                        stitch: {
+                            bg: '#f8fafc',
+                            card: '#ffffff',
+                            violet: '#7c3aed',
+                            'violet-light': '#f5f3ff',
+                            cyan: '#06b6d4',
+                            'cyan-light': '#ecfeff',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            navy: '#0f172a',
+                            slate: '#1e293b',
+                            muted: '#64748b'
+                        },
                         neu: {
-                            base: '#e0e5ec',
+                            base: '#f8fafc',
                             dark: '#1e293b',
                             text: '#334155',
                             muted: '#64748b',
-                            accent: '#2563eb',
-                            sky: '#0284c7',
-                            indigo: '#4f46e5'
+                            accent: '#7c3aed',
+                            sky: '#06b6d4',
+                            indigo: '#6366f1'
                         }
                     }
                 }
             }
         }
     </script>
+    <link rel="stylesheet" href="/css/stitch-theme.css">
     <style>
         :root {
-            --bg-color: #e0e5ec;
-            --shadow-light: rgba(255, 255, 255, 0.75);
-            --shadow-light-soft: rgba(255, 255, 255, 0.55);
-            --shadow-dark: #b8bec7;
-            --shadow-dark-deep: #a3abb7;
-            --shadow-minor: 0 4px 12px rgba(0, 0, 0, 0.06);
-            --shadow-minor-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+            --bg-color: #f8fafc;
         }
 
         body {
@@ -70,79 +78,13 @@
             font-family: 'Outfit', sans-serif;
         }
 
-        /* Neumorphic Design Tokens */
-        .neu-card {
-            background: #e0e5ec;
-            border-radius: 1.5rem;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light), var(--shadow-minor);
-            transition: all 0.25s ease;
-        }
-
-        .neu-card-sm {
-            background: #e0e5ec;
-            border-radius: 1rem;
-            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light), var(--shadow-minor-sm);
-            transition: all 0.2s ease;
-        }
-
-        .neu-btn {
-            background: #e0e5ec;
-            border-radius: 1rem;
-            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light), var(--shadow-minor-sm);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .neu-btn:hover {
-            box-shadow: 7px 7px 14px var(--shadow-dark-deep), -7px -7px 14px var(--shadow-light);
-            transform: translateY(-1px);
-        }
-
-        .neu-btn:active, .neu-btn.pressed {
-            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light-soft);
-            transform: translateY(0);
-        }
-
-        .neu-trench {
-            background: #e0e5ec;
-            border-radius: 9999px;
-            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light-soft);
-        }
-
-        .neu-circle {
-            background: #e0e5ec;
-            border-radius: 9999px;
-            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light), var(--shadow-minor-sm);
-        }
-
-        .neu-badge {
-            background: #e0e5ec;
-            border-radius: 9999px;
-            box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light), var(--shadow-minor-sm);
-        }
-
-        .neu-input {
-            background: #e0e5ec;
-            border-radius: 0.85rem;
-            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light-soft);
-            border: 1.5px solid #cbd5e1;
-            transition: all 0.2s ease;
-        }
-
-        .neu-input:focus {
-            box-shadow: inset 3px 3px 6px var(--shadow-dark-deep), inset -3px -3px 6px var(--shadow-light-soft), 0 0 0 2px #2563eb;
-            border-color: #2563eb;
-            outline: none;
-        }
-
         .neu-day-btn {
             width: 2.25rem;
             height: 2.25rem;
             border-radius: 0.65rem;
-            background: #e0e5ec;
-            box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
-            border: 1.5px solid #cbd5e1;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1.5px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -155,10 +97,10 @@
         }
 
         .neu-day-btn.checked {
-            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
             color: #ffffff;
-            border-color: #1e40af;
-            box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.35);
+            border-color: #6d28d9;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.3);
         }
 
         .font-digital {
@@ -168,7 +110,7 @@
         }
 
         .text-gradient {
-            background: linear-gradient(135deg, #1e293b 0%, #2563eb 50%, #4f46e5 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #7c3aed 50%, #06b6d4 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -179,7 +121,7 @@
             height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(224, 229, 236, 0.5);
+            background: rgba(241, 245, 249, 0.7);
             border-radius: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -207,55 +149,55 @@
     </a>
 
     <!-- TOP NAVIGATION BAR -->
-    <header class="relative w-full max-w-6xl px-3 sm:px-6 py-4 sm:py-6 flex items-center justify-between z-20 gap-2 min-h-[64px]">
+    <header class="relative w-full max-w-6xl px-3 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between z-20 gap-2 min-h-[64px] bg-white border-b border-slate-200/80 sticky top-0 shadow-xs" role="banner">
         <!-- LEFT: LOGO & NAV LINKS -->
         <div class="flex items-center gap-2 sm:gap-4">
-            <a href="/praxis" class="flex items-center gap-2 sm:gap-2.5 group cursor-pointer" title="Return to PRAXiS Home">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 neu-circle flex items-center justify-center text-amber-500 shrink-0 group-hover:scale-105 transition-transform">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L14.85 8.36L21.82 9.27L16.66 14.14L18.09 21.02L12 17.67L5.91 21.02L7.34 14.14L2.18 9.27L9.15 8.36L12 2Z" fill="url(#star-grad-nav)" stroke="#f59e0b" stroke-width="0.8" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="star-grad-nav" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#fbbf24"/>
-                                <stop offset="1" stop-color="#d97706"/>
-                            </linearGradient>
-                        </defs>
+            <a href="/praxis" class="flex items-center gap-2.5 group cursor-pointer" title="Return to PRAXiS Home">
+                <!-- Dark rounded-square logo mark with neon symbol -->
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-950 flex items-center justify-center text-white shadow-md shadow-slate-950/20 group-hover:scale-105 transition-transform shrink-0">
+                    <svg class="w-5 h-5 text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
                     </svg>
                 </div>
-                <span class="font-outfit font-extrabold text-xl sm:text-2xl text-slate-800 tracking-tight">PRAXiS</span>
+                <div class="flex flex-col">
+                    <span class="font-outfit font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none">PRAXiS</span>
+                    <span class="text-[9px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">Routine Engine</span>
+                </div>
             </a>
 
             <!-- DESKTOP NAV -->
-            <nav class="hidden md:flex items-center gap-2 ml-2">
-                <a href="/praxis#compass" class="neu-btn px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 transition-all">
+            <nav class="hidden md:flex items-center gap-1.5 ml-3" aria-label="Main Navigation">
+                <a href="/praxis#compass" class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-violet-600 rounded-lg hover:bg-slate-100/80 transition-all flex items-center gap-1.5">
                     <span>🧭</span> Compass
                 </a>
-                <a href="/routine.html" class="neu-btn pressed px-3.5 py-1.5 text-xs font-extrabold text-blue-600 flex items-center gap-1.5 border border-blue-300 shadow-inner">
+                <a href="/routine.html" class="px-3 py-1.5 text-xs font-black text-violet-700 bg-violet-50 rounded-lg border border-violet-200 shadow-xs flex items-center gap-1.5">
                     <span>🔥</span> Routine
                 </a>
-                <a href="/coach.html" class="neu-btn px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 flex items-center gap-1.5 transition-all">
+                <a href="/coach.html" class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-violet-600 rounded-lg hover:bg-slate-100/80 transition-all flex items-center gap-1.5">
                     <span>🎙️</span> Communication
                 </a>
-                <a href="/coach.html?view=fluency" class="neu-btn px-3.5 py-1.5 text-xs font-extrabold text-blue-600 hover:text-blue-700 flex items-center gap-1.5 transition-all" title="Fluency Lab Speaking Drills">
+                <a href="/coach.html?view=fluency" class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-cyan-600 rounded-lg hover:bg-slate-100/80 transition-all flex items-center gap-1.5" title="Fluency Lab Speaking Drills">
                     <span>⚡</span> Fluency Lab
                 </a>
-                <a id="nav-admin-btn" href="/admin.html" class="neu-btn px-3.5 py-1.5 text-xs font-black text-purple-700 hover:text-purple-900 border border-purple-300 flex items-center gap-1.5 transition-all hidden" title="Admin Studio">
+                <a id="nav-admin-btn" href="/admin.html" class="px-3 py-1.5 text-xs font-black text-purple-700 hover:text-purple-900 rounded-lg border border-purple-200 bg-purple-50 flex items-center gap-1.5 transition-all hidden" title="Admin Studio">
                     <span>🛡️</span> Admin Studio
                 </a>
             </nav>
         </div>
 
-        <!-- RIGHT: MOBILE ICONS & PROFILE / AUTH -->
+        <!-- RIGHT: ASSISTANT ICON & PROFILE / AUTH -->
         <div class="ml-auto flex items-center gap-2 sm:gap-3 shrink-0">
-            <div class="flex md:hidden items-center gap-1.5">
-                <a href="/praxis#compass" title="Career Compass" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-blue-600">🧭</a>
-                <a href="/coach.html" title="Communication Coach" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-blue-600">🎙️</a>
-                <a href="/coach.html?view=fluency" title="Fluency Lab" class="neu-circle w-8 h-8 flex items-center justify-center text-xs text-amber-500 font-bold">⚡</a>
+            <!-- Circular Assistant Icon with Active Status Dot -->
+            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 relative text-sm cursor-pointer hover:bg-slate-200 transition-colors" title="AI Habit Assistant Active">
+                <span>🤖</span>
+                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white"></span>
             </div>
 
             <!-- AUTH & PROFILE -->
             <div id="auth-container" class="flex items-center gap-2 z-30">
-                <button id="btn-google-login" onclick="window.praxisAuth && window.praxisAuth.openModal()" class="neu-btn px-3 py-1.5 sm:px-4 sm:py-2 flex items-center gap-2 text-slate-800 hover:text-indigo-600 font-bold text-xs transition-all shadow-sm cursor-pointer">
+                <button id="btn-google-login" onclick="window.praxisAuth && window.praxisAuth.openModal()" class="stitch-btn-secondary py-1.5 px-3 text-xs font-bold text-slate-700 hover:text-violet-700 flex items-center gap-2 cursor-pointer shadow-xs">
                     <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                         <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
                         <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
@@ -265,8 +207,8 @@
                     <span>Sign In</span>
                 </button>
 
-                <div id="profile-section" class="hidden flex items-center gap-2.5 bg-slate-900/90 text-white px-3 py-1.5 rounded-full border border-slate-700 shadow-md">
-                    <img id="user-avatar" class="w-7 h-7 rounded-full border border-indigo-400 object-cover shrink-0" src="" alt="Avatar">
+                <div id="profile-section" class="hidden flex items-center gap-2.5 bg-slate-900 text-white px-3 py-1.5 rounded-full border border-slate-700 shadow-md">
+                    <img id="user-avatar" class="w-7 h-7 rounded-full border border-violet-400 object-cover shrink-0" src="" alt="Avatar">
                     <div class="flex flex-col text-left hidden sm:flex">
                         <span id="user-name" class="text-[11px] font-bold text-slate-100 leading-tight">Student</span>
                         <span id="user-email" class="text-[9px] text-slate-400 leading-none truncate max-w-[110px]">email</span>
@@ -282,82 +224,89 @@
     <!-- MAIN PAGE CONTAINER -->
     <main class="w-full max-w-5xl px-3 sm:px-6 flex flex-col items-center relative z-10 space-y-6 sm:space-y-7">
 
-        <!-- 1. PRIMARY TODAY HERO DASHBOARD -->
-        <section class="w-full neu-card p-5 sm:p-7 md:p-8 bg-gradient-to-br from-slate-100/95 via-slate-100/85 to-blue-50/40 relative overflow-hidden border border-white/80 shadow-xl">
-            <div class="absolute -top-16 -right-16 w-52 h-52 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-16 -left-16 w-52 h-52 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- 1. PRIMARY TODAY HERO DASHBOARD (REFERENCE A/B UNIFIED STITCH CARD) -->
+        <section class="w-full stitch-card p-5 sm:p-7 md:p-8 bg-white border border-slate-200/90 relative overflow-hidden shadow-sm">
+            <div class="absolute -top-16 -right-16 w-52 h-52 bg-violet-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-16 -left-16 w-52 h-52 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-                <div>
-                    <div class="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-widest mb-1.5">
-                        <span id="today-greeting-text">Good evening</span> &bull; <span id="today-date-text" class="text-slate-500 font-semibold">Today</span>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 text-xs font-bold mb-2 flex-wrap">
+                        <span id="today-greeting-text" class="text-violet-700 font-extrabold uppercase tracking-widest text-[11px]">Good evening</span>
+                        <span class="text-slate-300">•</span>
+                        <span class="stitch-badge-green font-bold text-[10px]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            SYNC • ACTIVE
+                        </span>
+                        <span class="text-slate-300">•</span>
+                        <span id="today-date-text" class="text-slate-500 font-semibold text-xs">Today</span>
                     </div>
-                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-800 font-outfit tracking-tight">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 font-outfit tracking-tight leading-tight">
                         Daily <span class="text-gradient">Routine & Habits</span>
                     </h1>
-                    <p id="today-summary-headline" class="text-xs sm:text-sm text-slate-600 font-medium mt-1 leading-relaxed">
+                    <p id="today-summary-headline" class="text-xs sm:text-sm text-slate-500 font-medium mt-1.5 leading-relaxed max-w-xl">
                         Loading your routine...
                     </p>
 
                     <!-- PROGRESS BAR -->
-                    <div class="w-full max-w-md mt-3.5">
-                        <div class="flex items-center justify-between text-xs font-black text-slate-700 mb-1">
+                    <div class="w-full max-w-md mt-4">
+                        <div class="flex items-center justify-between text-xs font-black text-slate-700 mb-1.5">
                             <span>Today's Progress</span>
-                            <span id="today-hero-percent-badge" class="neu-badge text-[10px] text-blue-600 px-2 py-0.5 font-black">0% Complete</span>
+                            <span id="today-hero-percent-badge" class="stitch-badge-violet font-black text-[10px]">0% Complete</span>
                         </div>
-                        <div class="w-full h-3 rounded-full bg-[#cbd5e1] overflow-hidden neu-trench p-0.5">
-                            <div id="today-hero-progress-bar" class="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                        <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden border border-slate-200 p-0.5">
+                            <div id="today-hero-progress-bar" class="h-full bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 4 COMPACT STAT TILES -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-2 gap-2 sm:gap-3 shrink-0">
-                    <div class="neu-card-sm p-2.5 sm:p-3 text-center bg-white/70 min-w-[90px]">
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-2 gap-2.5 sm:gap-3 shrink-0">
+                    <div class="p-3 text-center bg-slate-50/80 rounded-2xl border border-slate-200 min-w-[95px] shadow-xs">
                         <span class="text-[9px] text-slate-400 font-extrabold block uppercase tracking-wider">Completed</span>
-                        <span id="stat-today-completed" class="text-lg sm:text-xl font-black text-slate-800 font-outfit block mt-0.5">0/0</span>
-                        <span class="text-[8px] text-slate-400 font-semibold block">Habits Done</span>
+                        <span id="stat-today-completed" class="text-lg sm:text-2xl font-black text-slate-900 font-outfit block mt-0.5">0/0</span>
+                        <span class="text-[9px] text-slate-500 font-semibold block">Habits Done</span>
                     </div>
 
-                    <div class="neu-card-sm p-2.5 sm:p-3 text-center bg-white/70 min-w-[90px]">
-                        <span class="text-[9px] text-slate-400 font-extrabold block uppercase tracking-wider">Remaining</span>
-                        <span id="stat-today-remaining" class="text-lg sm:text-xl font-black text-blue-600 font-outfit block mt-0.5">0</span>
-                        <span class="text-[8px] text-slate-400 font-semibold block">To Do Today</span>
+                    <div class="p-3 text-center bg-cyan-50/60 rounded-2xl border border-cyan-100 min-w-[95px] shadow-xs">
+                        <span class="text-[9px] text-cyan-600 font-extrabold block uppercase tracking-wider">Remaining</span>
+                        <span id="stat-today-remaining" class="text-lg sm:text-2xl font-black text-cyan-700 font-outfit block mt-0.5">0</span>
+                        <span class="text-[9px] text-cyan-600/80 font-semibold block">To Do Today</span>
                     </div>
 
-                    <div class="neu-card-sm p-2.5 sm:p-3 text-center bg-white/70 min-w-[90px]">
+                    <div class="p-3 text-center bg-amber-50/60 rounded-2xl border border-amber-100 min-w-[95px] shadow-xs">
                         <span class="text-[9px] text-amber-600 font-extrabold block uppercase tracking-wider">Streak</span>
-                        <span id="stat-today-streak" class="text-lg sm:text-xl font-black text-amber-600 font-outfit block mt-0.5">0d</span>
-                        <span id="stat-today-best-streak" class="text-[8px] text-amber-700/80 font-bold block">Best: 0d</span>
+                        <span id="stat-today-streak" class="text-lg sm:text-2xl font-black text-amber-600 font-outfit block mt-0.5">0d</span>
+                        <span id="stat-today-best-streak" class="text-[9px] text-amber-700/80 font-bold block">Best: 0d</span>
                     </div>
 
-                    <div class="neu-card-sm p-2.5 sm:p-3 text-center bg-white/70 min-w-[90px]">
-                        <span class="text-[9px] text-indigo-600 font-extrabold block uppercase tracking-wider">Focus Time</span>
-                        <span id="stat-today-focus" class="text-lg sm:text-xl font-black text-indigo-600 font-outfit block mt-0.5">0m</span>
-                        <span class="text-[8px] text-slate-400 font-semibold block">Today's Focus</span>
+                    <div class="p-3 text-center bg-violet-50/60 rounded-2xl border border-violet-100 min-w-[95px] shadow-xs">
+                        <span class="text-[9px] text-violet-600 font-extrabold block uppercase tracking-wider">Focus Time</span>
+                        <span id="stat-today-focus" class="text-lg sm:text-2xl font-black text-violet-700 font-outfit block mt-0.5">0m</span>
+                        <span class="text-[9px] text-violet-600/80 font-semibold block">Today's Focus</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 2. MAIN SECTION NAVIGATION TABS -->
-        <section class="w-full flex items-center justify-between gap-2 border-b border-slate-300/60 pb-3 flex-wrap">
+        <section class="w-full flex items-center justify-between gap-3 border-b border-slate-200 pb-3 flex-wrap">
             <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 no-scrollbar">
-                <button type="button" id="tab-btn-today" onclick="PraxisRoutine.switchTab('today')" class="neu-btn pressed px-4 py-2 text-xs font-black text-blue-600 border border-blue-400/40 shadow-inner flex items-center gap-1.5 cursor-pointer">
+                <button type="button" id="tab-btn-today" onclick="PraxisRoutine.switchTab('today')" class="px-4 py-2 text-xs font-black text-violet-700 bg-violet-50 rounded-xl border border-violet-200 shadow-xs flex items-center gap-1.5 cursor-pointer">
                     <span>📋</span> Today's Routine
                 </button>
-                <button type="button" id="tab-btn-calendar" onclick="PraxisRoutine.switchTab('calendar')" class="neu-btn px-4 py-2 text-xs font-bold text-slate-600 hover:text-blue-600 flex items-center gap-1.5 transition-all cursor-pointer">
+                <button type="button" id="tab-btn-calendar" onclick="PraxisRoutine.switchTab('calendar')" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-violet-600 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-1.5 transition-all cursor-pointer">
                     <span>📅</span> Calendar & 30-Day
                 </button>
-                <button type="button" id="tab-btn-analytics" onclick="PraxisRoutine.switchTab('analytics')" class="neu-btn px-4 py-2 text-xs font-bold text-slate-600 hover:text-blue-600 flex items-center gap-1.5 transition-all cursor-pointer">
+                <button type="button" id="tab-btn-analytics" onclick="PraxisRoutine.switchTab('analytics')" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-violet-600 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-1.5 transition-all cursor-pointer">
                     <span>📈</span> Weekly Insights
                 </button>
-                <button type="button" id="tab-btn-stopwatch" onclick="PraxisRoutine.switchTab('stopwatch')" class="neu-btn px-4 py-2 text-xs font-bold text-slate-600 hover:text-blue-600 flex items-center gap-1.5 transition-all cursor-pointer">
+                <button type="button" id="tab-btn-stopwatch" onclick="PraxisRoutine.switchTab('stopwatch')" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-violet-600 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-1.5 transition-all cursor-pointer">
                     <span>⏱️</span> Focus Timer
                 </button>
             </div>
 
-            <button type="button" onclick="PraxisRoutine.openAddHabitModal()" class="neu-btn px-3.5 py-2 text-xs font-extrabold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer">
+            <button type="button" onclick="PraxisRoutine.openAddHabitModal()" class="stitch-btn-primary py-2 px-4 text-xs font-black text-white rounded-xl shadow-sm cursor-pointer">
                 <span>+</span> Add Habit
             </button>
         </section>
@@ -831,6 +780,40 @@
     <script type="module" src="/app-firebase.js"></script>
     <script src="/js/routineSystem.js"></script>
     <script src="/script.js"></script>
+
+    <!-- FIXED MOBILE BOTTOM NAVIGATION BAR (REFERENCE A 5 DESTINATIONS) -->
+    <nav class="stitch-bottom-nav md:hidden" aria-label="Mobile Navigation">
+        <!-- 1. Home -->
+        <a href="/praxis" class="stitch-nav-item" title="Praxis Home">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <span>Home</span>
+        </a>
+
+        <!-- 2. Career -->
+        <a href="/praxis#compass" class="stitch-nav-item" title="Career Compass">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-2-9l6-2-2 6-6 2 2-6z"></path></svg>
+            <span>Career</span>
+        </a>
+
+        <!-- 3. Coach -->
+        <a href="/coach.html" class="stitch-nav-item" title="Communication Coach">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+            <span>Coach</span>
+        </a>
+
+        <!-- 4. Routine (Active Destination) -->
+        <a href="/routine.html" class="stitch-nav-item active" title="Routine Tracker">
+            <svg class="nav-icon text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
+            <span class="text-violet-700 font-extrabold">Routine</span>
+        </a>
+
+        <!-- 5. Progress -->
+        <a href="/routine.html#analytics" onclick="PraxisRoutine.switchTab('analytics')" class="stitch-nav-item" title="Weekly Insights">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+            <span>Progress</span>
+        </a>
+    </nav>
+
 </body>
 
 </html>
