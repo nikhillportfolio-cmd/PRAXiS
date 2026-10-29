@@ -9,14 +9,14 @@
       "visitCount": 1
     }
   },
-  "totalQuizzesCompleted": 12,
+  "totalQuizzesCompleted": 14,
   "featureUsage": {
-    "compass": 12,
+    "compass": 14,
     "library": 1,
     "routine": 2
   },
   "domainStats": {
-    "TechAI": 12
+    "TechAI": 14
   },
   "careerStats": {
     "Cybersecurity & Ethical Hacker": 1,
@@ -25,7 +25,8 @@
     "Cybersecurity Specialist & Ethical Hacker": 1,
     "Cloud Architect & Platform Specialist": 1,
     "Web3 & Blockchain Developer": 1,
-    "Systems & Network Administrator": 1
+    "Systems & Network Administrator": 1,
+    "Data Scientist & Business Analytics Lead": 1
   },
   "libraryStats": {
     "totalViews": 1,

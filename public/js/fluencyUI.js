@@ -301,6 +301,9 @@
     // 3. RECORDING & STATE MANAGEMENT
     // =========================================================================
     function toggleFluencyRecording() {
+        if (!recognitionManager) {
+            initSpeechRecognition();
+        }
         if (!recognitionManager || !recognitionManager.isSupported) {
             showFluencyToast("Speech recognition is not supported in this browser. Please use Chrome or Edge.", "⚠️");
             return;
@@ -314,13 +317,35 @@
     }
 
     function startFluencyRecording() {
-        resetFluencyRecording();
-        hideResultsDashboard();
+        // Stop any active TTS audio playback so it doesn't feed into microphone
+        if (window.PraxisSpeechSpeaker) {
+            window.PraxisSpeechSpeaker.stop();
+        } else if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+        resetFluencyListenButton();
 
-        const started = recognitionManager.start();
+        // Clear previous live transcript & word count
+        const liveTranscriptEl = document.getElementById('fluency-live-transcript');
+        const wordCountBadge = document.getElementById('fluency-word-count-badge');
+        if (liveTranscriptEl) liveTranscriptEl.innerText = "Listening... Start speaking whenever you're ready.";
+        if (wordCountBadge) wordCountBadge.innerText = "0 words";
+
+        hideResultsDashboard();
+        timeRemaining = timerDuration;
+        updateFluencyTimerDisplay();
+
+        if (!recognitionManager) {
+            initSpeechRecognition();
+        }
+
+        const started = recognitionManager ? recognitionManager.start('') : false;
         if (started) {
             isRecording = true;
             startFluencyTimer();
+            showFluencyToast("Microphone active — start speaking!", "🎙️");
+        } else {
+            showFluencyToast("Could not start microphone. Please check browser permissions.", "⚠️");
         }
     }
 
@@ -334,12 +359,12 @@
         // Brief debounce to allow final recognition tokens to settle
         setTimeout(() => {
             submitForFluencyEvaluation();
-        }, 300);
+        }, 350);
     }
 
     function resetFluencyRecording() {
-        if (recognitionManager) {
-            recognitionManager.reset();
+        if (recognitionManager && recognitionManager.isRecording) {
+            recognitionManager.stop();
         }
         isRecording = false;
         pauseFluencyTimer();
@@ -351,52 +376,64 @@
         if (liveTranscriptEl) liveTranscriptEl.innerText = "Transcript will appear here as you speak...";
         if (wordCountBadge) wordCountBadge.innerText = "0 words";
 
+        if (window.PraxisSpeechSpeaker) {
+            window.PraxisSpeechSpeaker.stop();
+        }
+        resetFluencyListenButton();
+
         setFluencyState('READY');
     }
 
     function setFluencyState(state, payload = {}) {
         const recordBtn = document.getElementById('btn-fluency-record');
+        const iconEl = document.getElementById('fl-record-icon');
+        const labelEl = document.getElementById('fl-record-label');
         const statusLabel = document.getElementById('fl-mic-status-label');
         const soundwave = document.getElementById('fl-soundwave-container');
 
         switch (state) {
             case 'READY':
             case 'STOPPED':
+                isRecording = false;
                 if (recordBtn) {
                     recordBtn.classList.remove('mic-recording-pulse', 'text-red-600', 'bg-red-50');
-                    recordBtn.classList.add('text-slate-700');
-                    recordBtn.innerHTML = `<span>🎙️</span> <span>Start Speaking</span>`;
+                    recordBtn.classList.add('text-white');
                     recordBtn.setAttribute('aria-label', 'Start Speaking');
                 }
+                if (iconEl) iconEl.innerText = "🎙️";
+                if (labelEl) labelEl.innerText = "Start Speaking";
                 if (statusLabel) statusLabel.innerText = "Click to Start Speaking";
                 if (soundwave) soundwave.classList.add('hidden');
                 break;
 
             case 'LISTENING':
+                isRecording = true;
                 if (recordBtn) {
-                    recordBtn.classList.add('mic-recording-pulse', 'text-red-600', 'bg-red-50');
-                    recordBtn.classList.remove('text-slate-700');
-                    recordBtn.innerHTML = `<span>⏹</span> <span>Stop Speaking</span>`;
+                    recordBtn.classList.add('mic-recording-pulse');
                     recordBtn.setAttribute('aria-label', 'Stop Speaking');
                 }
+                if (iconEl) iconEl.innerText = "⏹️";
+                if (labelEl) labelEl.innerText = "Stop Speaking";
                 if (statusLabel) statusLabel.innerText = "Listening... Speak naturally!";
                 if (soundwave) soundwave.classList.remove('hidden');
                 break;
 
             case 'ANALYZING':
             case 'PROCESSING':
+                isRecording = false;
                 if (soundwave) soundwave.classList.add('hidden');
                 if (statusLabel) statusLabel.innerText = "Analyzing speech fluency & timing...";
-                if (recordBtn) {
-                    recordBtn.innerHTML = `<span>⏳</span> <span>Analyzing...</span>`;
-                }
+                if (iconEl) iconEl.innerText = "⏳";
+                if (labelEl) labelEl.innerText = "Analyzing...";
                 break;
 
             case 'ERROR':
+                isRecording = false;
                 if (recordBtn) {
                     recordBtn.classList.remove('mic-recording-pulse', 'text-red-600', 'bg-red-50');
-                    recordBtn.innerHTML = `<span>🎙️</span> <span>Try Again</span>`;
                 }
+                if (iconEl) iconEl.innerText = "🎙️";
+                if (labelEl) labelEl.innerText = "Try Again";
                 if (soundwave) soundwave.classList.add('hidden');
                 if (statusLabel) statusLabel.innerText = payload.message || "Microphone ready (Click to record)";
                 break;
@@ -651,11 +688,11 @@
     }
 
     function speakTargetSentence() {
-        if (!('speechSynthesis' in window)) {
+        const Speaker = window.PraxisSpeechSpeaker;
+        if (!Speaker || !Speaker.isSupported()) {
             showFluencyToast("Text-to-speech is not supported in this browser.", "⚠️");
             return;
         }
-        window.speechSynthesis.cancel();
 
         let textToSpeak = "";
         if (currentExercise) {
@@ -670,13 +707,33 @@
 
         if (!textToSpeak) return;
 
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.rate = 0.92;
-        utterance.pitch = 1.0;
-        utterance.lang = 'en-US';
+        const iconEl = document.getElementById('fl-listen-icon');
+        const labelEl = document.getElementById('fl-listen-label');
 
-        window.speechSynthesis.speak(utterance);
-        showFluencyToast("🔊 Playing model sentence audio...", "🎙️");
+        Speaker.speak(textToSpeak, {
+            rate: 0.92,
+            onStart: () => {
+                if (iconEl) iconEl.innerText = "⏹️";
+                if (labelEl) labelEl.innerText = "Stop";
+                showFluencyToast("🔊 Playing model sentence audio...", "🎙️");
+            },
+            onEnd: () => {
+                if (iconEl) iconEl.innerText = "🔊";
+                if (labelEl) labelEl.innerText = "Listen";
+            },
+            onError: (err) => {
+                if (iconEl) iconEl.innerText = "🔊";
+                if (labelEl) labelEl.innerText = "Listen";
+                showFluencyToast(err || "Audio playback issue.", "⚠️");
+            }
+        });
+    }
+
+    function resetFluencyListenButton() {
+        const iconEl = document.getElementById('fl-listen-icon');
+        const labelEl = document.getElementById('fl-listen-label');
+        if (iconEl) iconEl.innerText = "🔊";
+        if (labelEl) labelEl.innerText = "Listen";
     }
 
     // =========================================================================

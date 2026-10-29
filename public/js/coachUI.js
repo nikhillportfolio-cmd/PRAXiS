@@ -169,33 +169,58 @@
         currentState = state;
         const micStatus = document.getElementById('mic-status-label');
         const soundwave = document.getElementById('soundwave-container');
+        const micIcon = document.getElementById('coach-mic-icon');
+        const pulse1 = document.getElementById('coach-mic-pulse-1');
+        const pulse2 = document.getElementById('coach-mic-pulse-2');
+
+        const setPulse = (active) => {
+            if (pulse1) pulse1.style.display = active ? 'block' : 'none';
+            if (pulse2) pulse2.style.display = active ? 'block' : 'none';
+        };
 
         switch (state) {
             case 'READY':
             case 'STOPPED':
                 if (micStatus) micStatus.innerText = "Ready to record";
                 if (soundwave) soundwave.classList.add('hidden');
+                if (micIcon) micIcon.innerText = "🎙️";
+                setPulse(false);
                 break;
 
             case 'LISTENING':
                 if (micStatus) micStatus.innerText = "Listening... Speak naturally!";
                 if (soundwave) soundwave.classList.remove('hidden');
+                if (micIcon) micIcon.innerText = "🎙️";
+                setPulse(true);
+                break;
+
+            case 'PAUSED':
+                if (micStatus) micStatus.innerText = "Microphone paused — tap to resume speaking";
+                if (soundwave) soundwave.classList.add('hidden');
+                if (micIcon) micIcon.innerText = "⏸️";
+                setPulse(false);
                 break;
 
             case 'PROCESSING':
             case 'ANALYZING':
                 if (soundwave) soundwave.classList.add('hidden');
                 if (micStatus) micStatus.innerText = "Analyzing your speech patterns...";
+                if (micIcon) micIcon.innerText = "⏳";
+                setPulse(false);
                 break;
 
             case 'COMPLETE':
                 if (soundwave) soundwave.classList.add('hidden');
                 if (micStatus) micStatus.innerText = "Coaching ready!";
+                if (micIcon) micIcon.innerText = "🎙️";
+                setPulse(false);
                 break;
 
             case 'ERROR':
                 if (soundwave) soundwave.classList.add('hidden');
-                if (micStatus) micStatus.innerText = payload.message || "Microphone issue";
+                if (micStatus) micStatus.innerText = payload.message || "Microphone issue — tap to retry";
+                if (micIcon) micIcon.innerText = "🎙️";
+                setPulse(false);
                 break;
         }
     }
@@ -338,10 +363,18 @@
     }
 
     // =========================================================================
-    // 5. STAGE 2: LIVE SPEAKING STAGE TRANSITION
+    // 5. STAGE 2: LIVE SPEAKING STAGE TRANSITION & MIC CONTROLS
     // =========================================================================
     function startSpeakingStage() {
         stopPrepCountdown();
+
+        // Safely stop any prompt audio if playing
+        if (window.PraxisSpeechSpeaker) {
+            window.PraxisSpeechSpeaker.stop();
+        } else if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+        resetHearPromptButton();
 
         // Clear any previous live transcript
         const liveBox = document.getElementById('speaking-live-transcript-box');
@@ -355,18 +388,68 @@
         setStage('speaking');
 
         // Start Speech Recognition
+        if (!recognitionManager) {
+            initSpeechEngine();
+        }
+
         if (recognitionManager && recognitionManager.isSupported) {
             const started = recognitionManager.start('');
             if (!started) {
-                showToast("Please grant microphone permissions to speak.", "⚠️");
+                showToast("Please grant microphone permissions in your browser to speak.", "⚠️");
             }
         } else {
-            showToast("Speech recognition is unavailable in this browser. You can still type below.", "ℹ️");
+            showToast("Speech recognition is unavailable in this browser. You can type or paste below.", "ℹ️");
+            toggleTypeFallback();
         }
 
         // Reset & Start Countdown Timer
         resetTimer();
         startTimer();
+    }
+
+    function toggleCoachSpeaking() {
+        if (!recognitionManager) {
+            initSpeechEngine();
+        }
+        if (!recognitionManager || !recognitionManager.isSupported) {
+            showToast("Speech recognition is not supported in this browser.", "⚠️");
+            return;
+        }
+
+        if (recognitionManager.isRecording) {
+            if (recognitionManager.isPaused) {
+                recognitionManager.resume();
+                setUIState('LISTENING');
+                if (!isTimerRunning) startTimer();
+                showToast("Microphone resumed — continue speaking!", "🎙️");
+            } else {
+                recognitionManager.pause();
+                setUIState('PAUSED');
+                pauseTimer();
+                showToast("Microphone paused. Tap again to resume.", "⏸️");
+            }
+        } else {
+            const started = recognitionManager.start(recognitionManager.finalTranscript);
+            if (started) {
+                setUIState('LISTENING');
+                if (!isTimerRunning) startTimer();
+                showToast("Microphone listening...", "🎙️");
+            } else {
+                showToast("Please allow microphone permissions in your browser.", "⚠️");
+            }
+        }
+    }
+
+    function coachStopSpeaking() {
+        if (recognitionManager && recognitionManager.isRecording) {
+            recognitionManager.stop();
+        }
+        pauseTimer();
+        stopPrepCountdown();
+        if (window.PraxisSpeechSpeaker) {
+            window.PraxisSpeechSpeaker.stop();
+        }
+        resetHearPromptButton();
     }
 
     function finishSpeakingAndEvaluate() {
@@ -381,10 +464,7 @@
     }
 
     function cancelSpeakingAndRestart() {
-        if (recognitionManager && recognitionManager.isRecording) {
-            recognitionManager.stop();
-        }
-        pauseTimer();
+        coachStopSpeaking();
         resetTimer();
 
         const liveBox = document.getElementById('speaking-live-transcript-box');
@@ -992,26 +1072,77 @@
     }
 
     // =========================================================================
-    // 9. TEXT-TO-SPEECH (TTS) AUDIO FEEDBACK
+    // 9. TEXT-TO-SPEECH (TTS) AUDIO PROMPTS & COACH FEEDBACK
     // =========================================================================
-    function speakCoachFeedback() {
-        if (!('speechSynthesis' in window)) {
+    function speakCurrentTopicQuestion() {
+        const textToSpeak = currentTopic ? (currentTopic.prompt || currentTopic.title) : "Choose a topic to begin speaking practice.";
+        const iconEl = document.getElementById('hear-prompt-icon');
+        const labelEl = document.getElementById('hear-prompt-label');
+
+        const Speaker = window.PraxisSpeechSpeaker;
+        if (!Speaker || !Speaker.isSupported()) {
             showToast("Text-to-speech is not supported in this browser.", "⚠️");
             return;
         }
-        window.speechSynthesis.cancel();
+
+        Speaker.speak(textToSpeak, {
+            rate: 0.94,
+            onStart: () => {
+                if (iconEl) iconEl.innerText = "⏹️";
+                if (labelEl) labelEl.innerText = "Stop Prompt";
+                showToast("🔊 Playing speaking prompt aloud...", "🎙️");
+            },
+            onEnd: () => {
+                if (iconEl) iconEl.innerText = "🔊";
+                if (labelEl) labelEl.innerText = "Hear Prompt";
+            },
+            onError: (err) => {
+                if (iconEl) iconEl.innerText = "🔊";
+                if (labelEl) labelEl.innerText = "Hear Prompt";
+                showToast(err || "Audio playback issue.", "⚠️");
+            }
+        });
+    }
+
+    function resetHearPromptButton() {
+        const iconEl = document.getElementById('hear-prompt-icon');
+        const labelEl = document.getElementById('hear-prompt-label');
+        if (iconEl) iconEl.innerText = "🔊";
+        if (labelEl) labelEl.innerText = "Hear Prompt";
+    }
+
+    function speakCoachFeedback() {
+        const Speaker = window.PraxisSpeechSpeaker;
+        if (!Speaker || !Speaker.isSupported()) {
+            showToast("Text-to-speech is not supported in this browser.", "⚠️");
+            return;
+        }
 
         const textToSpeak = activeEvaluation?.rephrasings?.professional ||
             activeEvaluation?.rephrasings?.natural ||
+            activeEvaluation?.coachGreeting?.text ||
             "Great speaking practice! Continue focusing on clear pace and structured delivery.";
 
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.rate = 0.95;
-        utterance.pitch = 1.0;
-        utterance.lang = 'en-US';
+        const iconEl = document.getElementById('coach-audio-icon');
+        const labelEl = document.getElementById('coach-audio-label');
 
-        window.speechSynthesis.speak(utterance);
-        showToast("🔊 Playing Natural & Professional Phrasing...", "🎙️");
+        Speaker.speak(textToSpeak, {
+            rate: 0.94,
+            onStart: () => {
+                if (iconEl) iconEl.innerText = "⏹️";
+                if (labelEl) labelEl.innerText = "Stop Audio";
+                showToast("🔊 Playing professional coaching phrasing...", "🎙️");
+            },
+            onEnd: () => {
+                if (iconEl) iconEl.innerText = "🔊";
+                if (labelEl) labelEl.innerText = "Listen Audio";
+            },
+            onError: (err) => {
+                if (iconEl) iconEl.innerText = "🔊";
+                if (labelEl) labelEl.innerText = "Listen Audio";
+                showToast(err || "Audio playback issue.", "⚠️");
+            }
+        });
     }
 
     // =========================================================================
@@ -1208,6 +1339,8 @@
     // Expose global methods for HTML onclick bindings
     root.setStage = setStage;
     root.startSpeakingStage = startSpeakingStage;
+    root.toggleCoachSpeaking = toggleCoachSpeaking;
+    root.coachStopSpeaking = coachStopSpeaking;
     root.finishSpeakingAndEvaluate = finishSpeakingAndEvaluate;
     root.cancelSpeakingAndRestart = cancelSpeakingAndRestart;
     root.launchTargetedDrill = launchTargetedDrill;
@@ -1221,6 +1354,7 @@
     root.clearTranscript = clearTranscript;
     root.setTimerDuration = setTimerDuration;
     root.submitSpeechForEvaluation = submitSpeechForEvaluation;
+    root.speakCurrentTopicQuestion = speakCurrentTopicQuestion;
     root.speakCoachFeedback = speakCoachFeedback;
     root.loadSessionHistory = loadSessionHistory;
 

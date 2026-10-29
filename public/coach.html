@@ -381,8 +381,8 @@
                         </div>
                         <div class="flex items-center gap-2">
                             <!-- Hear aloud action with a speaker icon -->
-                            <button type="button" onclick="speakCurrentTopicQuestion()" class="stitch-btn-secondary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Listen to question spoken out loud">
-                                <span>🔊</span> <span>Hear Prompt</span>
+                            <button type="button" id="btn-hear-prompt" onclick="speakCurrentTopicQuestion()" class="stitch-btn-secondary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all" title="Listen to question spoken out loud">
+                                <span id="hear-prompt-icon">🔊</span> <span id="hear-prompt-label">Hear Prompt</span>
                             </button>
                             <!-- Change Prompt action -->
                             <button type="button" onclick="shuffleTopic()" class="stitch-btn-secondary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Get a different question">
@@ -514,13 +514,13 @@
                     <!-- Center Layered Circular Microphone & Concentric Waveform (Reference C: Violet, Cyan, Soft-Blue) -->
                     <div class="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center my-2">
                         <!-- Layered circular pulse rings -->
-                        <div class="stitch-pulse-ring"></div>
-                        <div class="stitch-pulse-ring-outer"></div>
+                        <div id="coach-mic-pulse-1" class="stitch-pulse-ring"></div>
+                        <div id="coach-mic-pulse-2" class="stitch-pulse-ring-outer"></div>
 
-                        <!-- Inner circular microphone container -->
-                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-violet-600 to-indigo-600 text-white flex items-center justify-center text-4xl shadow-lg shadow-violet-300 relative z-10 cursor-pointer">
-                            🎙️
-                        </div>
+                        <!-- Inner circular microphone container with interactive toggle -->
+                        <button type="button" id="coach-mic-button" onclick="toggleCoachSpeaking()" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-violet-600 to-indigo-600 text-white flex items-center justify-center text-4xl shadow-lg shadow-violet-300 relative z-10 cursor-pointer transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-violet-300" aria-label="Microphone Toggle" title="Tap to pause or resume microphone">
+                            <span id="coach-mic-icon">🎙️</span>
+                        </button>
                     </div>
 
                     <!-- Decorative Audio Waveform Visualization -->
@@ -849,8 +849,8 @@
                             <div class="flex flex-col gap-3">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Natural & Professional Phrasing:</span>
-                                    <button type="button" onclick="speakCoachFeedback()" class="neu-btn px-3 py-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 cursor-pointer">
-                                        <span>🔊</span> Listen Audio
+                                    <button type="button" id="btn-listen-coach-audio" onclick="speakCoachFeedback()" class="neu-btn px-3 py-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 cursor-pointer transition-all">
+                                        <span id="coach-audio-icon">🔊</span> <span id="coach-audio-label">Listen Audio</span>
                                     </button>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1026,8 +1026,8 @@
                                 </span>
                             </div>
                             <div class="flex items-center gap-1.5">
-                                <button type="button" onclick="speakFluencyTargetSentence()" class="neu-btn px-2.5 py-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer" title="Listen to model sentence">
-                                    <span>🔊</span> Listen
+                                <button type="button" id="btn-fluency-listen" onclick="speakFluencyTargetSentence()" class="neu-btn px-2.5 py-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer transition-all" title="Listen to model sentence">
+                                    <span id="fl-listen-icon">🔊</span> <span id="fl-listen-label">Listen</span>
                                 </button>
                                 <button type="button" onclick="shuffleFluencyExercise()" class="neu-btn px-2.5 py-1 text-xs font-bold text-slate-600 hover:text-blue-600 flex items-center gap-1 cursor-pointer" title="Load another exercise">
                                     <span>🎲</span> Shuffle
@@ -1078,7 +1078,7 @@
                         <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200/80">
                             <div class="flex items-center gap-3">
                                 <button type="button" id="btn-fluency-record" onclick="toggleFluencyRecording()" aria-label="Start Speaking" class="neu-btn px-5 py-2.5 text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-lg flex items-center gap-2 cursor-pointer transition-all">
-                                    <span>🎙️</span> <span>Start Speaking</span>
+                                    <span id="fl-record-icon">🎙️</span> <span id="fl-record-label">Start Speaking</span>
                                 </button>
                                 <div>
                                     <div id="fl-mic-status-label" class="text-xs font-extrabold text-slate-800" aria-live="polite">
@@ -1339,6 +1339,19 @@
             const tabCoach = document.getElementById('tab-switch-coach');
             const tabFluency = document.getElementById('tab-switch-fluency');
 
+            // Cleanly stop any ongoing recognition or audio playback across modes
+            if (typeof window.coachStopSpeaking === 'function') {
+                window.coachStopSpeaking();
+            }
+            if (typeof window.resetFluencyRecording === 'function') {
+                window.resetFluencyRecording();
+            }
+            if (window.PraxisSpeechSpeaker) {
+                window.PraxisSpeechSpeaker.stop();
+            } else if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+
             if (mode === 'fluency') {
                 if (coachView) coachView.classList.add('hidden');
                 if (fluencyView) fluencyView.classList.remove('hidden');
@@ -1350,11 +1363,6 @@
                 if (tabCoach) {
                     tabCoach.classList.remove('pressed', 'text-blue-600', 'border', 'border-blue-300', 'shadow-inner');
                     tabCoach.classList.add('text-slate-700');
-                }
-
-                // If recognition is running on coach side, stop it
-                if (window.clearTranscript) {
-                    // safe state
                 }
             } else {
                 if (coachView) coachView.classList.remove('hidden');
